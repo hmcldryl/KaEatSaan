@@ -5,10 +5,10 @@ class SpinButton extends StatelessWidget {
   final String text;
 
   const SpinButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     this.text = 'Spin',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
