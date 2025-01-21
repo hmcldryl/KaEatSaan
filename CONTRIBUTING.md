@@ -82,8 +82,7 @@ Example:
 ## Code Style
 
 - Use Dart
-- Follow ESLint rules
-- Run `npm run lint` before committing
+- Run tests before committing
 - Write clear comments
 - Keep functions small and focused
 
@@ -91,7 +90,7 @@ Example:
 
 - Write unit tests for new features
 - Maintain test coverage
-- Run `npm test` locally
+- Run `flutter test <your-unit-test>` locally
 - Fix any failing tests
 
 ## Documentation
