@@ -3,7 +3,7 @@
 *Saan tayo kakain? Bahala na si Batman!* No more! Let KaEatSaan decide for you! 
 
 ## About 🤔
-KaEatSaan (from *"Kahit"* + *"Saan"*) is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless "Ikaw bahala" loop! Just tap a button and let destiny (aka our app) choose your next food adventure!
+KaEatSaan (from *"Kahit"* + *"Saan"*) is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless "Ikaw bahala" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!
 
 ## Features 🌟
 - **Random Pick:** One tap lang, may kainan na! Get a random restaurant or karinderia suggestion
