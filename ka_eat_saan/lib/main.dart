@@ -1,22 +1,41 @@
 import 'package:flutter/material.dart';
-import 'screens/main_page.dart';
+import 'package:ka_eat_saan/features/restaurant_picker/screens/home_page.dart';
 
 void main() {
-  runApp(const KaEatSaanApp());
+  runApp(const MyApp());
 }
 
-class KaEatSaanApp extends StatelessWidget {
-  const KaEatSaanApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'KaEatSaan',
+      title: 'Restaurant Spinner',
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.blue,
+        // Add custom theme settings
+        scaffoldBackgroundColor: Colors.grey[100],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blue,
+          elevation: 0,
+          centerTitle: true,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 32,
+              vertical: 16,
+            ),
+            textStyle: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ),
-      home: const KaEatSaanHomePage(title: 'KaEatSaan - Where to Eat?'),
+      home: HomePage(),
+      debugShowCheckedModeBanner: false, // Removes the debug banner
     );
   }
 }
