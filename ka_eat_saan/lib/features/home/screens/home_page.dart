@@ -3,14 +3,14 @@ import '../widgets/spinning_wheel.dart';
 
 class HomePage extends StatelessWidget {
   final List<String> restaurants = [
-    'Pizza Place',
-    'Burger Joint',
-    'Sushi Bar',
-    'Thai Food',
-    'Mexican Grill',
-    'Italian Restaurant',
-    'Indian Cuisine',
-    'Chinese Restaurant',
+    'Carlos Eatery',
+    'Kuya A\'s Karenderia',
+    'McDonald\'s San Pedro',
+    'Jollibee Junction 2',
+    'King Noah Eatery',
+    'Haim Chicken Robinson\'s',
+    'Jollibee Robinson\'s',
+    'Greenwich Robinson\'s',
   ];
 
   HomePage({super.key});
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restaurant Spinner'),
+        title: const Text('KaEatSaan'),
       ),
       body: Center(
         child: SpinningWheel(
@@ -27,8 +27,8 @@ class HomePage extends StatelessWidget {
           onRestaurantSelected: (String selected) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Selected restaurant: $selected'),
-                duration: const Duration(seconds: 2),
+                content: Text(selected),
+                duration: const Duration(seconds: 3),
               ),
             );
           },

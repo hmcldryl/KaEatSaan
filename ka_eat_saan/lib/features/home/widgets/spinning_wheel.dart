@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'dart:async';
 
+import 'package:ka_eat_saan/features/home/widgets/spin_button.dart';
+
 class SpinningWheel extends StatefulWidget {
   final List<String> restaurants;
   final Function(String) onRestaurantSelected;
@@ -66,7 +68,6 @@ class _SpinningWheelState extends State<SpinningWheel> {
       selectedValue = Fortune.randomInt(0, widget.restaurants.length);
       _controller.add(selectedValue);
 
-      // Delay the callback until animation ends
       Future.delayed(
         const Duration(milliseconds: 5000),
             () => widget.onRestaurantSelected(widget.restaurants[selectedValue]),
@@ -96,9 +97,9 @@ class _SpinningWheelState extends State<SpinningWheel> {
                   alignment: Alignment.topCenter,
                   child: TriangleIndicator(
                     color: Colors.amber,
-                    width: 40,
-                    height: 40,
-                    elevation: 5,
+                    width: 30,
+                    height: 30,
+                    elevation: 8,
                   ),
                 ),
               ],
@@ -106,15 +107,13 @@ class _SpinningWheelState extends State<SpinningWheel> {
           ),
         ),
         const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: _spinWheel,
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          ),
-          child: const Text(
-            'Spin for Restaurant!',
-            style: TextStyle(fontSize: 18),
-          ),
+        SpinButton(
+          size: 120.0,
+          color: Colors.red,
+          text: 'SPIN',
+          onPressed: () {
+            _spinWheel();
+          },
         ),
       ],
     );
