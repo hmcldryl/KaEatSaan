@@ -1,0 +1,512 @@
+[
+  {
+    "id": "1",
+    "name": "Jollibee Ayala",
+    "cuisine": "Fast Food",
+    "budget": 1,
+    "location": {
+      "latitude": 14.5547,
+      "longitude": 121.0244,
+      "address": "Ayala Avenue, Makati City"
+    },
+    "distance": 0.5,
+    "rating": 4.2,
+    "isOpen": true,
+    "description": "Filipino fast food chain",
+    "tags": ["fast food", "chickenjoy", "jolly spaghetti"],
+    "createdAt": "2024-01-15T00:00:00.000Z"
+  },
+  {
+    "id": "2",
+    "name": "Manam Comfort Filipino",
+    "cuisine": "Filipino",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5535,
+      "longitude": 121.0196,
+      "address": "SM Aura Premier, BGC"
+    },
+    "distance": 1.2,
+    "rating": 4.6,
+    "isOpen": true,
+    "description": "Modern Filipino comfort food",
+    "tags": ["sisig", "sinigang", "crispy pata"],
+    "createdAt": "2024-01-10T00:00:00.000Z"
+  },
+  {
+    "id": "3",
+    "name": "Yabu House of Katsu",
+    "cuisine": "Japanese",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5487,
+      "longitude": 121.0195,
+      "address": "Bonifacio High Street, BGC"
+    },
+    "distance": 1.5,
+    "rating": 4.7,
+    "isOpen": true,
+    "description": "Premium Japanese tonkatsu",
+    "tags": ["katsu", "ramen", "japanese"],
+    "createdAt": "2024-01-05T00:00:00.000Z"
+  },
+  {
+    "id": "4",
+    "name": "Samgyupsalamat Unlimited",
+    "cuisine": "Korean",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5478,
+      "longitude": 121.0508,
+      "address": "Ortigas Center, Pasig"
+    },
+    "distance": 2.8,
+    "rating": 4.4,
+    "isOpen": true,
+    "description": "Unlimited Korean BBQ",
+    "tags": ["samgyupsal", "korean bbq", "unlimited"],
+    "createdAt": "2023-12-20T00:00:00.000Z"
+  },
+  {
+    "id": "5",
+    "name": "Tita's Kitchen",
+    "cuisine": "Filipino",
+    "budget": 1,
+    "location": {
+      "latitude": 14.5592,
+      "longitude": 121.0276,
+      "address": "Poblacion, Makati"
+    },
+    "distance": 0.8,
+    "rating": 4.3,
+    "isOpen": true,
+    "description": "Home-style Filipino carinderia",
+    "tags": ["carinderia", "affordable", "home-cooked"],
+    "createdAt": "2023-11-15T00:00:00.000Z"
+  },
+  {
+    "id": "6",
+    "name": "Mama Lou's Italian Kitchen",
+    "cuisine": "Italian",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5515,
+      "longitude": 121.0471,
+      "address": "Serendra, BGC"
+    },
+    "distance": 2.1,
+    "rating": 4.8,
+    "isOpen": false,
+    "description": "Authentic Italian pasta and pizza",
+    "tags": ["pasta", "pizza", "italian"],
+    "createdAt": "2024-02-01T00:00:00.000Z"
+  },
+  {
+    "id": "7",
+    "name": "Din Tai Fung",
+    "cuisine": "Chinese",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5482,
+      "longitude": 121.0179,
+      "address": "Uptown Mall, BGC"
+    },
+    "distance": 1.8,
+    "rating": 4.9,
+    "isOpen": true,
+    "description": "Famous for xiaolongbao",
+    "tags": ["dimsum", "xiaolongbao", "chinese"],
+    "createdAt": "2023-10-10T00:00:00.000Z"
+  },
+  {
+    "id": "8",
+    "name": "Tim Ho Wan",
+    "cuisine": "Chinese",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5567,
+      "longitude": 121.0244,
+      "address": "Glorietta, Makati"
+    },
+    "distance": 1.0,
+    "rating": 4.5,
+    "isOpen": true,
+    "description": "Michelin-starred dimsum",
+    "tags": ["dimsum", "baked buns", "har gow"],
+    "createdAt": "2024-01-20T00:00:00.000Z"
+  },
+  {
+    "id": "9",
+    "name": "Señor Pollo",
+    "cuisine": "Mexican",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5544,
+      "longitude": 121.0234,
+      "address": "Greenbelt 2, Makati"
+    },
+    "distance": 0.7,
+    "rating": 4.4,
+    "isOpen": true,
+    "description": "Mexican rotisserie chicken",
+    "tags": ["chicken", "tacos", "burrito"],
+    "createdAt": "2023-12-05T00:00:00.000Z"
+  },
+  {
+    "id": "10",
+    "name": "Ramen Nagi",
+    "cuisine": "Japanese",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5499,
+      "longitude": 121.0191,
+      "address": "The Fort Strip, BGC"
+    },
+    "distance": 1.6,
+    "rating": 4.6,
+    "isOpen": true,
+    "description": "Customize your ramen",
+    "tags": ["ramen", "japanese", "customizable"],
+    "createdAt": "2024-02-10T00:00:00.000Z"
+  },
+  {
+    "id": "11",
+    "name": "Bacolod Chicken Inasal",
+    "cuisine": "Filipino",
+    "budget": 1,
+    "location": {
+      "latitude": 14.5622,
+      "longitude": 121.0289,
+      "address": "Rockwell, Makati"
+    },
+    "distance": 1.3,
+    "rating": 4.1,
+    "isOpen": true,
+    "description": "Authentic chicken inasal",
+    "tags": ["inasal", "chicken", "unlimited rice"],
+    "createdAt": "2023-11-01T00:00:00.000Z"
+  },
+  {
+    "id": "12",
+    "name": "Wildflour Cafe",
+    "cuisine": "American",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5533,
+      "longitude": 121.0189,
+      "address": "Net Park, BGC"
+    },
+    "distance": 1.4,
+    "rating": 4.7,
+    "isOpen": true,
+    "description": "Artisan bakery and cafe",
+    "tags": ["brunch", "pastries", "coffee"],
+    "createdAt": "2024-01-25T00:00:00.000Z"
+  },
+  {
+    "id": "13",
+    "name": "Bonchon Chicken",
+    "cuisine": "Korean",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5558,
+      "longitude": 121.0238,
+      "address": "Landmark Makati"
+    },
+    "distance": 0.9,
+    "rating": 4.5,
+    "isOpen": true,
+    "description": "Korean fried chicken",
+    "tags": ["fried chicken", "korean", "soy garlic"],
+    "createdAt": "2023-12-15T00:00:00.000Z"
+  },
+  {
+    "id": "14",
+    "name": "Pho Hoa",
+    "cuisine": "Vietnamese",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5512,
+      "longitude": 121.0201,
+      "address": "Market Market, BGC"
+    },
+    "distance": 1.7,
+    "rating": 4.3,
+    "isOpen": true,
+    "description": "Authentic Vietnamese pho",
+    "tags": ["pho", "vietnamese", "noodle soup"],
+    "createdAt": "2024-02-05T00:00:00.000Z"
+  },
+  {
+    "id": "15",
+    "name": "Aristocrat Restaurant",
+    "cuisine": "Filipino",
+    "budget": 2,
+    "location": {
+      "latitude": 14.6042,
+      "longitude": 120.9822,
+      "address": "Malate, Manila"
+    },
+    "distance": 5.2,
+    "rating": 4.2,
+    "isOpen": false,
+    "description": "Classic Filipino restaurant since 1936",
+    "tags": ["chicken barbecue", "classic", "filipino"],
+    "createdAt": "2023-10-01T00:00:00.000Z"
+  },
+  {
+    "id": "16",
+    "name": "Pepper Lunch",
+    "cuisine": "Japanese",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5544,
+      "longitude": 121.0231,
+      "address": "Greenbelt 3, Makati"
+    },
+    "distance": 0.6,
+    "rating": 4.4,
+    "isOpen": true,
+    "description": "DIY teppanyaki",
+    "tags": ["teppanyaki", "beef", "diy"],
+    "createdAt": "2024-01-08T00:00:00.000Z"
+  },
+  {
+    "id": "17",
+    "name": "Thai Dara",
+    "cuisine": "Thai",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5489,
+      "longitude": 121.0197,
+      "address": "Central Square, BGC"
+    },
+    "distance": 1.5,
+    "rating": 4.5,
+    "isOpen": true,
+    "description": "Authentic Thai cuisine",
+    "tags": ["pad thai", "tom yum", "thai"],
+    "createdAt": "2023-12-10T00:00:00.000Z"
+  },
+  {
+    "id": "18",
+    "name": "Yellow Cab Pizza",
+    "cuisine": "American",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5572,
+      "longitude": 121.0255,
+      "address": "Ayala Center, Makati"
+    },
+    "distance": 0.4,
+    "rating": 4.3,
+    "isOpen": true,
+    "description": "New York-style pizza",
+    "tags": ["pizza", "pasta", "american"],
+    "createdAt": "2024-01-18T00:00:00.000Z"
+  },
+  {
+    "id": "19",
+    "name": "Barrio Fiesta",
+    "cuisine": "Filipino",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5634,
+      "longitude": 121.0312,
+      "address": "Rockwell Power Plant Mall"
+    },
+    "distance": 1.4,
+    "rating": 4.3,
+    "isOpen": true,
+    "description": "Traditional Filipino fiesta food",
+    "tags": ["lechon", "kare-kare", "fiesta"],
+    "createdAt": "2023-11-20T00:00:00.000Z"
+  },
+  {
+    "id": "20",
+    "name": "Zark's Burgers",
+    "cuisine": "American",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5505,
+      "longitude": 121.0193,
+      "address": "BGC Stopover"
+    },
+    "distance": 1.5,
+    "rating": 4.4,
+    "isOpen": true,
+    "description": "Massive gourmet burgers",
+    "tags": ["burgers", "fries", "milkshake"],
+    "createdAt": "2024-02-12T00:00:00.000Z"
+  },
+  {
+    "id": "21",
+    "name": "Conti's Bakeshop",
+    "cuisine": "Filipino",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5551,
+      "longitude": 121.0241,
+      "address": "Greenbelt 1, Makati"
+    },
+    "distance": 0.5,
+    "rating": 4.6,
+    "isOpen": true,
+    "description": "Filipino bakery and cafe",
+    "tags": ["mango bravo", "pasta", "cakes"],
+    "createdAt": "2023-12-01T00:00:00.000Z"
+  },
+  {
+    "id": "22",
+    "name": "Taj Indian Restaurant",
+    "cuisine": "Indian",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5521,
+      "longitude": 121.0206,
+      "address": "Two Parkade, BGC"
+    },
+    "distance": 1.9,
+    "rating": 4.7,
+    "isOpen": false,
+    "description": "North Indian cuisine",
+    "tags": ["curry", "tandoori", "naan"],
+    "createdAt": "2024-01-30T00:00:00.000Z"
+  },
+  {
+    "id": "23",
+    "name": "Kuya J Restaurant",
+    "cuisine": "Filipino",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5565,
+      "longitude": 121.0249,
+      "address": "The Link Ayala, Makati"
+    },
+    "distance": 0.3,
+    "rating": 4.4,
+    "isOpen": true,
+    "description": "Affordable Filipino favorites",
+    "tags": ["halo-halo", "crispy pata", "bulalo"],
+    "createdAt": "2024-01-05T00:00:00.000Z"
+  },
+  {
+    "id": "24",
+    "name": "Ichiran Ramen",
+    "cuisine": "Japanese",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5491,
+      "longitude": 121.0188,
+      "address": "SM Aura, BGC"
+    },
+    "distance": 1.3,
+    "rating": 4.8,
+    "isOpen": true,
+    "description": "Private booth ramen experience",
+    "tags": ["tonkotsu", "ramen", "private booth"],
+    "createdAt": "2024-02-15T00:00:00.000Z"
+  },
+  {
+    "id": "25",
+    "name": "Mang Inasal",
+    "cuisine": "Filipino",
+    "budget": 1,
+    "location": {
+      "latitude": 14.5541,
+      "longitude": 121.0228,
+      "address": "Glorietta 4, Makati"
+    },
+    "distance": 0.8,
+    "rating": 4.0,
+    "isOpen": true,
+    "description": "Popular chicken inasal chain",
+    "tags": ["inasal", "unlimited rice", "halo-halo"],
+    "createdAt": "2023-11-10T00:00:00.000Z"
+  },
+  {
+    "id": "26",
+    "name": "Coco Ichibanya",
+    "cuisine": "Japanese",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5498,
+      "longitude": 121.0196,
+      "address": "Bonifacio High Street, BGC"
+    },
+    "distance": 1.6,
+    "rating": 4.5,
+    "isOpen": true,
+    "description": "Japanese curry house",
+    "tags": ["curry", "katsu", "customizable"],
+    "createdAt": "2024-01-12T00:00:00.000Z"
+  },
+  {
+    "id": "27",
+    "name": "Gyu-Kaku Japanese BBQ",
+    "cuisine": "Japanese",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5508,
+      "longitude": 121.0199,
+      "address": "Uptown Parade, BGC"
+    },
+    "distance": 1.7,
+    "rating": 4.6,
+    "isOpen": true,
+    "description": "Premium Japanese yakiniku",
+    "tags": ["yakiniku", "bbq", "wagyu"],
+    "createdAt": "2023-12-25T00:00:00.000Z"
+  },
+  {
+    "id": "28",
+    "name": "Max's Restaurant",
+    "cuisine": "Filipino",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5558,
+      "longitude": 121.0242,
+      "address": "Greenbelt 5, Makati"
+    },
+    "distance": 0.6,
+    "rating": 4.3,
+    "isOpen": true,
+    "description": "The House that Fried Chicken Built",
+    "tags": ["fried chicken", "filipino", "classic"],
+    "createdAt": "2023-10-20T00:00:00.000Z"
+  },
+  {
+    "id": "29",
+    "name": "8Cuts Burger Blends",
+    "cuisine": "American",
+    "budget": 3,
+    "location": {
+      "latitude": 14.5519,
+      "longitude": 121.0203,
+      "address": "Forbestown Road, BGC"
+    },
+    "distance": 1.8,
+    "rating": 4.7,
+    "isOpen": false,
+    "description": "Premium craft burgers",
+    "tags": ["gourmet burgers", "truffle fries", "premium"],
+    "createdAt": "2024-02-08T00:00:00.000Z"
+  },
+  {
+    "id": "30",
+    "name": "Army Navy Burger + Burrito",
+    "cuisine": "Mexican",
+    "budget": 2,
+    "location": {
+      "latitude": 14.5546,
+      "longitude": 121.0236,
+      "address": "Ayala Triangle, Makati"
+    },
+    "distance": 0.5,
+    "rating": 4.4,
+    "isOpen": true,
+    "description": "California-Mexican fusion",
+    "tags": ["burrito", "burgers", "freedom fries"],
+    "createdAt": "2024-01-22T00:00:00.000Z"
+  }
+]
