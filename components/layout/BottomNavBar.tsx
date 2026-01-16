@@ -41,10 +41,47 @@ export default function BottomNavBar() {
       value={value}
       onChange={handleNavigation}
       showLabels
+      sx={{
+        '& .MuiBottomNavigationAction-label': {
+          fontSize: '0.75rem',
+          fontWeight: 600,
+          letterSpacing: '0.02em',
+        },
+      }}
     >
-      <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="History" icon={<HistoryIcon />} />
+      <BottomNavigationAction
+        label="Home"
+        icon={<HomeIcon />}
+        sx={{
+          '&.Mui-selected': {
+            '& .MuiBottomNavigationAction-label': {
+              fontWeight: 700,
+            },
+          },
+        }}
+      />
+      <BottomNavigationAction
+        label="Favorites"
+        icon={<FavoriteIcon />}
+        sx={{
+          '&.Mui-selected': {
+            '& .MuiBottomNavigationAction-label': {
+              fontWeight: 700,
+            },
+          },
+        }}
+      />
+      <BottomNavigationAction
+        label="History"
+        icon={<HistoryIcon />}
+        sx={{
+          '&.Mui-selected': {
+            '& .MuiBottomNavigationAction-label': {
+              fontWeight: 700,
+            },
+          },
+        }}
+      />
     </BottomNavigation>
   );
 }
