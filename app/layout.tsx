@@ -6,6 +6,7 @@ import theme from '@/lib/theme';
 import AppLayout from '@/components/layout/AppLayout';
 import { Montserrat } from 'next/font/google';
 import "./globals.css";
+import 'leaflet/dist/leaflet.css';
 
 const montserrat = Montserrat({
   weight: ['300', '400', '500', '600', '700', '800'],

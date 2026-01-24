@@ -16,6 +16,40 @@
         },
         "rating": {
           ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5"
+        },
+        "averageRating": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5"
+        },
+        "reviewCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        }
+      }
+    },
+    "reviews": {
+      ".read": true,
+      ".write": "auth != null",
+      "$reviewId": {
+        ".validate": "newData.hasChildren(['restaurantId', 'userId', 'userName', 'rating', 'summary', 'createdAt'])",
+        "restaurantId": {
+          ".validate": "newData.isString()"
+        },
+        "userId": {
+          ".validate": "newData.isString() && newData.val() == auth.uid"
+        },
+        "userName": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+        },
+        "userPhotoUrl": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "rating": {
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 5"
+        },
+        "summary": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 500"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
         }
       }
     },
