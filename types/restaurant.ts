@@ -33,4 +33,6 @@ export interface Restaurant {
   description?: string;
   tags?: string[];
   createdAt: string;  // ISO date string
+  createdBy?: string; // User ID who added the restaurant
+  updatedAt?: string; // ISO date string
 }
