@@ -54,59 +54,114 @@ export default function WheelResult({
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 3,
+          backgroundColor: '#FFFFFF',
         },
       }}
     >
-      <DialogTitle sx={{ textAlign: 'center', pb: 1 }}>
-        <Typography variant="h5" component="div" gutterBottom>
+      <DialogTitle
+        sx={{
+          textAlign: 'center',
+          pb: 2,
+          pt: 4,
+          backgroundColor: '#FFFFFF',
+        }}
+      >
+        <Typography
+          variant="body1"
+          component="div"
+          gutterBottom
+          sx={{ color: 'text.secondary', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '0.875rem' }}
+        >
           You're eating at...
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
-          <Typography variant="h4" component="div" color="primary" sx={{ fontWeight: 600 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, mt: 1 }}>
+          <Typography
+            variant="h4"
+            component="div"
+            sx={{
+              fontWeight: 800,
+              color: '#980404',
+              letterSpacing: '-0.02em',
+            }}
+          >
             {restaurant.name}
           </Typography>
-          <IconButton onClick={handleToggleFavorite} color="primary">
+          <IconButton
+            onClick={handleToggleFavorite}
+            sx={{
+              color: favorite ? '#980404' : '#6B7280',
+              '&:hover': {
+                background: 'rgba(152, 4, 4, 0.08)',
+              },
+            }}
+          >
             {favorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
         </Box>
       </DialogTitle>
 
-      <DialogContent>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, py: 2 }}>
+      <DialogContent sx={{ py: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
           <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Chip label={restaurant.cuisine} color="secondary" />
-            <Chip label={getBudgetDisplay(restaurant.budget)} color="primary" variant="outlined" />
+            <Chip
+              label={restaurant.cuisine}
+              sx={{
+                background: 'linear-gradient(135deg, #93BD57 0%, #A8CC72 100%)',
+                color: 'white',
+                fontWeight: 600,
+              }}
+            />
+            <Chip
+              label={getBudgetDisplay(restaurant.budget)}
+              variant="outlined"
+              sx={{ borderWidth: 2, fontWeight: 600, borderColor: '#980404', color: '#980404' }}
+            />
             {restaurant.distance && (
-              <Chip label={`${restaurant.distance.toFixed(1)} km`} variant="outlined" />
+              <Chip label={`${restaurant.distance.toFixed(1)} km`} variant="outlined" sx={{ borderWidth: 2, fontWeight: 600 }} />
             )}
             {restaurant.rating && (
-              <Chip label={`⭐ ${restaurant.rating}`} variant="outlined" />
+              <Chip label={`⭐ ${restaurant.rating}`} variant="outlined" sx={{ borderWidth: 2, fontWeight: 600 }} />
             )}
           </Box>
 
           {restaurant.description && (
-            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+            <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', lineHeight: 1.7 }}>
               {restaurant.description}
             </Typography>
           )}
 
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', fontWeight: 500 }}>
             📍 {restaurant.location.address}
           </Typography>
 
           {restaurant.tags && restaurant.tags.length > 0 && (
-            <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', justifyContent: 'center' }}>
               {restaurant.tags.map((tag) => (
-                <Chip key={tag} label={tag} size="small" variant="outlined" />
+                <Chip
+                  key={tag}
+                  label={tag}
+                  size="small"
+                  variant="outlined"
+                  sx={{ fontWeight: 500 }}
+                />
               ))}
             </Box>
           )}
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: 'center', pb: 3, gap: 2 }}>
-        <Button onClick={onSpinAgain} variant="outlined" size="large">
+      <DialogActions sx={{ justifyContent: 'center', pb: 3, px: 3, gap: 2 }}>
+        <Button
+          onClick={onSpinAgain}
+          variant="outlined"
+          size="large"
+          sx={{
+            borderWidth: 2,
+            '&:hover': {
+              borderWidth: 2,
+            },
+          }}
+        >
           Spin Again
         </Button>
         <Button onClick={onClose} variant="contained" size="large">

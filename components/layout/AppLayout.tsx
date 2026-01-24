@@ -18,9 +18,9 @@ export default function AppLayout({ children }: AppLayoutProps) {
     <Box
       sx={{
         minHeight: '100vh',
-        paddingTop: '64px', // Account for top app bar height
-        paddingBottom: '80px', // Account for bottom navigation height
-        backgroundColor: 'background.default',
+        paddingTop: '64px',
+        paddingBottom: '80px',
+        background: 'linear-gradient(135deg, rgba(152, 4, 4, 0.02) 0%, rgba(147, 189, 87, 0.02) 50%, rgba(251, 229, 128, 0.02) 100%)',
       }}
     >
       <TopAppBar onFilterClick={() => setFiltersModalOpen(true)} />

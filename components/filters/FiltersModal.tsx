@@ -41,6 +41,13 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
     { value: 10, label: '10km' },
   ];
 
+  const maxRestaurantsMarks = [
+    { value: 5, label: '5' },
+    { value: 10, label: '10' },
+    { value: 15, label: '15' },
+    { value: 20, label: '20' },
+  ];
+
   const handleBudgetChange = (_event: Event, newValue: number | number[]) => {
     if (Array.isArray(newValue) && newValue.length === 2) {
       filters.setBudget([newValue[0] as BudgetLevel, newValue[1] as BudgetLevel]);
@@ -50,6 +57,12 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
   const handleDistanceChange = (_event: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number') {
       filters.setDistance(newValue);
+    }
+  };
+
+  const handleMaxRestaurantsChange = (_event: Event, newValue: number | number[]) => {
+    if (typeof newValue === 'number') {
+      filters.setMaxRestaurants(newValue);
     }
   };
 
@@ -63,28 +76,40 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
       maxWidth="sm"
       PaperProps={{
         sx: {
-          borderRadius: 2,
           maxHeight: '90vh',
+          backgroundColor: '#FFFFFF',
         },
       }}
     >
-      <DialogTitle>
+      <DialogTitle
+        sx={{
+          background: 'linear-gradient(135deg, #980404 0%, #B91C1C 100%)',
+          color: 'white',
+          py: 2.5,
+        }}
+      >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h6" component="div" fontWeight={700}>
+          <Typography variant="h6" component="div" fontWeight={700} sx={{ letterSpacing: '-0.01em' }}>
             Filters & Settings
           </Typography>
           <IconButton
             edge="end"
-            color="inherit"
             onClick={onClose}
             aria-label="close"
+            sx={{
+              color: 'white',
+              background: 'rgba(255, 255, 255, 0.15)',
+              '&:hover': {
+                background: 'rgba(255, 255, 255, 0.25)',
+              },
+            }}
           >
             <CloseIcon />
           </IconButton>
         </Box>
       </DialogTitle>
 
-      <DialogContent dividers>
+      <DialogContent sx={{ py: 3 }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, py: 1 }}>
           {/* Budget Filter */}
           <Box>
@@ -125,6 +150,29 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 max={10}
                 step={0.5}
                 marks={distanceMarks}
+              />
+            </Box>
+          </Box>
+
+          <Divider />
+
+          {/* Max Restaurants Filter */}
+          <Box>
+            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+              Max Restaurants
+            </Typography>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+              Show up to {filters.maxRestaurants} restaurants in the wheel
+            </Typography>
+            <Box sx={{ px: 2, pt: 2 }}>
+              <Slider
+                value={filters.maxRestaurants}
+                onChange={handleMaxRestaurantsChange}
+                valueLabelDisplay="auto"
+                min={5}
+                max={20}
+                step={5}
+                marks={maxRestaurantsMarks}
               />
             </Box>
           </Box>

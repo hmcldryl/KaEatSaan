@@ -7,6 +7,7 @@ import {
   drawSegment,
   drawPointer,
   drawCenterCircle,
+  drawOuterRing,
   getSegmentColors,
 } from '@/lib/utils/canvasHelpers';
 
@@ -29,7 +30,7 @@ export default function WheelCanvas({ restaurants, rotation, size = 300 }: Wheel
     const rect = canvas.getBoundingClientRect();
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const radius = Math.min(centerX, centerY) - 40;
+    const radius = Math.min(centerX, centerY) - 70; // Account for outer ring
 
     // Clear canvas
     ctx.clearRect(0, 0, rect.width, rect.height);
@@ -66,11 +67,14 @@ export default function WheelCanvas({ restaurants, rotation, size = 300 }: Wheel
     // Restore context state
     ctx.restore();
 
+    // Draw outer decorative ring (doesn't rotate)
+    drawOuterRing(ctx, centerX, centerY, radius);
+
+    // Draw pointer (doesn't rotate) - positioned at the top
+    drawPointer(ctx, centerX, centerY, radius);
+
     // Draw center circle (doesn't rotate)
     drawCenterCircle(ctx, centerX, centerY, 50);
-
-    // Draw pointer (doesn't rotate)
-    drawPointer(ctx, centerX, centerY, radius);
   }, [restaurants, rotation, size]);
 
   return (
@@ -80,10 +84,12 @@ export default function WheelCanvas({ restaurants, rotation, size = 300 }: Wheel
       height={size}
       style={{
         width: '100%',
-        height: 'auto',
+        height: '100%',
         maxWidth: `${size}px`,
+        maxHeight: `${size}px`,
         display: 'block',
         margin: '0 auto',
+        objectFit: 'contain',
       }}
     />
   );
