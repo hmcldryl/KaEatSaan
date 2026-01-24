@@ -15,9 +15,11 @@ import TuneIcon from '@mui/icons-material/Tune';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddIcon from '@mui/icons-material/Add';
 import { useFiltersStore } from '@/lib/store/filtersStore';
 import { useAuthStore } from '@/lib/store/authStore';
 import AuthDialog from '@/components/auth/AuthDialog';
+import AddRestaurantModal from '@/components/restaurant/AddRestaurantModal';
 
 interface TopAppBarProps {
   onFilterClick: () => void;
@@ -27,6 +29,7 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
   const activeFiltersCount = useFiltersStore((state) => state.getActiveFiltersCount());
   const { user, signOut } = useAuthStore();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [addRestaurantOpen, setAddRestaurantOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -74,6 +77,22 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            {user && (
+              <IconButton
+                color="inherit"
+                onClick={() => setAddRestaurantOpen(true)}
+                aria-label="add restaurant"
+                sx={{
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  backdropFilter: 'blur(10px)',
+                  '&:hover': {
+                    background: 'rgba(255, 255, 255, 0.3)',
+                  },
+                }}
+              >
+                <AddIcon />
+              </IconButton>
+            )}
             <IconButton
               color="inherit"
               onClick={onFilterClick}
@@ -159,6 +178,7 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
       </Menu>
 
       <AuthDialog open={authDialogOpen} onClose={() => setAuthDialogOpen(false)} />
+      <AddRestaurantModal open={addRestaurantOpen} onClose={() => setAddRestaurantOpen(false)} />
     </>
   );
 }

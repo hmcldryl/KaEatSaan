@@ -35,4 +35,6 @@ export interface Restaurant {
   createdAt: string;  // ISO date string
   createdBy?: string; // User ID who added the restaurant
   updatedAt?: string; // ISO date string
+  reviewCount?: number;   // Total number of reviews
+  averageRating?: number; // Calculated average rating (1-5)
 }
