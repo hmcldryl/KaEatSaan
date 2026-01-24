@@ -32,6 +32,7 @@ export function useWheel(restaurants: Restaurant[]) {
         cuisines: filters.cuisines,
         includeClosedRestaurants: filters.includeClosedRestaurants,
         onlyNewPlaces: filters.onlyNewPlaces,
+        maxRestaurants: filters.maxRestaurants,
       });
     }, 3500); // 3.5 second spin duration
   }, [isSpinning, restaurants, addHistoryEntry, filters]);
