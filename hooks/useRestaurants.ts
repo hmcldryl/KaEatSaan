@@ -30,6 +30,7 @@ export function useRestaurants() {
         cuisines: filters.cuisines,
         includeClosedRestaurants: filters.includeClosedRestaurants,
         onlyNewPlaces: filters.onlyNewPlaces,
+        maxRestaurants: filters.maxRestaurants,
       });
     }
   }, [
@@ -39,6 +40,7 @@ export function useRestaurants() {
     filters.cuisines,
     filters.includeClosedRestaurants,
     filters.onlyNewPlaces,
+    filters.maxRestaurants,
     filterRestaurants,
   ]);
 

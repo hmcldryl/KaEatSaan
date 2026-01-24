@@ -1,5 +1,13 @@
 {
   "projects": {
     "default": "kaeatsaan-75e29"
+  },
+  "targets": {
+    "kaeatsaan-75e29": {
+      "hosting": {
+        "kaeatsaan": ["kaeatsaan"],
+        "kaeatsaan-dev": ["kaeatsaan-dev"]
+      }
+    }
   }
 }

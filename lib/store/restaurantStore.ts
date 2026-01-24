@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import { ref, onValue, push, update, remove, off } from 'firebase/database';
+import { database } from '@/lib/firebase';
 import { Restaurant } from '@/types/restaurant';
 import { FilterState } from '@/types/filter';
 
@@ -7,13 +9,15 @@ interface RestaurantStore {
   filteredRestaurants: Restaurant[];
   isLoading: boolean;
   error: string | null;
+  unsubscribe: (() => void) | null;
 
   // Actions
-  loadRestaurants: () => Promise<void>;
+  loadRestaurants: () => void;
+  stopListening: () => void;
   filterRestaurants: (filters: FilterState) => void;
-  addRestaurant: (restaurant: Restaurant) => void;
-  updateRestaurant: (id: string, updates: Partial<Restaurant>) => void;
-  deleteRestaurant: (id: string) => void;
+  addRestaurant: (restaurant: Omit<Restaurant, 'id'>) => Promise<string | null>;
+  updateRestaurant: (id: string, updates: Partial<Restaurant>) => Promise<void>;
+  deleteRestaurant: (id: string) => Promise<void>;
 }
 
 export const useRestaurantStore = create<RestaurantStore>((set, get) => ({
@@ -21,25 +25,57 @@ export const useRestaurantStore = create<RestaurantStore>((set, get) => ({
   filteredRestaurants: [],
   isLoading: false,
   error: null,
+  unsubscribe: null,
 
-  loadRestaurants: async () => {
+  loadRestaurants: () => {
     set({ isLoading: true, error: null });
-    try {
-      const response = await fetch('/restaurants.json');
-      if (!response.ok) {
-        throw new Error('Failed to load restaurants');
+
+    const restaurantsRef = ref(database, 'restaurants');
+
+    const unsubscribe = () => {
+      off(restaurantsRef);
+    };
+
+    onValue(
+      restaurantsRef,
+      (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          const restaurantsList: Restaurant[] = Object.entries(data).map(
+            ([id, value]) => ({
+              ...(value as Omit<Restaurant, 'id'>),
+              id,
+            })
+          );
+          set({
+            restaurants: restaurantsList,
+            filteredRestaurants: restaurantsList,
+            isLoading: false,
+          });
+        } else {
+          set({
+            restaurants: [],
+            filteredRestaurants: [],
+            isLoading: false,
+          });
+        }
+      },
+      (error) => {
+        set({
+          error: error.message || 'Failed to load restaurants',
+          isLoading: false,
+        });
       }
-      const data: Restaurant[] = await response.json();
-      set({
-        restaurants: data,
-        filteredRestaurants: data,
-        isLoading: false
-      });
-    } catch (error) {
-      set({
-        error: error instanceof Error ? error.message : 'Unknown error',
-        isLoading: false
-      });
+    );
+
+    set({ unsubscribe });
+  },
+
+  stopListening: () => {
+    const { unsubscribe } = get();
+    if (unsubscribe) {
+      unsubscribe();
+      set({ unsubscribe: null });
     }
   },
 
@@ -83,28 +119,38 @@ export const useRestaurantStore = create<RestaurantStore>((set, get) => ({
     set({ filteredRestaurants: filtered });
   },
 
-  addRestaurant: (restaurant: Restaurant) => {
-    set((state) => ({
-      restaurants: [...state.restaurants, restaurant],
-      filteredRestaurants: [...state.filteredRestaurants, restaurant],
-    }));
+  addRestaurant: async (restaurant: Omit<Restaurant, 'id'>) => {
+    try {
+      const restaurantsRef = ref(database, 'restaurants');
+      const newRef = await push(restaurantsRef, restaurant);
+      return newRef.key;
+    } catch (error) {
+      set({
+        error: error instanceof Error ? error.message : 'Failed to add restaurant',
+      });
+      return null;
+    }
   },
 
-  updateRestaurant: (id: string, updates: Partial<Restaurant>) => {
-    set((state) => ({
-      restaurants: state.restaurants.map((r) =>
-        r.id === id ? { ...r, ...updates } : r
-      ),
-      filteredRestaurants: state.filteredRestaurants.map((r) =>
-        r.id === id ? { ...r, ...updates } : r
-      ),
-    }));
+  updateRestaurant: async (id: string, updates: Partial<Restaurant>) => {
+    try {
+      const restaurantRef = ref(database, `restaurants/${id}`);
+      await update(restaurantRef, updates);
+    } catch (error) {
+      set({
+        error: error instanceof Error ? error.message : 'Failed to update restaurant',
+      });
+    }
   },
 
-  deleteRestaurant: (id: string) => {
-    set((state) => ({
-      restaurants: state.restaurants.filter((r) => r.id !== id),
-      filteredRestaurants: state.filteredRestaurants.filter((r) => r.id !== id),
-    }));
+  deleteRestaurant: async (id: string) => {
+    try {
+      const restaurantRef = ref(database, `restaurants/${id}`);
+      await remove(restaurantRef);
+    } catch (error) {
+      set({
+        error: error instanceof Error ? error.message : 'Failed to delete restaurant',
+      });
+    }
   },
 }));
