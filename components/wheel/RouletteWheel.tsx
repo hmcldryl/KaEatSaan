@@ -16,6 +16,7 @@ interface RouletteWheelProps {
   restaurants: Restaurant[];
   onSpinStart?: () => void;
   onSpinEnd?: (restaurant: Restaurant) => void;
+  onCurrentChange?: (restaurant: Restaurant) => void;
   triggerSpin?: boolean;
 }
 
@@ -23,12 +24,28 @@ export default function RouletteWheel({
   restaurants,
   onSpinStart,
   onSpinEnd,
+  onCurrentChange,
   triggerSpin = false,
 }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState<Restaurant | null>(null);
   const [lastTrigger, setLastTrigger] = useState(false);
+
+  // Calculate current restaurant under pointer
+  useEffect(() => {
+    if (restaurants.length === 0) return;
+
+    const normalizedRotation = ((rotation % 360) + 360) % 360;
+    const segmentAngle = 360 / restaurants.length;
+    const adjustedRotation = (normalizedRotation + segmentAngle / 2) % 360;
+    const segmentIndex = Math.floor(adjustedRotation / segmentAngle);
+    const currentRestaurant = restaurants[segmentIndex];
+
+    if (currentRestaurant && onCurrentChange) {
+      onCurrentChange(currentRestaurant);
+    }
+  }, [rotation, restaurants, onCurrentChange]);
 
   const spin = useCallback(() => {
     if (isSpinning || restaurants.length === 0) return;
@@ -99,8 +116,10 @@ export default function RouletteWheel({
     const dy = clickY - centerY;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    // Check if click is within center circle (radius ~50px scaled to container)
-    const centerRadius = 50 * (rect.width / 400); // Scale based on actual size
+    // Check if click is within center circle
+    // Button is 0.85 * wheel radius, and wheel radius is approximately (rect.width/2 - 70)
+    const wheelRadius = (rect.width / 2 - 70);
+    const centerRadius = wheelRadius * 0.85;
 
     if (distance <= centerRadius) {
       spin();
@@ -117,13 +136,14 @@ export default function RouletteWheel({
           justifyContent: 'center',
           minHeight: 300,
           p: 4,
+          textAlign: 'center',
         }}
       >
-        <Typography variant="h6" color="text.secondary" textAlign="center">
-          No restaurants match your filters.
+        <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 1 }}>
+          No restaurants match your filters
         </Typography>
-        <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
-          Try adjusting your filters to see more options.
+        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+          Try adjusting your filters to see more options
         </Typography>
       </Box>
     );
@@ -133,13 +153,14 @@ export default function RouletteWheel({
     <Box
       sx={{
         width: '100%',
-        maxWidth: 400,
+        aspectRatio: '1/1',
         margin: '0 auto',
         cursor: isSpinning ? 'default' : 'pointer',
+        position: 'relative',
       }}
       onClick={handleWheelClick}
     >
-      <WheelCanvas restaurants={restaurants} rotation={rotation} size={400} />
+      <WheelCanvas restaurants={restaurants} rotation={rotation} size={600} />
 
       <WheelResult
         restaurant={result}

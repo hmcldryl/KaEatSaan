@@ -73,6 +73,13 @@ export const useRestaurantStore = create<RestaurantStore>((set, get) => ({
       return budgetMatch && distanceMatch && cuisineMatch && openMatch && newPlaceMatch;
     });
 
+    // Limit to maxRestaurants by randomly selecting
+    if (filtered.length > filters.maxRestaurants) {
+      // Shuffle and take first maxRestaurants
+      const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+      filtered = shuffled.slice(0, filters.maxRestaurants);
+    }
+
     set({ filteredRestaurants: filtered });
   },
 

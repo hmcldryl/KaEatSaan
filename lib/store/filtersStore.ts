@@ -10,6 +10,7 @@ interface FiltersStore extends FilterState {
   toggleCuisine: (cuisine: CuisineType) => void;
   setIncludeClosedRestaurants: (include: boolean) => void;
   setOnlyNewPlaces: (onlyNew: boolean) => void;
+  setMaxRestaurants: (max: number) => void;
   resetFilters: () => void;
   getActiveFiltersCount: () => number;
 }
@@ -20,6 +21,7 @@ const defaultFilters: FilterState = {
   cuisines: [],
   includeClosedRestaurants: false,
   onlyNewPlaces: false,
+  maxRestaurants: 20,
 };
 
 export const useFiltersStore = create<FiltersStore>()(
@@ -52,6 +54,10 @@ export const useFiltersStore = create<FiltersStore>()(
         set({ onlyNewPlaces: onlyNew });
       },
 
+      setMaxRestaurants: (max: number) => {
+        set({ maxRestaurants: max });
+      },
+
       resetFilters: () => {
         set(defaultFilters);
       },
@@ -72,6 +78,9 @@ export const useFiltersStore = create<FiltersStore>()(
         // Boolean filters
         if (state.includeClosedRestaurants) count++;
         if (state.onlyNewPlaces) count++;
+
+        // Max restaurants is active if not default
+        if (state.maxRestaurants !== 20) count++;
 
         return count;
       },
