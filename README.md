@@ -3,7 +3,7 @@
 *Saan tayo kakain? Bahala na si Batman!* No more! Let KaEatSaan decide for you! 
 
 ## About 🤔
-KaEatSaan (from *"Kahit"* + *"Saan"*) is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless "Ikaw bahala" loop! Just tap a button and let destiny (aka our app) choose your next food adventure!
+KaEatSaan (from *"Kahit"* + *"Saan"*) is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless "Ikaw bahala" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!
 
 ## Features 🌟
 - **Random Pick:** One tap lang, may kainan na! Get a random restaurant or karinderia suggestion
@@ -27,26 +27,25 @@ Available soon on:
 - Your tita's secret restaurant recommendations
 
 ## Contributing 🤝
-Want to help make KaEatSaan more awesome? Tara! Check out our contribution guidelines.
+Want to help make KaEatSaan more awesome? Tara! Check out the contribution guidelines.
 
 ## Bug Reports 🐛
-Found a bug? Create an issue! Wag mahiya, we appreciate your help in making the app better!
+Found a bug? Create an issue! Wag mahiya, I appreciate your help in making the app better!
 
 ## License 📄
 MIT License - Feel free to use our code, pero wag naman sobra sobra! 😉
 
-## The Team 👥
-Just a bunch of hungry developers who got tired of the "Ikaw bahala" syndrome.
+## About the Developer 👥
+Just a hungry developer who got tired of the "Ikaw bahala" syndrome.
 
 ## Special Thanks 🙏
-- To all the indecisive food lovers out there
-- Sa mga karinderiang nagpapakain sa amin during development
-- Kay Manong Guard na laging tinuturuan kami ng bagong kainan
+- To all my indecisive food lover tropas out there
+- Sa mga karinderiang kinakainan ko during lunch time at sa mga bike rides
 - Sa lahat ng nag-suggest ng "Kahit saan" - you inspired this app!
 
 ---
-Made with ❤️ and lots of instant noodles in the Philippines 🇵🇭
+Made with ❤️ and lots of chaolong in the Puerto Princesa, Palawan 🇵🇭
 
-*"Pag bumigay ang powers ng KaEatSaan, McDo na lang tayo."* - The Dev Team
+*"Pag bumigay ang powers ng KaEatSaan, edi mag pares na lang tayo."* - Dada
 
 #SaanTayoKakain #KaEatSaanNa #NoMoreIkawBahala
