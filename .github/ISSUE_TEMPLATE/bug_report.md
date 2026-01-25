@@ -1,9 +1,9 @@
 ---
 name: Bug Report
 about: Report a bug to help improve KaEatSaan.
-title: "[BUG] Short and descriptive bug title"
+title: "[BUG] Title"
 labels: bug
-assignees: ""
+assignees: "hmcldryl"
 ---
 
 **Describe the bug**
@@ -23,9 +23,9 @@ A brief description of what you expected to happen.
 **Screenshots / Videos (Optional)**
 If applicable, add screenshots or a short video to help explain your problem.
 
-**Environment (please complete the following information):**
+**Environment:**
 
 - Device: [e.g. iPhone 17, Samsung Galaxy S24, Desktop PC]
 - OS: [e.g. iOS 17, Android 14, Windows 11, macOS Sonoma]
 - Browser: [e.g. Chrome, Firefox, Safari, Brave]
-- App Version: [e.g. 1.0.0 (if applicable)]
+- App Version: [e.g. 1.0.0]
