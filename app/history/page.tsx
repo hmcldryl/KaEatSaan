@@ -1,19 +1,24 @@
 'use client';
 
+import { useState } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CardActionArea from '@mui/material/CardActionArea';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HistoryIcon from '@mui/icons-material/History';
 import { useHistoryStore } from '@/lib/store/historyStore';
+import { Restaurant } from '@/types/restaurant';
+import RestaurantDetailModal from '@/components/restaurant/RestaurantDetailModal';
 
 export default function HistoryPage() {
   const { history, getGroupedHistory, removeEntry, clearHistory } = useHistoryStore();
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
 
   const grouped = getGroupedHistory();
 
@@ -76,56 +81,61 @@ export default function HistoryPage() {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {entries.map((entry) => (
             <Card key={entry.id}>
-              <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <Box sx={{ flex: 1 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                      <Typography variant="caption" color="text.secondary">
-                        {formatTime(entry.timestamp)}
-                      </Typography>
-                      {title === 'Older' && (
+              <CardActionArea onClick={() => setSelectedRestaurant(entry.restaurant)}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <Box sx={{ flex: 1 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                         <Typography variant="caption" color="text.secondary">
-                          • {formatDate(entry.timestamp)}
+                          {formatTime(entry.timestamp)}
                         </Typography>
-                      )}
-                    </Box>
+                        {title === 'Older' && (
+                          <Typography variant="caption" color="text.secondary">
+                            • {formatDate(entry.timestamp)}
+                          </Typography>
+                        )}
+                      </Box>
 
-                    <Typography variant="h6" component="h2" gutterBottom>
-                      {entry.restaurant.name}
-                    </Typography>
+                      <Typography variant="h6" component="h2" gutterBottom>
+                        {entry.restaurant.name}
+                      </Typography>
 
-                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1 }}>
-                      <Chip label={entry.restaurant.cuisine} size="small" color="secondary" />
-                      <Chip
-                        label={getBudgetDisplay(entry.restaurant.budget)}
-                        size="small"
-                        color="primary"
-                        variant="outlined"
-                      />
-                      {entry.restaurant.distance && (
+                      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 1 }}>
+                        <Chip label={entry.restaurant.cuisine} size="small" color="secondary" />
                         <Chip
-                          label={`${entry.restaurant.distance.toFixed(1)} km`}
+                          label={getBudgetDisplay(entry.restaurant.budget)}
                           size="small"
+                          color="primary"
                           variant="outlined"
                         />
-                      )}
+                        {entry.restaurant.distance && (
+                          <Chip
+                            label={`${entry.restaurant.distance.toFixed(1)} km`}
+                            size="small"
+                            variant="outlined"
+                          />
+                        )}
+                      </Box>
+
+                      <Typography variant="body2" color="text.secondary">
+                        📍 {entry.restaurant.location.address}
+                      </Typography>
                     </Box>
 
-                    <Typography variant="body2" color="text.secondary">
-                      📍 {entry.restaurant.location.address}
-                    </Typography>
+                    <IconButton
+                      aria-label="remove from history"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeEntry(entry.id);
+                      }}
+                      size="small"
+                      sx={{ ml: 1 }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
                   </Box>
-
-                  <IconButton
-                    aria-label="remove from history"
-                    onClick={() => removeEntry(entry.id)}
-                    size="small"
-                    sx={{ ml: 1 }}
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </Box>
-              </CardContent>
+                </CardContent>
+              </CardActionArea>
             </Card>
           ))}
         </Box>
@@ -162,6 +172,12 @@ export default function HistoryPage() {
         {renderHistorySection('This Week', grouped.thisWeek)}
         {renderHistorySection('Older', grouped.older)}
       </Box>
+
+      <RestaurantDetailModal
+        restaurant={selectedRestaurant}
+        open={selectedRestaurant !== null}
+        onClose={() => setSelectedRestaurant(null)}
+      />
     </Container>
   );
 }

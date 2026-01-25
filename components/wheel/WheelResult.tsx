@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,8 +12,11 @@ import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Restaurant } from '@/types/restaurant';
 import { useFavoritesStore } from '@/lib/store/favoritesStore';
+import RestaurantDetailModal from '@/components/restaurant/RestaurantDetailModal';
+import StarRating from '@/components/reviews/StarRating';
 
 interface WheelResultProps {
   restaurant: Restaurant | null;
@@ -29,6 +32,7 @@ export default function WheelResult({
   onSpinAgain,
 }: WheelResultProps) {
   const { isFavorite, addFavorite, removeFavorite } = useFavoritesStore();
+  const [detailOpen, setDetailOpen] = useState(false);
 
   if (!restaurant) return null;
 
@@ -119,10 +123,19 @@ export default function WheelResult({
             {restaurant.distance && (
               <Chip label={`${restaurant.distance.toFixed(1)} km`} variant="outlined" sx={{ borderWidth: 2, fontWeight: 600 }} />
             )}
-            {restaurant.rating && (
-              <Chip label={`⭐ ${restaurant.rating}`} variant="outlined" sx={{ borderWidth: 2, fontWeight: 600 }} />
-            )}
           </Box>
+
+          {(restaurant.averageRating || 0) > 0 && (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <StarRating
+                value={restaurant.averageRating || 0}
+                readonly
+                size="medium"
+                showValue
+                count={restaurant.reviewCount}
+              />
+            </Box>
+          )}
 
           {restaurant.description && (
             <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', lineHeight: 1.7 }}>
@@ -150,7 +163,16 @@ export default function WheelResult({
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: 'center', pb: 3, px: 3, gap: 2 }}>
+      <DialogActions sx={{ justifyContent: 'center', pb: 3, px: 3, gap: 2, flexWrap: 'wrap' }}>
+        <Button
+          onClick={() => setDetailOpen(true)}
+          variant="text"
+          size="large"
+          startIcon={<InfoOutlinedIcon />}
+          sx={{ color: 'text.secondary' }}
+        >
+          View Details
+        </Button>
         <Button
           onClick={onSpinAgain}
           variant="outlined"
@@ -168,6 +190,12 @@ export default function WheelResult({
           Let's Go!
         </Button>
       </DialogActions>
+
+      <RestaurantDetailModal
+        restaurant={restaurant}
+        open={detailOpen}
+        onClose={() => setDetailOpen(false)}
+      />
     </Dialog>
   );
 }
