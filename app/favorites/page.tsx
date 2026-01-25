@@ -15,7 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useFavoritesStore } from "@/lib/store/favoritesStore";
 import { useFoodOutletStore } from "@/lib/store/foodOutletStore";
 import { FoodOutlet } from "@/types/foodOutlet";
-import RestaurantDetailModal from "@/components/food_outlet/FoodOutletDetailModal";
+import FoodOutletDetailModal from "@/components/food_outlet/FoodOutletDetailModal";
 import StarRating from "@/components/reviews/StarRating";
 
 export default function FavoritesPage() {
@@ -212,8 +212,8 @@ export default function FavoritesPage() {
         </Box>
       </Box>
 
-      <RestaurantDetailModal
-        restaurant={selectedOutlet}
+      <FoodOutletDetailModal
+        outlet={selectedOutlet}
         open={selectedOutlet !== null}
         onClose={() => setSelectedOutlet(null)}
       />
