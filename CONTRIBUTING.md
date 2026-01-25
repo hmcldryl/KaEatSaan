@@ -1,111 +1,24 @@
 # Contributing to KaEatSaan
 
-Salamat for considering contributing to KaEatSaan! Your help in making this app better is greatly appreciated.
+First off, thanks for being interested in helping out! I'm not super strict about the whole process, so don't worry about it too much. The main goal is to have fun and make this app better.
 
-## Quick Guide
+## The Super Simple Workflow
+I try to follow a basic Git workflow, but I won't get mad if you don't follow it to the letter.
 
-1. Check Issues tab for existing bugs/features
-2. Fork the repo
-3. Create your feature branch (`git checkout -b feature/malupet-na-feature`)
-4. Commit your changes (`git commit -m 'feat: add some malupet na feature'`)
-5. Push to your branch (`git push origin feature/malupet-na-feature`)
-6. Open a Pull Request
+1.  **Branching:** Create a new branch for your feature or fix. I like to name them like this:
+    - `features/sample-feature`
+    - `fixes/bug-fix-name`
 
-## Development Setup
+2.  **Commits:** I try to stick to [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/). It helps keep the history clean. A simple `feat: add new button` or `fix: correct a typo` is perfect.
 
-### Install required tools
+3.  **Pull Requests (PRs):** When you're ready, open a Pull Request from your branch to the `develop` branch.
 
-- Flutter SDK (latest stable version)
-- Dart SDK
-- Android Studio / VS Code
-- iOS development tools (for Mac users)
+## PRs, Templates, and Labels
+Honestly, I'm too lazy to enforce strict templates and a bunch of labels. Just give your PR a clear title and a brief description of what you changed. That's good enough for me.
 
-### Clone your fork
-    git clone https://github.com/hmcldryl/KaEatSaan.git
-### Navigate to project
-    cd KaEatSaan
-### Install dependencies
-    flutter pub get
-    
-### Run the app
-    flutter run
+## Getting Help
+If you have any questions, want to discuss ideas, or just need help with something, feel free to hit me up on our Discord server.
 
-## Development Process
+- **Discord:** [https://discord.gg/WqspEkDK](https://discord.gg/WqspEkDK)
 
-- We use `main` branch for production releases
-- `develop` branch for development
-- Create feature branches from `develop`
-- Submit PRs back to `develop`
-
-## Branch Naming
-
--  `feature/*` - New features
--  `bugfix/*` - Bug fixes
--  `hotfix/*` - Critical production fixes
--  `release/*` - Release preparation
--  `docs/*` - Documentation updates
-
-## Commit Messages
-
-Follow the [Conventional Commits](https://www.conventionalcommits.org/) spec:
-
-    <type>: <description>
-    [optional body]
-    [optional footer]
-
-## Types:
-
--  `feat`: New feature
--  `fix`: Bug fix
--  `docs`: Documentation
--  `style`: Formatting
--  `refactor`: Code restructuring
--  `test`: Tests
--  `chore`: Maintenance
-
-Example:
-
-    feat: add restaurant price filter
-    - Add price range component
-    - Implement filter logic
-    - Update tests
-
-## Pull Request Process
-
-1. Follow the PR template
-2. Reference any relevant issues
-3. Add appropriate labels
-4. Update documentation
-5. Add/update tests
-6. Get approval from maintainers
-
-## Code Style
-
-- Use Dart
-- Run tests before committing
-- Write clear comments
-- Keep functions small and focused
-
-## Testing
-
-- Write unit tests for new features
-- Maintain test coverage
-- Run `flutter test <your-unit-test>` locally
-- Fix any failing tests
-
-## Documentation
-
-Update these when making changes:
-- README.md
-- Code comments
-
-## Need Help?
-
-- Check our [documentation](#)
-- Ask in GitHub Discussions
-- Join our [Discord](#) server
-- Email: daryl.homecillo@gmail.com
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
+That's pretty much it. Let's build something cool together!
