@@ -1,3 +1,10 @@
+# [1.1.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2026-01-25)
+
+
+### Features
+
+* add discord webhook notifications for deployments ([fc08383](https://github.com/hmcldryl/KaEatSaan/commit/fc08383dc3d06a5cb1b7de2119bd4e3d9d6f2470))
+
 # [1.1.0-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.0.0...v1.1.0-beta.1) (2026-01-25)
 
 
