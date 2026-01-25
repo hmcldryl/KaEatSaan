@@ -102,7 +102,8 @@ export default function ReviewForm({ onSubmit, onCancel }: ReviewFormProps) {
           onClick={handleSubmit}
           disabled={isSubmitting || rating === 0 || !summary.trim()}
           sx={{
-            background: 'linear-gradient(135deg, #980404 0%, #c41e1e 100%)',
+            backgroundColor: '#FF6B35',
+            '&:hover': { backgroundColor: '#E55A2B' },
           }}
         >
           {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Submit Review'}

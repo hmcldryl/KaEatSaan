@@ -1,14 +1,20 @@
-'use client';
+"use client";
 
-import { MapContainer as LeafletMapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
-import { LatLngExpression, Icon, LeafletMouseEvent } from 'leaflet';
-import { useEffect, useState } from 'react';
+import {
+  MapContainer as LeafletMapContainer,
+  TileLayer,
+  Marker,
+  useMapEvents,
+} from "react-leaflet";
+import { LatLngExpression, Icon, LeafletMouseEvent } from "leaflet";
+import { useEffect, useState } from "react";
 
 // Fix for default marker icon in Leaflet with webpack/Next.js
 const defaultIcon = new Icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -23,7 +29,11 @@ interface MapInnerProps {
   height?: string | number;
 }
 
-function MapClickHandler({ onClick }: { onClick?: (lat: number, lng: number) => void }) {
+function MapClickHandler({
+  onClick,
+}: {
+  onClick?: (lat: number, lng: number) => void;
+}) {
   useMapEvents({
     click: (e: LeafletMouseEvent) => {
       if (onClick) {
@@ -51,12 +61,12 @@ export default function MapInner({
     return (
       <div
         style={{
-          height: typeof height === 'number' ? `${height}px` : height,
-          backgroundColor: '#f0f0f0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: '8px',
+          height: typeof height === "number" ? `${height}px` : height,
+          backgroundColor: "#f0f0f0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "8px",
         }}
       >
         Loading map...
@@ -69,9 +79,9 @@ export default function MapInner({
       center={center}
       zoom={zoom}
       style={{
-        height: typeof height === 'number' ? `${height}px` : height,
-        width: '100%',
-        borderRadius: '8px',
+        height: typeof height === "number" ? `${height}px` : height,
+        width: "100%",
+        borderRadius: "8px",
       }}
     >
       <TileLayer
@@ -79,7 +89,9 @@ export default function MapInner({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <MapClickHandler onClick={onMapClick} />
-      {markerPosition && <Marker position={markerPosition} icon={defaultIcon} />}
+      {markerPosition && (
+        <Marker position={markerPosition} icon={defaultIcon} />
+      )}
     </LeafletMapContainer>
   );
 }

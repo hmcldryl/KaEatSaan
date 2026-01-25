@@ -10,27 +10,27 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import { useFiltersStore } from '@/lib/store/filtersStore';
-import { useRestaurantStore } from '@/lib/store/restaurantStore';
-import { CUISINES } from '@/lib/constants/cuisines';
-import { BudgetLevel } from '@/types/restaurant';
+import { useFoodOutletStore } from '@/lib/store/foodOutletStore';
+import { CUISINES } from '@/lib/constants/foodOutlets';
+import { BudgetLevel } from '@/types/foodOutlet';
 
 export default function FiltersPage() {
   const {
     budget,
     distance,
     cuisines,
-    includeClosedRestaurants,
+    includeClosedOutlets,
     onlyNewPlaces,
     setBudget,
     setDistance,
     toggleCuisine,
-    setIncludeClosedRestaurants,
+    setIncludeClosedOutlets,
     setOnlyNewPlaces,
     resetFilters,
     getActiveFiltersCount,
   } = useFiltersStore();
 
-  const filteredRestaurants = useRestaurantStore((state) => state.filteredRestaurants);
+  const filteredOutlets = useFoodOutletStore((state) => state.filteredOutlets);
 
   const budgetMarks = [
     { value: 1, label: '₱' },
@@ -69,7 +69,7 @@ export default function FiltersPage() {
               Filters & Settings
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {filteredRestaurants.length} restaurant{filteredRestaurants.length !== 1 ? 's' : ''} match
+              {filteredOutlets.length} outlet{filteredOutlets.length !== 1 ? 's' : ''} match
               {activeFiltersCount > 0 && ` (${activeFiltersCount} filter${activeFiltersCount !== 1 ? 's' : ''} active)`}
             </Typography>
           </div>
@@ -109,7 +109,7 @@ export default function FiltersPage() {
               Distance
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Show restaurants within {distance} km
+              Show places within {distance} km
             </Typography>
             <Box sx={{ px: 2, pt: 2 }}>
               <Slider
@@ -162,11 +162,11 @@ export default function FiltersPage() {
               <FormControlLabel
                 control={
                   <Switch
-                    checked={includeClosedRestaurants}
-                    onChange={(e) => setIncludeClosedRestaurants(e.target.checked)}
+                    checked={includeClosedOutlets}
+                    onChange={(e) => setIncludeClosedOutlets(e.target.checked)}
                   />
                 }
-                label="Include closed restaurants"
+                label="Include closed places"
               />
               <FormControlLabel
                 control={

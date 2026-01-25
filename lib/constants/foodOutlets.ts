@@ -1,0 +1,41 @@
+import { ClassificationType, CuisineType } from '@/types/foodOutlet';
+
+export const CLASSIFICATIONS: ClassificationType[] = [
+  'Restaurant',
+  'Fast Food',
+  'Cafe',
+  'Coffee Shop',
+  'Bakery',
+  'Pizza Parlor',
+  'Noodle House',
+  'Ramen Shop',
+  'Gelato Bar',
+  'Ice Cream Shop',
+  'Donut Shop',
+  'Food Stall',
+  'Food Truck',
+  'Bar & Grill',
+  'Buffet',
+  'Diner',
+  'Other',
+];
+
+export const CUISINES: CuisineType[] = [
+  'Filipino',
+  'Japanese',
+  'Korean',
+  'Italian',
+  'Chinese',
+  'American',
+  'Thai',
+  'Vietnamese',
+  'Mexican',
+  'Indian',
+  'Spanish',
+  'French',
+  'Mediterranean',
+  'Middle Eastern',
+  'Fusion',
+  'International',
+  'Other',
+];

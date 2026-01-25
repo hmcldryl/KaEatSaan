@@ -97,8 +97,8 @@ export function drawPointer(
   ctx.lineTo(pointerSize, pointerPosition); // Right
   ctx.closePath();
 
-  // Fill with lighter coral color
-  ctx.fillStyle = '#FF9B9B';
+  // Fill with orange color
+  ctx.fillStyle = '#FF6B35';
   ctx.fill();
 
   // Reset shadow
@@ -122,18 +122,18 @@ export function drawCenterCircle(
   const buttonRadius = radius * 0.85; // Smaller button
 
   // Add shadow/glow effect
-  ctx.shadowColor = 'rgba(255, 155, 155, 0.4)';
+  ctx.shadowColor = 'rgba(255, 107, 53, 0.4)';
   ctx.shadowBlur = 20;
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 5;
 
-  // Draw outer circle with gradient (lighter coral/pink)
+  // Draw outer circle with gradient (orange theme)
   ctx.beginPath();
   ctx.arc(centerX, centerY, buttonRadius, 0, Math.PI * 2);
   const gradient = ctx.createRadialGradient(centerX, centerY - 15, 0, centerX, centerY, buttonRadius);
-  gradient.addColorStop(0, '#FFB8B8');
-  gradient.addColorStop(0.5, '#FF9B9B');
-  gradient.addColorStop(1, '#FF8080');
+  gradient.addColorStop(0, '#FF8A5B');
+  gradient.addColorStop(0.5, '#FF6B35');
+  gradient.addColorStop(1, '#E55A2B');
   ctx.fillStyle = gradient;
   ctx.fill();
 
@@ -164,15 +164,15 @@ export function drawCenterCircle(
   ctx.fillStyle = highlightGradient;
   ctx.fill();
 
-  // Draw "Saan?" text with dark color for lighter button
-  ctx.fillStyle = '#1F2937';
+  // Draw "Saan?" text with white color for orange button
+  ctx.fillStyle = '#FFFFFF';
   ctx.font = 'bold 18px Montserrat, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.letterSpacing = '0.5px';
 
   // Add subtle text shadow for better visibility
-  ctx.shadowColor = 'rgba(255, 255, 255, 0.5)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
   ctx.shadowBlur = 2;
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 1;
@@ -256,10 +256,10 @@ export function drawOuterRing(
 }
 
 export function getSegmentColors(count: number): string[] {
-  // Light coral/salmon and white stripes
+  // Light orange and white stripes
   const colors: string[] = [];
   for (let i = 0; i < count; i++) {
-    colors.push(i % 2 === 0 ? '#FF9B9B' : '#FFFFFF');
+    colors.push(i % 2 === 0 ? '#FFCBB8' : '#FFFFFF');
   }
   return colors;
 }

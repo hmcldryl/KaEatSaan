@@ -1,9 +1,9 @@
-import { Restaurant } from './restaurant';
+import { FoodOutlet } from './foodOutlet';
 import { FilterState } from './filter';
 
 export interface HistoryEntry {
   id: string;
-  restaurant: Restaurant;
+  outlet: FoodOutlet;
   timestamp: string;  // ISO date string
   filters: FilterState;
 }
