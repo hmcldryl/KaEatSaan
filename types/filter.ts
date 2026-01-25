@@ -1,16 +1,17 @@
-import { CuisineType, BudgetLevel } from './restaurant';
+import { CuisineType, ClassificationType, BudgetLevel } from './foodOutlet';
 
 export interface FilterState {
   budget: [BudgetLevel, BudgetLevel];  // Min, max
   distance: number;  // kilometers
+  classifications: ClassificationType[];
   cuisines: CuisineType[];
-  includeClosedRestaurants: boolean;
+  includeClosedOutlets: boolean;
   onlyNewPlaces: boolean;
-  maxRestaurants: number;  // Max restaurants to show in wheel (5-20)
+  maxOutlets: number;  // Max food outlets to show in wheel (5-20)
 }
 
 export interface ActiveFilter {
-  type: 'budget' | 'distance' | 'cuisine';
+  type: 'budget' | 'distance' | 'classification' | 'cuisine';
   label: string;
   value: string;
 }

@@ -1,13 +1,10 @@
 import { create } from 'zustand';
 import {
   User,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
-  updateProfile,
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
@@ -19,8 +16,6 @@ interface AuthStore {
 
   // Actions
   initialize: () => () => void;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, displayName: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
   clearError: () => void;
@@ -37,35 +32,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
       set({ user, isLoading: false, initialized: true });
     });
     return unsubscribe;
-  },
-
-  signIn: async (email: string, password: string) => {
-    set({ isLoading: true, error: null });
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      set({ isLoading: false });
-    } catch (error) {
-      set({
-        error: error instanceof Error ? error.message : 'Failed to sign in',
-        isLoading: false,
-      });
-      throw error;
-    }
-  },
-
-  signUp: async (email: string, password: string, displayName: string) => {
-    set({ isLoading: true, error: null });
-    try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
-      await updateProfile(user, { displayName });
-      set({ isLoading: false });
-    } catch (error) {
-      set({
-        error: error instanceof Error ? error.message : 'Failed to sign up',
-        isLoading: false,
-      });
-      throw error;
-    }
   },
 
   signInWithGoogle: async () => {

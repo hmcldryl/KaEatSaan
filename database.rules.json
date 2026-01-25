@@ -1,12 +1,15 @@
 {
   "rules": {
-    "restaurants": {
+    "food_outlets": {
       ".read": true,
       ".write": "auth != null",
-      "$restaurantId": {
-        ".validate": "newData.hasChildren(['name', 'cuisine', 'budget', 'location', 'createdAt'])",
+      "$outletId": {
+        ".validate": "newData.hasChildren(['name', 'classification', 'cuisine', 'budget', 'location', 'createdAt'])",
         "name": {
           ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+        },
+        "classification": {
+          ".validate": "newData.isString()"
         },
         "cuisine": {
           ".validate": "newData.isString()"
@@ -14,14 +17,38 @@
         "budget": {
           ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 4"
         },
+        "location": {
+          ".validate": "newData.hasChildren(['latitude', 'longitude', 'address'])"
+        },
+        "description": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "tags": {
+          ".validate": "!newData.exists() || newData.hasChildren()"
+        },
+        "imageUrl": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "isOpen": {
+          ".validate": "!newData.exists() || newData.isBoolean()"
+        },
         "rating": {
-          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5"
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0 && newData.val() <= 5)"
         },
         "averageRating": {
-          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5"
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0 && newData.val() <= 5)"
         },
         "reviewCount": {
-          ".validate": "newData.isNumber() && newData.val() >= 0"
+          ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0)"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdBy": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "updatedAt": {
+          ".validate": "!newData.exists() || newData.isString()"
         }
       }
     },
@@ -29,8 +56,8 @@
       ".read": true,
       ".write": "auth != null",
       "$reviewId": {
-        ".validate": "newData.hasChildren(['restaurantId', 'userId', 'userName', 'rating', 'summary', 'createdAt'])",
-        "restaurantId": {
+        ".validate": "newData.hasChildren(['outletId', 'userId', 'userName', 'rating', 'summary', 'createdAt'])",
+        "outletId": {
           ".validate": "newData.isString()"
         },
         "userId": {
@@ -40,7 +67,7 @@
           ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
         },
         "userPhotoUrl": {
-          ".validate": "newData.isString() || newData.val() == null"
+          ".validate": "!newData.exists() || newData.isString() || newData.val() == null"
         },
         "rating": {
           ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 5"

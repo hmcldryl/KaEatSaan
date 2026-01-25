@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,68 +11,68 @@ import {
   Divider,
   Button,
   Collapse,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import RateReviewIcon from '@mui/icons-material/RateReview';
-import DirectionsIcon from '@mui/icons-material/Directions';
-import { Restaurant, BudgetLevel } from '@/types/restaurant';
-import { useReviews } from '@/hooks/useReviews';
-import { useAuthStore } from '@/lib/store/authStore';
-import { formatDistance } from '@/lib/utils/distance';
-import StarRating from '@/components/reviews/StarRating';
-import ReviewList from '@/components/reviews/ReviewList';
-import ReviewForm from '@/components/reviews/ReviewForm';
-import MapContainer from '@/components/map/MapContainer';
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import { FoodOutlet, BudgetLevel } from "@/types/foodOutlet";
+import { useReviews } from "@/hooks/useReviews";
+import { useAuthStore } from "@/lib/store/authStore";
+import { formatDistance } from "@/lib/utils/distance";
+import StarRating from "@/components/reviews/StarRating";
+import ReviewList from "@/components/reviews/ReviewList";
+import ReviewForm from "@/components/reviews/ReviewForm";
+import MapContainer from "@/components/map/MapContainer";
 
-interface RestaurantDetailModalProps {
-  restaurant: Restaurant | null;
+interface FoodOutletDetailModalProps {
+  outlet: FoodOutlet | null;
   open: boolean;
   onClose: () => void;
 }
 
 const BUDGET_SYMBOLS: Record<BudgetLevel, string> = {
-  1: '₱',
-  2: '₱₱',
-  3: '₱₱₱',
-  4: '₱₱₱₱',
+  1: "₱",
+  2: "₱₱",
+  3: "₱₱₱",
+  4: "₱₱₱₱",
 };
 
-export default function RestaurantDetailModal({
-  restaurant,
+export default function FoodOutletDetailModal({
+  outlet,
   open,
   onClose,
-}: RestaurantDetailModalProps) {
+}: FoodOutletDetailModalProps) {
   const { user } = useAuthStore();
   const { reviews, isLoading, addReview, deleteReview } = useReviews(
-    open && restaurant ? restaurant.id : null
+    open && outlet ? outlet.id : null,
   );
   const [showReviewForm, setShowReviewForm] = useState(false);
 
-  if (!restaurant) return null;
+  if (!outlet) return null;
 
   const handleAddReview = async (rating: number, summary: string) => {
     if (!user) return;
 
     await addReview(
-      restaurant.id,
+      outlet.id,
       user.uid,
-      user.displayName || 'Anonymous',
+      user.displayName || "Anonymous",
       user.photoURL || undefined,
-      { rating, summary }
+      { rating, summary },
     );
     setShowReviewForm(false);
   };
 
   const handleDeleteReview = async (reviewId: string) => {
-    await deleteReview(reviewId, restaurant.id);
+    await deleteReview(reviewId, outlet.id);
   };
 
   const handleGetDirections = () => {
-    const { latitude, longitude } = restaurant.location;
+    const { latitude, longitude } = outlet.location;
     const url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
   const userHasReviewed = reviews.some((r) => r.userId === user?.uid);
@@ -86,15 +86,15 @@ export default function RestaurantDetailModal({
       PaperProps={{
         sx: {
           borderRadius: 3,
-          maxHeight: '90vh',
+          maxHeight: "90vh",
         },
       }}
     >
       <Box
         sx={{
-          position: 'relative',
-          background: 'linear-gradient(135deg, #980404 0%, #c41e1e 100%)',
-          color: 'white',
+          position: "relative",
+          background: "linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%)",
+          color: "white",
           p: 3,
           pb: 2,
         }}
@@ -102,60 +102,68 @@ export default function RestaurantDetailModal({
         <IconButton
           onClick={onClose}
           sx={{
-            position: 'absolute',
+            position: "absolute",
             top: 8,
             right: 8,
-            color: 'white',
+            color: "white",
           }}
         >
           <CloseIcon />
         </IconButton>
 
         <Typography variant="h5" fontWeight={700} sx={{ pr: 4 }}>
-          {restaurant.name}
+          {outlet.name}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
           <Chip
-            label={restaurant.cuisine}
+            label={outlet.cuisine}
             size="small"
             sx={{
-              bgcolor: 'rgba(255,255,255,0.2)',
-              color: 'white',
+              bgcolor: "rgba(255,255,255,0.2)",
+              color: "white",
               fontWeight: 600,
             }}
           />
           <Chip
-            icon={<AttachMoneyIcon sx={{ color: 'white !important', fontSize: 16 }} />}
-            label={BUDGET_SYMBOLS[restaurant.budget]}
+            icon={
+              <AttachMoneyIcon
+                sx={{ color: "white !important", fontSize: 16 }}
+              />
+            }
+            label={BUDGET_SYMBOLS[outlet.budget]}
             size="small"
             sx={{
-              bgcolor: 'rgba(255,255,255,0.2)',
-              color: 'white',
+              bgcolor: "rgba(255,255,255,0.2)",
+              color: "white",
               fontWeight: 600,
             }}
           />
-          {restaurant.distance !== undefined && (
+          {outlet.distance !== undefined && (
             <Chip
-              icon={<LocationOnIcon sx={{ color: 'white !important', fontSize: 16 }} />}
-              label={formatDistance(restaurant.distance)}
+              icon={
+                <LocationOnIcon
+                  sx={{ color: "white !important", fontSize: 16 }}
+                />
+              }
+              label={formatDistance(outlet.distance)}
               size="small"
               sx={{
-                bgcolor: 'rgba(255,255,255,0.2)',
-                color: 'white',
+                bgcolor: "rgba(255,255,255,0.2)",
+                color: "white",
                 fontWeight: 600,
               }}
             />
           )}
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1.5 }}>
           <StarRating
-            value={restaurant.averageRating || 0}
+            value={outlet.averageRating || 0}
             readonly
             size="small"
             showValue
-            count={restaurant.reviewCount}
+            count={outlet.reviewCount}
           />
         </Box>
       </Box>
@@ -164,19 +172,24 @@ export default function RestaurantDetailModal({
         {/* Map */}
         <Box sx={{ height: 200 }}>
           <MapContainer
-            center={[restaurant.location.latitude, restaurant.location.longitude]}
+            center={[outlet.location.latitude, outlet.location.longitude]}
             zoom={16}
-            markerPosition={[restaurant.location.latitude, restaurant.location.longitude]}
+            markerPosition={[
+              outlet.location.latitude,
+              outlet.location.longitude,
+            ]}
             height={200}
           />
         </Box>
 
         <Box sx={{ p: 3 }}>
           {/* Address & Directions */}
-          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 2 }}>
+          <Box
+            sx={{ display: "flex", alignItems: "flex-start", gap: 1, mb: 2 }}
+          >
             <LocationOnIcon color="action" sx={{ mt: 0.25 }} />
             <Box sx={{ flex: 1 }}>
-              <Typography variant="body2">{restaurant.location.address}</Typography>
+              <Typography variant="body2">{outlet.location.address}</Typography>
             </Box>
             <Button
               size="small"
@@ -189,18 +202,18 @@ export default function RestaurantDetailModal({
           </Box>
 
           {/* Description */}
-          {restaurant.description && (
+          {outlet.description && (
             <Box sx={{ mb: 2 }}>
               <Typography variant="body2" color="text.secondary">
-                {restaurant.description}
+                {outlet.description}
               </Typography>
             </Box>
           )}
 
           {/* Tags */}
-          {restaurant.tags && restaurant.tags.length > 0 && (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2 }}>
-              {restaurant.tags.map((tag) => (
+          {outlet.tags && outlet.tags.length > 0 && (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 2 }}>
+              {outlet.tags.map((tag) => (
                 <Chip key={tag} label={tag} size="small" variant="outlined" />
               ))}
             </Box>
@@ -209,16 +222,23 @@ export default function RestaurantDetailModal({
           <Divider sx={{ my: 2 }} />
 
           {/* Reviews Section */}
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              mb: 2,
+            }}
+          >
             <Typography variant="h6" fontWeight={600}>
-              Reviews ({restaurant.reviewCount || 0})
+              Reviews ({outlet.reviewCount || 0})
             </Typography>
             {user && !userHasReviewed && !showReviewForm && (
               <Button
                 size="small"
                 startIcon={<RateReviewIcon />}
                 onClick={() => setShowReviewForm(true)}
-                sx={{ color: 'primary.main' }}
+                sx={{ color: "primary.main" }}
               >
                 Write Review
               </Button>
@@ -226,7 +246,7 @@ export default function RestaurantDetailModal({
           </Box>
 
           <Collapse in={showReviewForm}>
-            <Box sx={{ mb: 2, p: 2, bgcolor: 'grey.50', borderRadius: 2 }}>
+            <Box sx={{ mb: 2, p: 2, bgcolor: "grey.50", borderRadius: 2 }}>
               <ReviewForm
                 onSubmit={handleAddReview}
                 onCancel={() => setShowReviewForm(false)}

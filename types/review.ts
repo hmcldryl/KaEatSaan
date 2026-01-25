@@ -1,6 +1,6 @@
 export interface Review {
   id: string;
-  restaurantId: string;
+  outletId: string;
   userId: string;
   userName: string;
   userPhotoUrl?: string;

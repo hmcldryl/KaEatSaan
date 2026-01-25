@@ -1,184 +1,208 @@
 "use client";
 
 import { useState } from "react";
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import AddIcon from "@mui/icons-material/Add";
 import RouletteWheel from "@/components/wheel/RouletteWheel";
-import { useRestaurants } from "@/hooks/useRestaurants";
+import { useFoodOutlets } from "@/hooks/useFoodOutlets";
 import { useUIStore } from "@/lib/store/uiStore";
 import { useHistoryStore } from "@/lib/store/historyStore";
 import { useFiltersStore } from "@/lib/store/filtersStore";
-import { Restaurant } from "@/types/restaurant";
+import { useAuthStore } from "@/lib/store/authStore";
+import { FoodOutlet } from "@/types/foodOutlet";
+import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
 
 export default function Home() {
-  const { restaurants, isLoading, error } = useRestaurants();
+  const { restaurants, isLoading } = useFoodOutlets();
   const { spinTrigger, setIsSpinning } = useUIStore();
   const addHistoryEntry = useHistoryStore((state) => state.addEntry);
   const filters = useFiltersStore();
-  const [currentRestaurant, setCurrentRestaurant] = useState<Restaurant | null>(null);
+  const { user } = useAuthStore();
+  const [currentOutlet, setCurrentOutlet] = useState<FoodOutlet | null>(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
 
   const handleSpinStart = () => {
     setIsSpinning(true);
   };
 
-  const handleSpinEnd = (restaurant: Restaurant) => {
+  const handleSpinEnd = (outlet: FoodOutlet) => {
     setIsSpinning(false);
-    addHistoryEntry(restaurant, {
+    addHistoryEntry(outlet, {
       budget: filters.budget,
       distance: filters.distance,
+      classifications: filters.classifications,
       cuisines: filters.cuisines,
-      includeClosedRestaurants: filters.includeClosedRestaurants,
+      includeClosedOutlets: filters.includeClosedOutlets,
       onlyNewPlaces: filters.onlyNewPlaces,
-      maxRestaurants: filters.maxRestaurants,
+      maxOutlets: filters.maxOutlets,
     });
   };
 
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          minHeight: "calc(100vh - 144px)",
-          background:
-            "linear-gradient(135deg, rgba(152, 4, 4, 0.03) 0%, rgba(147, 189, 87, 0.03) 50%, rgba(251, 229, 128, 0.03) 100%)",
-        }}
-      >
-        <Container maxWidth="md">
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "60vh",
-              gap: 3,
-            }}
-          >
-            <CircularProgress size={60} sx={{ color: "#980404" }} />
-            <Typography
-              variant="h6"
-              color="text.secondary"
-              sx={{ fontWeight: 600 }}
-            >
-              Loading restaurants...
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box
-        sx={{
-          minHeight: "calc(100vh - 144px)",
-          background:
-            "linear-gradient(135deg, rgba(152, 4, 4, 0.03) 0%, rgba(147, 189, 87, 0.03) 50%, rgba(251, 229, 128, 0.03) 100%)",
-        }}
-      >
-        <Container maxWidth="md">
-          <Card
-            sx={{
-              mt: 4,
-              p: 4,
-              textAlign: "center",
-              backgroundColor: "#FFFFFF",
-            }}
-          >
-            <Typography
-              variant="h5"
-              sx={{ color: "#980404", fontWeight: 700, mb: 2 }}
-            >
-              Error loading restaurants
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              {error}
-            </Typography>
-          </Card>
-        </Container>
-      </Box>
-    );
-  }
+  const hasFoodOutlets = restaurants.length > 0;
 
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 64px)", // Account for top bar only
-        background:
-          "linear-gradient(135deg, rgba(152, 4, 4, 0.03) 0%, rgba(147, 189, 87, 0.03) 50%, rgba(251, 229, 128, 0.03) 100%)",
-        position: 'relative',
+        minHeight: "calc(100vh - 64px)",
+        backgroundColor: "#FAF9F7",
+        position: "relative",
       }}
     >
-      {/* Text showing current restaurant - positioned above wheel */}
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: 'calc(80px + 350px + 16px)', // Above wheel (80px nav + 350px wheel height + 16px gap)
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '90%',
-          maxWidth: '600px',
-          textAlign: 'center',
-          zIndex: 901,
-          px: 2,
-        }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 700,
-            color: '#980404',
-            textShadow: '0 2px 8px rgba(255, 255, 255, 0.8)',
-            fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2rem' },
-            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            padding: { xs: '8px 16px', sm: '12px 24px' },
-            borderRadius: '16px',
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {currentRestaurant?.name || 'Tap to Spin!'}
-        </Typography>
-      </Box>
-
-      {/* Wheel anchored at bottom */}
-      <Box
-        sx={{
-          position: 'fixed',
-          bottom: '80px', // Above bottom navigation
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '100vw',
-          height: '350px', // Show only top portion
-          zIndex: 900,
-          overflow: 'hidden',
-        }}
-      >
-        {/* Wheel container - 133.33% width to show 75% */}
+      {/* Loading overlay */}
+      {isLoading && (
         <Box
           sx={{
-            width: '133.33%',
-            maxWidth: '800px',
-            margin: '0 auto',
-            position: 'relative',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            position: "fixed",
+            top: 64,
+            left: 0,
+            right: 0,
+            bottom: 80,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(250, 249, 247, 0.9)",
+            zIndex: 1100,
+            gap: 2,
+          }}
+        >
+          <CircularProgress size={48} sx={{ color: "#FF6B35" }} />
+          <Typography variant="body1" color="text.secondary">
+            Loading...
+          </Typography>
+        </Box>
+      )}
+
+      {/* Empty state message - shown above wheel when no kainan */}
+      {!isLoading && !hasFoodOutlets && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 64,
+            left: 0,
+            right: 0,
+            bottom: "calc(80px + 350px)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            px: 3,
+            textAlign: "center",
+            zIndex: 901,
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 700,
+              color: "#1F2937",
+              mb: 1,
+            }}
+          >
+            No Kainan Yet
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            sx={{ mb: 3, maxWidth: 280 }}
+          >
+            Add your favorite food places to start spinning!
+          </Typography>
+          {user ? (
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={() => setAddModalOpen(true)}
+              sx={{
+                backgroundColor: "#FF6B35",
+                "&:hover": { backgroundColor: "#E55A2B" },
+              }}
+            >
+              Add Kainan
+            </Button>
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              Sign in to add food places
+            </Typography>
+          )}
+        </Box>
+      )}
+
+      {/* Text showing current kainan - positioned above wheel */}
+      {hasFoodOutlets && (
+        <Box
+          sx={{
+            position: "fixed",
+            bottom: "calc(80px + 350px + 16px)",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "90%",
+            maxWidth: "600px",
+            textAlign: "center",
+            zIndex: 901,
+            px: 2,
+          }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 700,
+              color: "#FF6B35",
+              fontSize: { xs: "1.25rem", sm: "1.75rem", md: "2rem" },
+              backgroundColor: "rgba(255, 255, 255, 0.95)",
+              padding: { xs: "8px 16px", sm: "12px 24px" },
+              borderRadius: "20px",
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {currentOutlet?.name || "Tap to Spin!"}
+          </Typography>
+        </Box>
+      )}
+
+      {/* Wheel - always visible */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: "80px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "100vw",
+          height: "350px",
+          zIndex: 900,
+          overflow: "hidden",
+        }}
+      >
+        <Box
+          sx={{
+            width: "133.33%",
+            maxWidth: "800px",
+            margin: "0 auto",
+            position: "relative",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
           <RouletteWheel
             restaurants={restaurants}
             onSpinStart={handleSpinStart}
             onSpinEnd={handleSpinEnd}
-            onCurrentChange={setCurrentRestaurant}
+            onCurrentChange={setCurrentOutlet}
             triggerSpin={spinTrigger > 0}
           />
         </Box>
       </Box>
+
+      <AddFoodOutletModal
+        open={addModalOpen}
+        onClose={() => setAddModalOpen(false)}
+      />
     </Box>
   );
 }

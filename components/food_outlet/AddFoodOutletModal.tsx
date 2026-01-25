@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -18,49 +18,52 @@ import {
   Alert,
   IconButton,
   CircularProgress,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { CuisineType, BudgetLevel, Location } from '@/types/restaurant';
-import { CUISINES } from '@/lib/constants/cuisines';
-import { useRestaurantStore } from '@/lib/store/restaurantStore';
-import { useAuthStore } from '@/lib/store/authStore';
-import LocationPicker from '@/components/map/LocationPicker';
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { CuisineType, BudgetLevel, Location } from "@/types/restaurant";
+import { CUISINES } from "@/lib/constants/cuisines";
+import { useFoodOutletStore } from "@/lib/store/foodOutletStore";
+import { useAuthStore } from "@/lib/store/authStore";
+import LocationPicker from "@/components/map/LocationPicker";
 
-interface AddRestaurantModalProps {
+interface AddFoodOutletModalProps {
   open: boolean;
   onClose: () => void;
 }
 
 const BUDGET_LABELS: Record<BudgetLevel, string> = {
-  1: '₱ - Budget Friendly',
-  2: '₱₱ - Moderate',
-  3: '₱₱₱ - Upscale',
-  4: '₱₱₱₱ - Fine Dining',
+  1: "₱ - Budget Friendly",
+  2: "₱₱ - Moderate",
+  3: "₱₱₱ - Upscale",
+  4: "₱₱₱₱ - Fine Dining",
 };
 
-export default function AddRestaurantModal({ open, onClose }: AddRestaurantModalProps) {
-  const { addRestaurant } = useRestaurantStore();
+export default function AddFoodOutletModal({
+  open,
+  onClose,
+}: AddFoodOutletModalProps) {
+  const { addFoodOutlet } = useFoodOutletStore();
   const { user } = useAuthStore();
 
-  const [name, setName] = useState('');
-  const [cuisine, setCuisine] = useState<CuisineType>('Filipino');
+  const [name, setName] = useState("");
+  const [cuisine, setCuisine] = useState<CuisineType>("Filipino");
   const [budget, setBudget] = useState<BudgetLevel>(2);
   const [location, setLocation] = useState<Location | null>(null);
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
-  const [tagInput, setTagInput] = useState('');
+  const [tagInput, setTagInput] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const resetForm = () => {
-    setName('');
-    setCuisine('Filipino');
+    setName("");
+    setCuisine("Filipino");
     setBudget(2);
     setLocation(null);
-    setDescription('');
+    setDescription("");
     setTags([]);
-    setTagInput('');
+    setTagInput("");
     setError(null);
   };
 
@@ -73,7 +76,7 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
     const trimmedTag = tagInput.trim();
     if (trimmedTag && !tags.includes(trimmedTag) && tags.length < 5) {
       setTags([...tags, trimmedTag]);
-      setTagInput('');
+      setTagInput("");
     }
   };
 
@@ -82,7 +85,7 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
   };
 
   const handleTagKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleAddTag();
     }
@@ -91,11 +94,11 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
   const handleSubmit = async () => {
     // Validation
     if (!name.trim()) {
-      setError('Please enter a restaurant name');
+      setError("Please enter a name");
       return;
     }
     if (!location) {
-      setError('Please select a location on the map');
+      setError("Please select a location on the map");
       return;
     }
 
@@ -103,7 +106,7 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
     setError(null);
 
     try {
-      const newRestaurant = {
+      const newFoodOutlet = {
         name: name.trim(),
         cuisine,
         budget,
@@ -117,15 +120,15 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
         averageRating: 0,
       };
 
-      const id = await addRestaurant(newRestaurant);
+      const id = await addFoodOutlet(newFoodOutlet);
 
       if (id) {
         handleClose();
       } else {
-        setError('Failed to add restaurant. Please try again.');
+        setError("Failed to add kainan. Please try again.");
       }
     } catch {
-      setError('An error occurred. Please try again.');
+      setError("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -140,24 +143,24 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
       PaperProps={{
         sx: {
           borderRadius: 3,
-          maxHeight: '90vh',
+          maxHeight: "90vh",
         },
       }}
     >
       <DialogTitle
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: 'linear-gradient(135deg, #980404 0%, #c41e1e 100%)',
-          color: 'white',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          backgroundColor: "#FFFFFF",
+          borderBottom: "1px solid #F3F4F6",
           py: 2,
         }}
       >
-        <Typography variant="h6" fontWeight={700}>
-          Add New Restaurant
+        <Typography variant="h6" fontWeight={700} color="text.primary">
+          Add New Kainan
         </Typography>
-        <IconButton onClick={handleClose} sx={{ color: 'white' }}>
+        <IconButton onClick={handleClose} sx={{ color: "#6B7280" }}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -169,9 +172,9 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
           </Alert>
         )}
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
           <TextField
-            label="Restaurant Name"
+            label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
@@ -210,10 +213,18 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
           </FormControl>
 
           <Box>
-            <Typography variant="subtitle2" gutterBottom sx={{ color: 'text.secondary' }}>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              sx={{ color: "text.secondary" }}
+            >
               Location *
             </Typography>
-            <LocationPicker value={location} onChange={setLocation} height={250} />
+            <LocationPicker
+              value={location}
+              onChange={setLocation}
+              height={250}
+            />
           </Box>
 
           <TextField
@@ -223,14 +234,18 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
             fullWidth
             multiline
             rows={2}
-            placeholder="Brief description of the restaurant..."
+            placeholder="Brief description of the food place..."
           />
 
           <Box>
-            <Typography variant="subtitle2" gutterBottom sx={{ color: 'text.secondary' }}>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              sx={{ color: "text.secondary" }}
+            >
               Tags (optional, max 5)
             </Typography>
-            <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+            <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
               <TextField
                 size="small"
                 value={tagInput}
@@ -250,7 +265,7 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
               </Button>
             </Box>
             {tags.length > 0 && (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                 {tags.map((tag) => (
                   <Chip
                     key={tag}
@@ -274,11 +289,16 @@ export default function AddRestaurantModal({ open, onClose }: AddRestaurantModal
           variant="contained"
           disabled={isSubmitting}
           sx={{
-            background: 'linear-gradient(135deg, #980404 0%, #c41e1e 100%)',
+            backgroundColor: "#FF6B35",
+            "&:hover": { backgroundColor: "#E55A2B" },
             px: 4,
           }}
         >
-          {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Add Restaurant'}
+          {isSubmitting ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Add Kainan"
+          )}
         </Button>
       </DialogActions>
     </Dialog>

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import WheelCanvas from './WheelCanvas';
 import WheelResult from './WheelResult';
-import { Restaurant } from '@/types/restaurant';
+import { FoodOutlet } from '@/types/foodOutlet';
 import {
   animateWheel,
   generateFinalRotation,
@@ -13,10 +13,10 @@ import {
 } from '@/lib/utils/wheelAnimation';
 
 interface RouletteWheelProps {
-  restaurants: Restaurant[];
+  restaurants: FoodOutlet[];
   onSpinStart?: () => void;
-  onSpinEnd?: (restaurant: Restaurant) => void;
-  onCurrentChange?: (restaurant: Restaurant) => void;
+  onSpinEnd?: (outlet: FoodOutlet) => void;
+  onCurrentChange?: (outlet: FoodOutlet) => void;
   triggerSpin?: boolean;
 }
 
@@ -29,7 +29,7 @@ export default function RouletteWheel({
 }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [result, setResult] = useState<Restaurant | null>(null);
+  const [result, setResult] = useState<FoodOutlet | null>(null);
   const [lastTrigger, setLastTrigger] = useState(false);
 
   // Calculate current restaurant under pointer
@@ -126,28 +126,7 @@ export default function RouletteWheel({
     }
   };
 
-  if (restaurants.length === 0) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: 300,
-          p: 4,
-          textAlign: 'center',
-        }}
-      >
-        <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 1 }}>
-          No restaurants match your filters
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
-          Try adjusting your filters to see more options
-        </Typography>
-      </Box>
-    );
-  }
+  const isEmpty = restaurants.length === 0;
 
   return (
     <Box
@@ -155,10 +134,10 @@ export default function RouletteWheel({
         width: '100%',
         aspectRatio: '1/1',
         margin: '0 auto',
-        cursor: isSpinning ? 'default' : 'pointer',
+        cursor: isSpinning || isEmpty ? 'default' : 'pointer',
         position: 'relative',
       }}
-      onClick={handleWheelClick}
+      onClick={isEmpty ? undefined : handleWheelClick}
     >
       <WheelCanvas restaurants={restaurants} rotation={rotation} size={600} />
 

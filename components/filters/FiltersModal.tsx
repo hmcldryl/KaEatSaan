@@ -16,8 +16,8 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { useFiltersStore } from '@/lib/store/filtersStore';
-import { BudgetLevel } from '@/types/restaurant';
-import { CUISINES } from '@/lib/constants/cuisines';
+import { BudgetLevel } from '@/types/foodOutlet';
+import { CUISINES } from '@/lib/constants/foodOutlets';
 
 interface FiltersModalProps {
   open: boolean;
@@ -41,7 +41,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
     { value: 10, label: '10km' },
   ];
 
-  const maxRestaurantsMarks = [
+  const maxOutletsMarks = [
     { value: 5, label: '5' },
     { value: 10, label: '10' },
     { value: 15, label: '15' },
@@ -60,9 +60,9 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
     }
   };
 
-  const handleMaxRestaurantsChange = (_event: Event, newValue: number | number[]) => {
+  const handleMaxOutletsChange = (_event: Event, newValue: number | number[]) => {
     if (typeof newValue === 'number') {
-      filters.setMaxRestaurants(newValue);
+      filters.setMaxOutlets(newValue);
     }
   };
 
@@ -83,13 +83,13 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
     >
       <DialogTitle
         sx={{
-          background: 'linear-gradient(135deg, #980404 0%, #B91C1C 100%)',
-          color: 'white',
+          backgroundColor: '#FFFFFF',
+          borderBottom: '1px solid #F3F4F6',
           py: 2.5,
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h6" component="div" fontWeight={700} sx={{ letterSpacing: '-0.01em' }}>
+          <Typography variant="h6" component="div" fontWeight={700} color="text.primary">
             Filters & Settings
           </Typography>
           <IconButton
@@ -97,10 +97,9 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
             onClick={onClose}
             aria-label="close"
             sx={{
-              color: 'white',
-              background: 'rgba(255, 255, 255, 0.15)',
+              color: '#6B7280',
               '&:hover': {
-                background: 'rgba(255, 255, 255, 0.25)',
+                backgroundColor: 'rgba(0, 0, 0, 0.04)',
               },
             }}
           >
@@ -138,7 +137,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
               Distance
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Show restaurants within {filters.distance} km
+              Show kainan within {filters.distance} km
             </Typography>
             <Box sx={{ px: 2, pt: 2 }}>
               <Slider
@@ -156,23 +155,23 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
 
           <Divider />
 
-          {/* Max Restaurants Filter */}
+          {/* Max Kainan Filter */}
           <Box>
             <Typography variant="subtitle1" fontWeight={600} gutterBottom>
-              Max Restaurants
+              Max Kainan
             </Typography>
             <Typography variant="body2" color="text.secondary" gutterBottom>
-              Show up to {filters.maxRestaurants} restaurants in the wheel
+              Show up to {filters.maxOutlets} kainan in the wheel
             </Typography>
             <Box sx={{ px: 2, pt: 2 }}>
               <Slider
-                value={filters.maxRestaurants}
-                onChange={handleMaxRestaurantsChange}
+                value={filters.maxOutlets}
+                onChange={handleMaxOutletsChange}
                 valueLabelDisplay="auto"
                 min={5}
                 max={20}
                 step={5}
-                marks={maxRestaurantsMarks}
+                marks={maxOutletsMarks}
               />
             </Box>
           </Box>
@@ -214,11 +213,11 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
               <FormControlLabel
                 control={
                   <Switch
-                    checked={filters.includeClosedRestaurants}
-                    onChange={(e) => filters.setIncludeClosedRestaurants(e.target.checked)}
+                    checked={filters.includeClosedOutlets}
+                    onChange={(e) => filters.setIncludeClosedOutlets(e.target.checked)}
                   />
                 }
-                label="Include closed restaurants"
+                label="Include closed kainan"
               />
               <FormControlLabel
                 control={
@@ -234,13 +233,20 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, py: 2 }}>
+      <DialogActions sx={{ px: 3, py: 2, borderTop: '1px solid #F3F4F6' }}>
         {activeFiltersCount > 0 && (
-          <Button onClick={filters.resetFilters} sx={{ mr: 'auto' }}>
+          <Button onClick={filters.resetFilters} sx={{ mr: 'auto', color: '#6B7280' }}>
             Reset All
           </Button>
         )}
-        <Button onClick={onClose} variant="contained">
+        <Button
+          onClick={onClose}
+          variant="contained"
+          sx={{
+            backgroundColor: '#FF6B35',
+            '&:hover': { backgroundColor: '#E55A2B' },
+          }}
+        >
           Done
         </Button>
       </DialogActions>
