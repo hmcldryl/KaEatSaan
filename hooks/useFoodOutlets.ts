@@ -72,8 +72,8 @@ export function useFoodOutlets() {
   ]);
 
   return {
-    restaurants: filteredOutlets,
-    allRestaurants: outlets,
+    outlets: filteredOutlets,
+    allOutles: outlets,
     isLoading,
     error,
     hasLocation: location !== null,

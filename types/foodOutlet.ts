@@ -1,5 +1,7 @@
 // Classification - Type of establishment
 export type ClassificationType =
+  | "Karinderia"
+  | "Tusok-tusok"
   | "Restaurant"
   | "Fast Food"
   | "Cafe"

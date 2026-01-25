@@ -16,7 +16,7 @@ import { FoodOutlet } from "@/types/foodOutlet";
 import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
 
 export default function Home() {
-  const { restaurants, isLoading } = useFoodOutlets();
+  const { outlets, isLoading } = useFoodOutlets();
   const { spinTrigger, setIsSpinning } = useUIStore();
   const addHistoryEntry = useHistoryStore((state) => state.addEntry);
   const filters = useFiltersStore();
@@ -41,7 +41,7 @@ export default function Home() {
     });
   };
 
-  const hasFoodOutlets = restaurants.length > 0;
+  const hasFoodOutlets = outlets.length > 0;
 
   return (
     <Box
@@ -190,7 +190,7 @@ export default function Home() {
           }}
         >
           <RouletteWheel
-            restaurants={restaurants}
+            outlets={outlets}
             onSpinStart={handleSpinStart}
             onSpinEnd={handleSpinEnd}
             onCurrentChange={setCurrentOutlet}

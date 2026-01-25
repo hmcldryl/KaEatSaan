@@ -20,11 +20,17 @@ import {
   CircularProgress,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { CuisineType, BudgetLevel, Location } from "@/types/restaurant";
-import { CUISINES } from "@/lib/constants/cuisines";
+import {
+  CuisineType,
+  BudgetLevel,
+  ClassificationType,
+  Location,
+} from "@/types/foodOutlet";
+import { CUISINES } from "@/lib/constants/foodOutlets";
 import { useFoodOutletStore } from "@/lib/store/foodOutletStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import LocationPicker from "@/components/map/LocationPicker";
+import { CLASSIFICATIONS } from "@/lib/constants/foodOutlets";
 
 interface AddFoodOutletModalProps {
   open: boolean;
@@ -32,10 +38,11 @@ interface AddFoodOutletModalProps {
 }
 
 const BUDGET_LABELS: Record<BudgetLevel, string> = {
-  1: "₱ - Budget Friendly",
-  2: "₱₱ - Moderate",
-  3: "₱₱₱ - Upscale",
-  4: "₱₱₱₱ - Fine Dining",
+  1: "₱ - Budgetarian",
+  2: "₱₱ - Goods pag payday",
+  3: "₱₱₱ - Mahal",
+  4: "₱₱₱₱ - Masakit sa bulsa",
+  5: "₱₱₱₱₱ - Anak ng contractor",
 };
 
 export default function AddFoodOutletModal({
@@ -46,6 +53,8 @@ export default function AddFoodOutletModal({
   const { user } = useAuthStore();
 
   const [name, setName] = useState("");
+  const [classification, setClassification] =
+    useState<ClassificationType>("Karinderia");
   const [cuisine, setCuisine] = useState<CuisineType>("Filipino");
   const [budget, setBudget] = useState<BudgetLevel>(2);
   const [location, setLocation] = useState<Location | null>(null);
@@ -59,6 +68,7 @@ export default function AddFoodOutletModal({
   const resetForm = () => {
     setName("");
     setCuisine("Filipino");
+    setClassification("Karinderia");
     setBudget(2);
     setLocation(null);
     setDescription("");
@@ -111,6 +121,7 @@ export default function AddFoodOutletModal({
         cuisine,
         budget,
         location,
+        classification,
         description: description.trim() || undefined,
         tags: tags.length > 0 ? tags : undefined,
         isOpen: true,
@@ -183,6 +194,23 @@ export default function AddFoodOutletModal({
           />
 
           <FormControl fullWidth>
+            <InputLabel>Classification</InputLabel>
+            <Select
+              value={cuisine}
+              label="Classification"
+              onChange={(e) =>
+                setClassification(e.target.value as ClassificationType)
+              }
+            >
+              {CLASSIFICATIONS.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {c}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth>
             <InputLabel>Cuisine Type</InputLabel>
             <Select
               value={cuisine}
@@ -204,7 +232,7 @@ export default function AddFoodOutletModal({
               label="Budget Level"
               onChange={(e) => setBudget(e.target.value as BudgetLevel)}
             >
-              {([1, 2, 3, 4] as BudgetLevel[]).map((b) => (
+              {([1, 2, 3, 4, 5] as BudgetLevel[]).map((b) => (
                 <MenuItem key={b} value={b}>
                   {BUDGET_LABELS[b]}
                 </MenuItem>

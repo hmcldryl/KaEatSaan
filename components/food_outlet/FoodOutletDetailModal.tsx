@@ -37,6 +37,7 @@ const BUDGET_SYMBOLS: Record<BudgetLevel, string> = {
   2: "₱₱",
   3: "₱₱₱",
   4: "₱₱₱₱",
+  5: "₱₱₱₱₱",
 };
 
 export default function FoodOutletDetailModal({
