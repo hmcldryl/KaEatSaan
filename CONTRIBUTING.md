@@ -34,6 +34,6 @@ Honestly, I'm too lazy to enforce strict templates and a bunch of labels. Just g
 ## Getting Help
 If you have any questions, want to discuss ideas, or just need help with something, feel free to hit me up on our Discord server.
 
-- **Discord:** [https://discord.gg/WqspEkDK](https://discord.gg/WqspEkDK)
+- **Discord:** [https://discord.gg/e3b9rtYUx5](https://discord.gg/e3b9rtYUx5)
 
 That's pretty much it. Let's build something cool together!
