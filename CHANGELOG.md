@@ -1,3 +1,10 @@
+# [1.1.0-beta.3](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-01-25)
+
+
+### Bug Fixes
+
+* use PAT for semantic-release to bypass branch protection ([a5e881f](https://github.com/hmcldryl/KaEatSaan/commit/a5e881f2ff6ffa7c7082313ff888297afdd74d91))
+
 # [1.1.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2026-01-25)
 
 
