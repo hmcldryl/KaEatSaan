@@ -1,4 +1,4 @@
-import { Restaurant } from '@/types/restaurant';
+import { FoodOutlet } from '@/types/foodOutlet';
 
 export function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
@@ -6,8 +6,8 @@ export function easeOutCubic(t: number): number {
 
 export function calculateWinner(
   rotation: number,
-  restaurants: Restaurant[]
-): Restaurant {
+  restaurants: FoodOutlet[]
+): FoodOutlet {
   const segmentCount = restaurants.length;
   const degreesPerSegment = 360 / segmentCount;
 

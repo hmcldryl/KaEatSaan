@@ -1,16 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { FilterState } from '@/types/filter';
-import { CuisineType, BudgetLevel } from '@/types/restaurant';
+import { CuisineType, ClassificationType, BudgetLevel } from '@/types/foodOutlet';
 
 interface FiltersStore extends FilterState {
   // Actions
   setBudget: (range: [BudgetLevel, BudgetLevel]) => void;
   setDistance: (km: number) => void;
+  toggleClassification: (classification: ClassificationType) => void;
   toggleCuisine: (cuisine: CuisineType) => void;
-  setIncludeClosedRestaurants: (include: boolean) => void;
+  setIncludeClosedOutlets: (include: boolean) => void;
   setOnlyNewPlaces: (onlyNew: boolean) => void;
-  setMaxRestaurants: (max: number) => void;
+  setMaxOutlets: (max: number) => void;
   resetFilters: () => void;
   getActiveFiltersCount: () => number;
 }
@@ -18,10 +19,11 @@ interface FiltersStore extends FilterState {
 const defaultFilters: FilterState = {
   budget: [1, 4],
   distance: 5,
+  classifications: [],
   cuisines: [],
-  includeClosedRestaurants: false,
+  includeClosedOutlets: false,
   onlyNewPlaces: false,
-  maxRestaurants: 20,
+  maxOutlets: 20,
 };
 
 export const useFiltersStore = create<FiltersStore>()(
@@ -37,6 +39,15 @@ export const useFiltersStore = create<FiltersStore>()(
         set({ distance: km });
       },
 
+      toggleClassification: (classification: ClassificationType) => {
+        set((state) => {
+          const classifications = state.classifications.includes(classification)
+            ? state.classifications.filter((c) => c !== classification)
+            : [...state.classifications, classification];
+          return { classifications };
+        });
+      },
+
       toggleCuisine: (cuisine: CuisineType) => {
         set((state) => {
           const cuisines = state.cuisines.includes(cuisine)
@@ -46,16 +57,16 @@ export const useFiltersStore = create<FiltersStore>()(
         });
       },
 
-      setIncludeClosedRestaurants: (include: boolean) => {
-        set({ includeClosedRestaurants: include });
+      setIncludeClosedOutlets: (include: boolean) => {
+        set({ includeClosedOutlets: include });
       },
 
       setOnlyNewPlaces: (onlyNew: boolean) => {
         set({ onlyNewPlaces: onlyNew });
       },
 
-      setMaxRestaurants: (max: number) => {
-        set({ maxRestaurants: max });
+      setMaxOutlets: (max: number) => {
+        set({ maxOutlets: max });
       },
 
       resetFilters: () => {
@@ -72,15 +83,18 @@ export const useFiltersStore = create<FiltersStore>()(
         // Distance is active if not default
         if (state.distance !== 5) count++;
 
+        // Classifications count
+        count += state.classifications.length;
+
         // Cuisines count
         count += state.cuisines.length;
 
         // Boolean filters
-        if (state.includeClosedRestaurants) count++;
+        if (state.includeClosedOutlets) count++;
         if (state.onlyNewPlaces) count++;
 
-        // Max restaurants is active if not default
-        if (state.maxRestaurants !== 20) count++;
+        // Max outlets is active if not default
+        if (state.maxOutlets !== 20) count++;
 
         return count;
       },

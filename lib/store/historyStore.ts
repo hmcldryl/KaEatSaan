@@ -1,14 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { HistoryEntry, GroupedHistory } from '@/types/history';
-import { Restaurant } from '@/types/restaurant';
+import { FoodOutlet } from '@/types/foodOutlet';
 import { FilterState } from '@/types/filter';
 
 interface HistoryStore {
   history: HistoryEntry[];
 
   // Actions
-  addEntry: (restaurant: Restaurant, filters: FilterState) => void;
+  addEntry: (outlet: FoodOutlet, filters: FilterState) => void;
   removeEntry: (id: string) => void;
   clearHistory: () => void;
   getGroupedHistory: () => GroupedHistory;
@@ -19,10 +19,10 @@ export const useHistoryStore = create<HistoryStore>()(
     (set, get) => ({
       history: [],
 
-      addEntry: (restaurant: Restaurant, filters: FilterState) => {
+      addEntry: (outlet: FoodOutlet, filters: FilterState) => {
         const entry: HistoryEntry = {
-          id: `${Date.now()}-${restaurant.id}`,
-          restaurant,
+          id: `${Date.now()}-${outlet.id}`,
+          outlet,
           timestamp: new Date().toISOString(),
           filters,
         };

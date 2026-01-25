@@ -26,7 +26,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           minHeight: '100vh',
           paddingTop: '64px',
           paddingBottom: '80px',
-          background: 'linear-gradient(135deg, rgba(152, 4, 4, 0.02) 0%, rgba(147, 189, 87, 0.02) 50%, rgba(251, 229, 128, 0.02) 100%)',
+          backgroundColor: '#FAF9F7',
         }}
       >
         <TopAppBar onFilterClick={() => setFiltersModalOpen(true)} />

@@ -1,16 +1,16 @@
 import { useState, useCallback } from 'react';
-import { Restaurant } from '@/types/restaurant';
+import { FoodOutlet } from '@/types/foodOutlet';
 import { useHistoryStore } from '@/lib/store/historyStore';
 import { useFiltersStore } from '@/lib/store/filtersStore';
 
-export function useWheel(restaurants: Restaurant[]) {
+export function useWheel(outlets: FoodOutlet[]) {
   const [isSpinning, setIsSpinning] = useState(false);
-  const [result, setResult] = useState<Restaurant | null>(null);
+  const [result, setResult] = useState<FoodOutlet | null>(null);
   const addHistoryEntry = useHistoryStore((state) => state.addEntry);
   const filters = useFiltersStore();
 
   const spin = useCallback(() => {
-    if (isSpinning || restaurants.length === 0) {
+    if (isSpinning || outlets.length === 0) {
       return;
     }
 
@@ -18,24 +18,25 @@ export function useWheel(restaurants: Restaurant[]) {
 
     // Simulate spin duration (actual animation will be handled by canvas component)
     setTimeout(() => {
-      // Select random restaurant
-      const randomIndex = Math.floor(Math.random() * restaurants.length);
-      const selectedRestaurant = restaurants[randomIndex];
+      // Select random outlet
+      const randomIndex = Math.floor(Math.random() * outlets.length);
+      const selectedOutlet = outlets[randomIndex];
 
-      setResult(selectedRestaurant);
+      setResult(selectedOutlet);
       setIsSpinning(false);
 
       // Add to history
-      addHistoryEntry(selectedRestaurant, {
+      addHistoryEntry(selectedOutlet, {
         budget: filters.budget,
         distance: filters.distance,
+        classifications: filters.classifications,
         cuisines: filters.cuisines,
-        includeClosedRestaurants: filters.includeClosedRestaurants,
+        includeClosedOutlets: filters.includeClosedOutlets,
         onlyNewPlaces: filters.onlyNewPlaces,
-        maxRestaurants: filters.maxRestaurants,
+        maxOutlets: filters.maxOutlets,
       });
     }, 3500); // 3.5 second spin duration
-  }, [isSpinning, restaurants, addHistoryEntry, filters]);
+  }, [isSpinning, outlets, addHistoryEntry, filters]);
 
   const closeResult = useCallback(() => {
     setResult(null);

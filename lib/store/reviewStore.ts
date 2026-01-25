@@ -7,23 +7,23 @@ interface ReviewStore {
   reviews: Review[];
   isLoading: boolean;
   error: string | null;
-  currentRestaurantId: string | null;
+  currentOutletId: string | null;
   unsubscribe: (() => void) | null;
 
   // Actions
-  loadReviews: (restaurantId: string) => void;
+  loadReviews: (outletId: string) => void;
   stopListening: () => void;
   addReview: (
-    restaurantId: string,
+    outletId: string,
     userId: string,
     userName: string,
     userPhotoUrl: string | undefined,
     data: ReviewFormData
   ) => Promise<string | null>;
-  deleteReview: (reviewId: string, restaurantId: string) => Promise<void>;
+  deleteReview: (reviewId: string, outletId: string) => Promise<void>;
 }
 
-async function updateRestaurantRating(restaurantId: string) {
+async function updateOutletRating(outletId: string) {
   try {
     const reviewsRef = ref(database, 'reviews');
     const snapshot = await get(reviewsRef);
@@ -35,7 +35,7 @@ async function updateRestaurantRating(restaurantId: string) {
     if (data) {
       Object.values(data).forEach((review) => {
         const r = review as Review;
-        if (r.restaurantId === restaurantId) {
+        if (r.outletId === outletId) {
           totalRating += r.rating;
           reviewCount++;
         }
@@ -44,14 +44,14 @@ async function updateRestaurantRating(restaurantId: string) {
 
     const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
-    const restaurantRef = ref(database, `restaurants/${restaurantId}`);
-    await update(restaurantRef, {
+    const outletRef = ref(database, `food_outlets/${outletId}`);
+    await update(outletRef, {
       reviewCount,
       averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal
       updatedAt: new Date().toISOString(),
     });
   } catch (error) {
-    console.error('Failed to update restaurant rating:', error);
+    console.error('Failed to update outlet rating:', error);
   }
 }
 
@@ -59,14 +59,14 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
   reviews: [],
   isLoading: false,
   error: null,
-  currentRestaurantId: null,
+  currentOutletId: null,
   unsubscribe: null,
 
-  loadReviews: (restaurantId: string) => {
-    const { currentRestaurantId, unsubscribe } = get();
+  loadReviews: (outletId: string) => {
+    const { currentOutletId, unsubscribe } = get();
 
-    // If already listening to this restaurant, don't reload
-    if (currentRestaurantId === restaurantId && unsubscribe) {
+    // If already listening to this outlet, don't reload
+    if (currentOutletId === outletId && unsubscribe) {
       return;
     }
 
@@ -75,7 +75,7 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
       unsubscribe();
     }
 
-    set({ isLoading: true, error: null, currentRestaurantId: restaurantId });
+    set({ isLoading: true, error: null, currentOutletId: outletId });
 
     const reviewsRef = ref(database, 'reviews');
 
@@ -93,7 +93,7 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
               ...(value as Omit<Review, 'id'>),
               id,
             }))
-            .filter((review) => review.restaurantId === restaurantId)
+            .filter((review) => review.outletId === outletId)
             .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
           set({ reviews: reviewsList, isLoading: false });
@@ -116,12 +116,12 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     const { unsubscribe } = get();
     if (unsubscribe) {
       unsubscribe();
-      set({ unsubscribe: null, currentRestaurantId: null, reviews: [] });
+      set({ unsubscribe: null, currentOutletId: null, reviews: [] });
     }
   },
 
   addReview: async (
-    restaurantId: string,
+    outletId: string,
     userId: string,
     userName: string,
     userPhotoUrl: string | undefined,
@@ -130,7 +130,7 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     try {
       const reviewsRef = ref(database, 'reviews');
       const newReview = {
-        restaurantId,
+        outletId,
         userId,
         userName,
         userPhotoUrl: userPhotoUrl || null,
@@ -141,8 +141,8 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
 
       const newRef = await push(reviewsRef, newReview);
 
-      // Update restaurant rating
-      await updateRestaurantRating(restaurantId);
+      // Update outlet rating
+      await updateOutletRating(outletId);
 
       return newRef.key;
     } catch (error) {
@@ -153,13 +153,13 @@ export const useReviewStore = create<ReviewStore>((set, get) => ({
     }
   },
 
-  deleteReview: async (reviewId: string, restaurantId: string) => {
+  deleteReview: async (reviewId: string, outletId: string) => {
     try {
       const reviewRef = ref(database, `reviews/${reviewId}`);
       await remove(reviewRef);
 
-      // Update restaurant rating
-      await updateRestaurantRating(restaurantId);
+      // Update outlet rating
+      await updateOutletRating(outletId);
     } catch (error) {
       set({
         error: error instanceof Error ? error.message : 'Failed to delete review',

@@ -1,32 +1,32 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Restaurant } from '@/types/restaurant';
-import { useFavoritesStore } from '@/lib/store/favoritesStore';
-import RestaurantDetailModal from '@/components/restaurant/RestaurantDetailModal';
-import StarRating from '@/components/reviews/StarRating';
+import React, { useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import { FoodOutlet } from "@/types/foodOutlet";
+import { useFavoritesStore } from "@/lib/store/favoritesStore";
+import FoodOutletDetailModal from "@/components/food_outlet/FoodOutletDetailModal";
+import StarRating from "@/components/reviews/StarRating";
 
 interface WheelResultProps {
-  restaurant: Restaurant | null;
+  outlet: FoodOutlet | null;
   open: boolean;
   onClose: () => void;
   onSpinAgain: () => void;
 }
 
 export default function WheelResult({
-  restaurant,
+  outlet,
   open,
   onClose,
   onSpinAgain,
@@ -34,20 +34,20 @@ export default function WheelResult({
   const { isFavorite, addFavorite, removeFavorite } = useFavoritesStore();
   const [detailOpen, setDetailOpen] = useState(false);
 
-  if (!restaurant) return null;
+  if (!outlet) return null;
 
-  const favorite = isFavorite(restaurant.id);
+  const favorite = isFavorite(outlet.id);
 
   const handleToggleFavorite = () => {
     if (favorite) {
-      removeFavorite(restaurant.id);
+      removeFavorite(outlet.id);
     } else {
-      addFavorite(restaurant.id);
+      addFavorite(outlet.id);
     }
   };
 
   const getBudgetDisplay = (budget: number) => {
-    return '₱'.repeat(budget);
+    return "₱".repeat(budget);
   };
 
   return (
@@ -58,44 +58,58 @@ export default function WheelResult({
       fullWidth
       PaperProps={{
         sx: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: "#FFFFFF",
         },
       }}
     >
       <DialogTitle
         sx={{
-          textAlign: 'center',
+          textAlign: "center",
           pb: 2,
           pt: 4,
-          backgroundColor: '#FFFFFF',
+          backgroundColor: "#FFFFFF",
         }}
       >
         <Typography
           variant="body1"
           component="div"
           gutterBottom
-          sx={{ color: 'text.secondary', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase', fontSize: '0.875rem' }}
+          sx={{
+            color: "text.secondary",
+            fontWeight: 500,
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            fontSize: "0.875rem",
+          }}
         >
           You're eating at...
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, mt: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 1,
+            mt: 1,
+          }}
+        >
           <Typography
             variant="h4"
             component="div"
             sx={{
               fontWeight: 800,
-              color: '#980404',
-              letterSpacing: '-0.02em',
+              color: "#FF6B35",
+              letterSpacing: "-0.02em",
             }}
           >
-            {restaurant.name}
+            {outlet.name}
           </Typography>
           <IconButton
             onClick={handleToggleFavorite}
             sx={{
-              color: favorite ? '#980404' : '#6B7280',
-              '&:hover': {
-                background: 'rgba(152, 4, 4, 0.08)',
+              color: favorite ? "#FF6B35" : "#6B7280",
+              "&:hover": {
+                background: "rgba(255, 107, 53, 0.08)",
               },
             }}
           >
@@ -105,51 +119,82 @@ export default function WheelResult({
       </DialogTitle>
 
       <DialogContent sx={{ py: 3 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', justifyContent: 'center' }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 1,
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             <Chip
-              label={restaurant.cuisine}
+              label={outlet.cuisine}
               sx={{
-                background: 'linear-gradient(135deg, #93BD57 0%, #A8CC72 100%)',
-                color: 'white',
+                backgroundColor: "#FF6B35",
+                color: "white",
                 fontWeight: 600,
               }}
             />
             <Chip
-              label={getBudgetDisplay(restaurant.budget)}
+              label={getBudgetDisplay(outlet.budget)}
               variant="outlined"
-              sx={{ borderWidth: 2, fontWeight: 600, borderColor: '#980404', color: '#980404' }}
+              sx={{
+                borderWidth: 1.5,
+                fontWeight: 600,
+                borderColor: "#E5E7EB",
+                color: "#1F2937",
+              }}
             />
-            {restaurant.distance && (
-              <Chip label={`${restaurant.distance.toFixed(1)} km`} variant="outlined" sx={{ borderWidth: 2, fontWeight: 600 }} />
+            {outlet.distance && (
+              <Chip
+                label={`${outlet.distance.toFixed(1)} km`}
+                variant="outlined"
+                sx={{ borderWidth: 2, fontWeight: 600 }}
+              />
             )}
           </Box>
 
-          {(restaurant.averageRating || 0) > 0 && (
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          {(outlet.averageRating || 0) > 0 && (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               <StarRating
-                value={restaurant.averageRating || 0}
+                value={outlet.averageRating || 0}
                 readonly
                 size="medium"
                 showValue
-                count={restaurant.reviewCount}
+                count={outlet.reviewCount}
               />
             </Box>
           )}
 
-          {restaurant.description && (
-            <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', lineHeight: 1.7 }}>
-              {restaurant.description}
+          {outlet.description && (
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ textAlign: "center", lineHeight: 1.7 }}
+            >
+              {outlet.description}
             </Typography>
           )}
 
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', fontWeight: 500 }}>
-            📍 {restaurant.location.address}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ textAlign: "center", fontWeight: 500 }}
+          >
+            📍 {outlet.location.address}
           </Typography>
 
-          {restaurant.tags && restaurant.tags.length > 0 && (
-            <Box sx={{ display: 'flex', gap: 0.75, flexWrap: 'wrap', justifyContent: 'center' }}>
-              {restaurant.tags.map((tag) => (
+          {outlet.tags && outlet.tags.length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                gap: 0.75,
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              {outlet.tags.map((tag) => (
                 <Chip
                   key={tag}
                   label={tag}
@@ -163,13 +208,21 @@ export default function WheelResult({
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ justifyContent: 'center', pb: 3, px: 3, gap: 2, flexWrap: 'wrap' }}>
+      <DialogActions
+        sx={{
+          justifyContent: "center",
+          pb: 3,
+          px: 3,
+          gap: 2,
+          flexWrap: "wrap",
+        }}
+      >
         <Button
           onClick={() => setDetailOpen(true)}
           variant="text"
           size="large"
           startIcon={<InfoOutlinedIcon />}
-          sx={{ color: 'text.secondary' }}
+          sx={{ color: "text.secondary" }}
         >
           View Details
         </Button>
@@ -179,7 +232,7 @@ export default function WheelResult({
           size="large"
           sx={{
             borderWidth: 2,
-            '&:hover': {
+            "&:hover": {
               borderWidth: 2,
             },
           }}
@@ -191,8 +244,8 @@ export default function WheelResult({
         </Button>
       </DialogActions>
 
-      <RestaurantDetailModal
-        restaurant={restaurant}
+      <FoodOutletDetailModal
+        outlet={outlet}
         open={detailOpen}
         onClose={() => setDetailOpen(false)}
       />

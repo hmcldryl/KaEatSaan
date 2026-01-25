@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   Box,
   TextField,
@@ -13,14 +13,18 @@ import {
   Paper,
   Typography,
   CircularProgress,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import MyLocationIcon from '@mui/icons-material/MyLocation';
-import ClearIcon from '@mui/icons-material/Clear';
-import MapContainer from './MapContainer';
-import { searchLocation, reverseGeocode, GeocodingResult } from '@/lib/utils/geocoding';
-import { useGeolocation } from '@/hooks/useGeolocation';
-import { Location } from '@/types/restaurant';
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
+import ClearIcon from "@mui/icons-material/Clear";
+import MapContainer from "./MapContainer";
+import {
+  searchLocation,
+  reverseGeocode,
+  GeocodingResult,
+} from "@/lib/utils/geocoding";
+import { useGeolocation } from "@/hooks/useGeolocation";
+import { Location } from "@/types/foodOutlet";
 
 interface LocationPickerProps {
   value?: Location | null;
@@ -28,23 +32,33 @@ interface LocationPickerProps {
   height?: number;
 }
 
-export default function LocationPicker({ value, onChange, height = 300 }: LocationPickerProps) {
-  const [searchQuery, setSearchQuery] = useState('');
+export default function LocationPicker({
+  value,
+  onChange,
+  height = 300,
+}: LocationPickerProps) {
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<GeocodingResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [isReverseGeocoding, setIsReverseGeocoding] = useState(false);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const { location: userLocation, requestLocation, isLoading: isGettingLocation } = useGeolocation();
+  const {
+    location: userLocation,
+    requestLocation,
+    isLoading: isGettingLocation,
+  } = useGeolocation();
 
   const mapCenter = value
     ? ([value.latitude, value.longitude] as [number, number])
     : userLocation
-    ? ([userLocation.latitude, userLocation.longitude] as [number, number])
-    : ([14.5995, 120.9842] as [number, number]); // Manila default
+      ? ([userLocation.latitude, userLocation.longitude] as [number, number])
+      : ([14.5995, 120.9842] as [number, number]); // Manila default
 
-  const markerPosition = value ? ([value.latitude, value.longitude] as [number, number]) : null;
+  const markerPosition = value
+    ? ([value.latitude, value.longitude] as [number, number])
+    : null;
 
   // Debounced search
   useEffect(() => {
@@ -84,10 +98,10 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
         longitude: lng,
         address: result?.shortAddress || `${lat.toFixed(6)}, ${lng.toFixed(6)}`,
       });
-      setSearchQuery('');
+      setSearchQuery("");
       setShowResults(false);
     },
-    [onChange]
+    [onChange],
   );
 
   const handleSearchResultClick = useCallback(
@@ -97,10 +111,10 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
         longitude: result.longitude,
         address: result.shortAddress,
       });
-      setSearchQuery('');
+      setSearchQuery("");
       setShowResults(false);
     },
-    [onChange]
+    [onChange],
   );
 
   const handleUseCurrentLocation = useCallback(async () => {
@@ -119,7 +133,7 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
   }, [userLocation, value, handleMapClick]);
 
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box sx={{ position: "relative" }}>
       <Box sx={{ mb: 2 }}>
         <TextField
           fullWidth
@@ -130,7 +144,11 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  {isSearching ? <CircularProgress size={20} /> : <SearchIcon />}
+                  {isSearching ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    <SearchIcon />
+                  )}
                 </InputAdornment>
               ),
               endAdornment: (
@@ -139,7 +157,7 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
                     <IconButton
                       size="small"
                       onClick={() => {
-                        setSearchQuery('');
+                        setSearchQuery("");
                         setShowResults(false);
                       }}
                     >
@@ -169,28 +187,30 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
         {showResults && (
           <Paper
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 56,
               left: 0,
               right: 0,
               zIndex: 1000,
               maxHeight: 200,
-              overflow: 'auto',
+              overflow: "auto",
             }}
             elevation={3}
           >
             <List dense disablePadding>
               {searchResults.map((result, index) => (
                 <ListItem key={index} disablePadding>
-                  <ListItemButton onClick={() => handleSearchResultClick(result)}>
+                  <ListItemButton
+                    onClick={() => handleSearchResultClick(result)}
+                  >
                     <ListItemText
                       primary={result.shortAddress}
                       secondary={result.displayName}
                       secondaryTypographyProps={{
                         sx: {
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
                         },
                       }}
                     />
@@ -202,7 +222,7 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
         )}
       </Box>
 
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={{ position: "relative" }}>
         <MapContainer
           center={mapCenter}
           zoom={value ? 16 : 13}
@@ -213,16 +233,16 @@ export default function LocationPicker({ value, onChange, height = 300 }: Locati
         {isReverseGeocoding && (
           <Box
             sx={{
-              position: 'absolute',
+              position: "absolute",
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: 'rgba(255, 255, 255, 0.7)',
-              borderRadius: 2,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              borderRadius: "8px",
               zIndex: 500,
             }}
           >

@@ -1,13 +1,13 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface FavoritesStore {
-  favorites: string[];  // Restaurant IDs
+  favorites: string[]; // Restaurant IDs
 
   // Actions
-  addFavorite: (restaurantId: string) => void;
-  removeFavorite: (restaurantId: string) => void;
-  isFavorite: (restaurantId: string) => boolean;
+  addFavorite: (outletId: string) => void;
+  removeFavorite: (outletId: string) => void;
+  isFavorite: (outletId: string) => boolean;
   clearFavorites: () => void;
 }
 
@@ -16,23 +16,23 @@ export const useFavoritesStore = create<FavoritesStore>()(
     (set, get) => ({
       favorites: [],
 
-      addFavorite: (restaurantId: string) => {
+      addFavorite: (outletId: string) => {
         set((state) => {
-          if (state.favorites.includes(restaurantId)) {
+          if (state.favorites.includes(outletId)) {
             return state;
           }
-          return { favorites: [...state.favorites, restaurantId] };
+          return { favorites: [...state.favorites, outletId] };
         });
       },
 
-      removeFavorite: (restaurantId: string) => {
+      removeFavorite: (outletId: string) => {
         set((state) => ({
-          favorites: state.favorites.filter((id) => id !== restaurantId),
+          favorites: state.favorites.filter((id) => id !== outletId),
         }));
       },
 
-      isFavorite: (restaurantId: string) => {
-        return get().favorites.includes(restaurantId);
+      isFavorite: (outletId: string) => {
+        return get().favorites.includes(outletId);
       },
 
       clearFavorites: () => {
@@ -40,7 +40,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
       },
     }),
     {
-      name: 'kaetsaan-favorites',
-    }
-  )
+      name: "kaetsaan-favorites",
+    },
+  ),
 );

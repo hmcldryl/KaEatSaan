@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import React, { useState, useCallback, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import WheelCanvas from './WheelCanvas';
-import WheelResult from './WheelResult';
-import { Restaurant } from '@/types/restaurant';
+import React, { useState, useCallback, useEffect } from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import WheelCanvas from "./WheelCanvas";
+import WheelResult from "./WheelResult";
+import { FoodOutlet } from "@/types/foodOutlet";
 import {
   animateWheel,
   generateFinalRotation,
   calculateWinner,
-} from '@/lib/utils/wheelAnimation';
+} from "@/lib/utils/wheelAnimation";
 
 interface RouletteWheelProps {
-  restaurants: Restaurant[];
+  outlets: FoodOutlet[];
   onSpinStart?: () => void;
-  onSpinEnd?: (restaurant: Restaurant) => void;
-  onCurrentChange?: (restaurant: Restaurant) => void;
+  onSpinEnd?: (outlet: FoodOutlet) => void;
+  onCurrentChange?: (outlet: FoodOutlet) => void;
   triggerSpin?: boolean;
 }
 
 export default function RouletteWheel({
-  restaurants,
+  outlets,
   onSpinStart,
   onSpinEnd,
   onCurrentChange,
@@ -29,33 +29,33 @@ export default function RouletteWheel({
 }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [result, setResult] = useState<Restaurant | null>(null);
+  const [result, setResult] = useState<FoodOutlet | null>(null);
   const [lastTrigger, setLastTrigger] = useState(false);
 
   // Calculate current restaurant under pointer
   useEffect(() => {
-    if (restaurants.length === 0) return;
+    if (outlets.length === 0) return;
 
     const normalizedRotation = ((rotation % 360) + 360) % 360;
-    const segmentAngle = 360 / restaurants.length;
+    const segmentAngle = 360 / outlets.length;
     const adjustedRotation = (normalizedRotation + segmentAngle / 2) % 360;
     const segmentIndex = Math.floor(adjustedRotation / segmentAngle);
-    const currentRestaurant = restaurants[segmentIndex];
+    const currentRestaurant = outlets[segmentIndex];
 
     if (currentRestaurant && onCurrentChange) {
       onCurrentChange(currentRestaurant);
     }
-  }, [rotation, restaurants, onCurrentChange]);
+  }, [rotation, outlets, onCurrentChange]);
 
   const spin = useCallback(() => {
-    if (isSpinning || restaurants.length === 0) return;
+    if (isSpinning || outlets.length === 0) return;
 
     setIsSpinning(true);
     onSpinStart?.();
 
     // Select random target
-    const targetIndex = Math.floor(Math.random() * restaurants.length);
-    const finalRotation = generateFinalRotation(targetIndex, restaurants.length);
+    const targetIndex = Math.floor(Math.random() * outlets.length);
+    const finalRotation = generateFinalRotation(targetIndex, outlets.length);
 
     const startTime = performance.now();
     const duration = 3500; // 3.5 seconds
@@ -70,13 +70,13 @@ export default function RouletteWheel({
         setRotation(currentRotation);
       },
       () => {
-        const winner = calculateWinner(rotation + finalRotation, restaurants);
+        const winner = calculateWinner(rotation + finalRotation, outlets);
         setResult(winner);
         setIsSpinning(false);
         onSpinEnd?.(winner);
-      }
+      },
     );
-  }, [isSpinning, restaurants, rotation, onSpinStart, onSpinEnd]);
+  }, [isSpinning, outlets, rotation, onSpinStart, onSpinEnd]);
 
   // Handle external spin trigger
   useEffect(() => {
@@ -100,7 +100,7 @@ export default function RouletteWheel({
   };
 
   const handleWheelClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (isSpinning || restaurants.length === 0) return;
+    if (isSpinning || outlets.length === 0) return;
 
     const target = event.currentTarget;
     const rect = target.getBoundingClientRect();
@@ -118,7 +118,7 @@ export default function RouletteWheel({
 
     // Check if click is within center circle
     // Button is 0.85 * wheel radius, and wheel radius is approximately (rect.width/2 - 70)
-    const wheelRadius = (rect.width / 2 - 70);
+    const wheelRadius = rect.width / 2 - 70;
     const centerRadius = wheelRadius * 0.85;
 
     if (distance <= centerRadius) {
@@ -126,44 +126,23 @@ export default function RouletteWheel({
     }
   };
 
-  if (restaurants.length === 0) {
-    return (
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: 300,
-          p: 4,
-          textAlign: 'center',
-        }}
-      >
-        <Typography variant="h6" sx={{ fontWeight: 700, color: 'text.primary', mb: 1 }}>
-          No restaurants match your filters
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
-          Try adjusting your filters to see more options
-        </Typography>
-      </Box>
-    );
-  }
+  const isEmpty = outlets.length === 0;
 
   return (
     <Box
       sx={{
-        width: '100%',
-        aspectRatio: '1/1',
-        margin: '0 auto',
-        cursor: isSpinning ? 'default' : 'pointer',
-        position: 'relative',
+        width: "100%",
+        aspectRatio: "1/1",
+        margin: "0 auto",
+        cursor: isSpinning || isEmpty ? "default" : "pointer",
+        position: "relative",
       }}
-      onClick={handleWheelClick}
+      onClick={isEmpty ? undefined : handleWheelClick}
     >
-      <WheelCanvas restaurants={restaurants} rotation={rotation} size={600} />
+      <WheelCanvas outlets={outlets} rotation={rotation} size={600} />
 
       <WheelResult
-        restaurant={result}
+        outlet={result}
         open={!!result}
         onClose={handleCloseResult}
         onSpinAgain={handleSpinAgain}
