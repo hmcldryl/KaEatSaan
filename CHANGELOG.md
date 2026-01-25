@@ -1,3 +1,10 @@
+# [1.1.0-beta.4](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0-beta.3...v1.1.0-beta.4) (2026-01-25)
+
+
+### Bug Fixes
+
+* configure checkout to use PAT for git push credentials ([161172f](https://github.com/hmcldryl/KaEatSaan/commit/161172f72a75800ae15e5263b5db1a8b57650d5e))
+
 # [1.1.0-beta.3](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0-beta.2...v1.1.0-beta.3) (2026-01-25)
 
 
