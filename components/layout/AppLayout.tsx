@@ -7,6 +7,7 @@ import BottomNavBar from './BottomNavBar';
 import FiltersModal from '@/components/filters/FiltersModal';
 import AuthProvider from '@/components/auth/AuthProvider';
 import { useUIStore } from '@/lib/store/uiStore';
+import { useGeolocation } from '@/hooks/useGeolocation';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,9 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children }: AppLayoutProps) {
   const { filtersModalOpen, setFiltersModalOpen } = useUIStore();
+
+  // Request user location on app load
+  useGeolocation(true);
 
   return (
     <AuthProvider>

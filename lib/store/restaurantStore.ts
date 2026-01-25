@@ -3,6 +3,8 @@ import { ref, onValue, push, update, remove, off } from 'firebase/database';
 import { database } from '@/lib/firebase';
 import { Restaurant } from '@/types/restaurant';
 import { FilterState } from '@/types/filter';
+import { UserLocation } from '@/types/geolocation';
+import { calculateDistance } from '@/lib/utils/distance';
 
 interface RestaurantStore {
   restaurants: Restaurant[];
@@ -15,6 +17,7 @@ interface RestaurantStore {
   loadRestaurants: () => void;
   stopListening: () => void;
   filterRestaurants: (filters: FilterState) => void;
+  calculateDistances: (userLocation: UserLocation) => void;
   addRestaurant: (restaurant: Omit<Restaurant, 'id'>) => Promise<string | null>;
   updateRestaurant: (id: string, updates: Partial<Restaurant>) => Promise<void>;
   deleteRestaurant: (id: string) => Promise<void>;
@@ -117,6 +120,25 @@ export const useRestaurantStore = create<RestaurantStore>((set, get) => ({
     }
 
     set({ filteredRestaurants: filtered });
+  },
+
+  calculateDistances: (userLocation: UserLocation) => {
+    const { restaurants } = get();
+
+    const restaurantsWithDistance = restaurants.map((restaurant) => ({
+      ...restaurant,
+      distance: calculateDistance(
+        userLocation.latitude,
+        userLocation.longitude,
+        restaurant.location.latitude,
+        restaurant.location.longitude
+      ),
+    }));
+
+    // Sort by distance
+    restaurantsWithDistance.sort((a, b) => (a.distance || 0) - (b.distance || 0));
+
+    set({ restaurants: restaurantsWithDistance });
   },
 
   addRestaurant: async (restaurant: Omit<Restaurant, 'id'>) => {

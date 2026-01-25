@@ -1,10 +1,12 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import CardActionArea from '@mui/material/CardActionArea';
 import IconButton from '@mui/material/IconButton';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
@@ -12,11 +14,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useFavoritesStore } from '@/lib/store/favoritesStore';
 import { useRestaurantStore } from '@/lib/store/restaurantStore';
-import { useEffect } from 'react';
+import { Restaurant } from '@/types/restaurant';
+import RestaurantDetailModal from '@/components/restaurant/RestaurantDetailModal';
+import StarRating from '@/components/reviews/StarRating';
 
 export default function FavoritesPage() {
   const { favorites, removeFavorite, clearFavorites } = useFavoritesStore();
   const { restaurants, loadRestaurants } = useRestaurantStore();
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
 
   useEffect(() => {
     if (restaurants.length === 0) {
@@ -83,70 +88,86 @@ export default function FavoritesPage() {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {favoriteRestaurants.map((restaurant) => (
             <Card key={restaurant.id} sx={{ position: 'relative' }}>
-              <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6" component="h2" gutterBottom>
-                      {restaurant.name}
-                    </Typography>
+              <CardActionArea onClick={() => setSelectedRestaurant(restaurant)}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography variant="h6" component="h2" gutterBottom>
+                        {restaurant.name}
+                      </Typography>
 
-                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
-                      <Chip label={restaurant.cuisine} size="small" color="secondary" />
-                      <Chip
-                        label={getBudgetDisplay(restaurant.budget)}
-                        size="small"
-                        color="primary"
-                        variant="outlined"
-                      />
-                      {restaurant.distance && (
+                      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
+                        <Chip label={restaurant.cuisine} size="small" color="secondary" />
                         <Chip
-                          label={`${restaurant.distance.toFixed(1)} km`}
+                          label={getBudgetDisplay(restaurant.budget)}
                           size="small"
+                          color="primary"
                           variant="outlined"
                         />
+                        {restaurant.distance && (
+                          <Chip
+                            label={`${restaurant.distance.toFixed(1)} km`}
+                            size="small"
+                            variant="outlined"
+                          />
+                        )}
+                      </Box>
+
+                      {(restaurant.averageRating || 0) > 0 && (
+                        <Box sx={{ mb: 1 }}>
+                          <StarRating
+                            value={restaurant.averageRating || 0}
+                            readonly
+                            size="small"
+                            showValue
+                            count={restaurant.reviewCount}
+                          />
+                        </Box>
                       )}
-                      {restaurant.rating && (
-                        <Chip
-                          label={`⭐ ${restaurant.rating}`}
-                          size="small"
-                          variant="outlined"
-                        />
+
+                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                        📍 {restaurant.location.address}
+                      </Typography>
+
+                      {restaurant.description && (
+                        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                          {restaurant.description}
+                        </Typography>
+                      )}
+
+                      {restaurant.tags && restaurant.tags.length > 0 && (
+                        <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 1 }}>
+                          {restaurant.tags.slice(0, 3).map((tag) => (
+                            <Chip key={tag} label={tag} size="small" variant="outlined" />
+                          ))}
+                        </Box>
                       )}
                     </Box>
 
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      📍 {restaurant.location.address}
-                    </Typography>
-
-                    {restaurant.description && (
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-                        {restaurant.description}
-                      </Typography>
-                    )}
-
-                    {restaurant.tags && restaurant.tags.length > 0 && (
-                      <Box sx={{ display: 'flex', gap: 0.5, flexWrap: 'wrap', mt: 1 }}>
-                        {restaurant.tags.slice(0, 3).map((tag) => (
-                          <Chip key={tag} label={tag} size="small" variant="outlined" />
-                        ))}
-                      </Box>
-                    )}
+                    <IconButton
+                      aria-label="remove from favorites"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        removeFavorite(restaurant.id);
+                      }}
+                      color="error"
+                      sx={{ ml: 1 }}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </Box>
-
-                  <IconButton
-                    aria-label="remove from favorites"
-                    onClick={() => removeFavorite(restaurant.id)}
-                    color="error"
-                    sx={{ ml: 1 }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Box>
-              </CardContent>
+                </CardContent>
+              </CardActionArea>
             </Card>
           ))}
         </Box>
       </Box>
+
+      <RestaurantDetailModal
+        restaurant={selectedRestaurant}
+        open={selectedRestaurant !== null}
+        onClose={() => setSelectedRestaurant(null)}
+      />
     </Container>
   );
 }
