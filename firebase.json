@@ -1,7 +1,7 @@
 {
   "hosting": [
     {
-      "target": "kaeatsaan",
+      "target": "prod",
       "public": "out",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "target": "kaeatsaan-dev",
+      "target": "dev",
       "public": "out",
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
