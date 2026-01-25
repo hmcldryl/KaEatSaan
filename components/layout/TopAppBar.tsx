@@ -189,6 +189,11 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
           </ListItemIcon>
           Sign Out
         </MenuItem>
+        <MenuItem disabled sx={{ opacity: 0.6, justifyContent: "center" }}>
+          <Typography variant="caption" color="text.secondary">
+            v{process.env.NEXT_PUBLIC_APP_VERSION}
+          </Typography>
+        </MenuItem>
       </Menu>
 
       <AuthDialog
