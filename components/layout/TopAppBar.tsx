@@ -56,7 +56,7 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
               sx={{
                 width: 40,
                 height: 40,
-                borderRadius: 2.5,
+                borderRadius: "8px",
                 background: "linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%)",
                 display: "flex",
                 alignItems: "center",
@@ -172,7 +172,7 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         PaperProps={{
           sx: {
-            borderRadius: 3,
+            borderRadius: "8px",
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
             mt: 1,
           },

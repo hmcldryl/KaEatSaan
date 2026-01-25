@@ -153,7 +153,7 @@ export default function AddFoodOutletModal({
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 3,
+          borderRadius: "8px",
           maxHeight: "90vh",
         },
       }}

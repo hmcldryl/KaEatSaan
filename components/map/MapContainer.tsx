@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
-import { LatLngExpression } from 'leaflet';
-import { Box, CircularProgress } from '@mui/material';
+import dynamic from "next/dynamic";
+import { LatLngExpression } from "leaflet";
+import { Box, CircularProgress } from "@mui/material";
 
 // Dynamic import for Leaflet - it requires window object
-const MapInner = dynamic(() => import('./MapInner'), {
+const MapInner = dynamic(() => import("./MapInner"), {
   ssr: false,
   loading: () => (
     <Box
       sx={{
         height: 300,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'grey.100',
-        borderRadius: 2,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "grey.100",
+        borderRadius: "8px",
       }}
     >
       <CircularProgress size={40} />

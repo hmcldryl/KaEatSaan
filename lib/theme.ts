@@ -76,7 +76,7 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 16,
+    borderRadius: "8px",
   },
   components: {
     MuiBottomNavigation: {
@@ -120,7 +120,7 @@ const theme = createTheme({
         root: {
           backgroundColor: "#FFFFFF",
           boxShadow: "0 2px 12px rgba(0, 0, 0, 0.04)",
-          borderRadius: 16,
+          borderRadius: "8px",
           border: "1px solid rgba(0, 0, 0, 0.04)",
         },
       },
@@ -128,7 +128,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 25,
+          borderRadius: "8px",
           padding: "12px 28px",
           fontSize: "0.9375rem",
           boxShadow: "none",
@@ -157,7 +157,7 @@ const theme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          borderRadius: 20,
+          borderRadius: "8px",
           fontWeight: 500,
           fontSize: "0.8125rem",
         },
@@ -205,7 +205,7 @@ const theme = createTheme({
       styleOverrides: {
         paper: {
           backgroundColor: "#FFFFFF",
-          borderRadius: 20,
+          borderRadius: "8px",
           boxShadow: "0 20px 60px rgba(0, 0, 0, 0.15)",
         },
       },
@@ -214,7 +214,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-root": {
-            borderRadius: 12,
+            borderRadius: "8px",
             backgroundColor: "#FAFAFA",
             "& fieldset": {
               borderColor: "#E5E7EB",
@@ -232,7 +232,7 @@ const theme = createTheme({
     MuiSelect: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
+          borderRadius: "8px",
         },
       },
     },

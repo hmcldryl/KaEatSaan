@@ -109,7 +109,7 @@ export default function Home() {
             color="text.secondary"
             sx={{ mb: 3, maxWidth: 280 }}
           >
-            Add your favorite food places to start spinning!
+            Add your favorite kainan!
           </Typography>
           {user ? (
             <Button
@@ -125,7 +125,7 @@ export default function Home() {
             </Button>
           ) : (
             <Typography variant="body2" color="text.secondary">
-              Sign in to add food places
+              Sign in to add your favorite kainan
             </Typography>
           )}
         </Box>
@@ -154,7 +154,7 @@ export default function Home() {
               fontSize: { xs: "1.25rem", sm: "1.75rem", md: "2rem" },
               backgroundColor: "rgba(255, 255, 255, 0.95)",
               padding: { xs: "8px 16px", sm: "12px 24px" },
-              borderRadius: "20px",
+              borderRadius: "8px",
               boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
               whiteSpace: "nowrap",
               overflow: "hidden",
