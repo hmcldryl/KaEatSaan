@@ -1,51 +1,42 @@
 # KaEatSaan - Where to Eat? 🍜
 
-*Saan tayo kakain? Bahala na si Batman!* No more! Let KaEatSaan decide for you! 
+*Saan tayo kakain?* No more "Bahala na si Batman"! Let KaEatSaan decide for you!
 
 ## About 🤔
-KaEatSaan (from *"Kahit"* + *"Saan"*) is your trusty sidekick when you and your barkada can't decide where to eat. Gone are the days of the endless "Ikaw bahala" loop! Just tap a button and let destiny (aka this app) choose your next food adventure!
-
-## Features 🌟
-- **Random Pick:** One tap lang, may kainan na! Get a random restaurant or karinderia suggestion
-- **Filters:** Pwedeng i-customize!
-  - Budget (Pang-masa to Pang-mayaman)
-  - Distance (Para di malayo sa inyo)
-  - Type of cuisine (Filipino, Japanese, Korean, atbp.)
-- **Save Favorites:** Tag your go-to spots as "Suki" places
-- **Group Decision Mode:** Share the random pick with your friends via messaging apps
-- **Food Discovery:** Find hidden gems and karinderias in your area
-
-## Installation 📱
-Available soon on:
-- Google Play Store
-- Apple App Store
+KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for those moments when you and your friends can't decide where to eat. Say goodbye to the endless "Kayo bahala" loop!
 
 ## Tech Stack 💻
-- Flutter
-- Firebase  
-- Google Maps API
-- Your tita's secret restaurant recommendations
+This project has been rebooted with a new tech stack:
+- **Framework:** [Next.js](https://nextjs.org/)
+- **Hosting & DB:** [Firebase](https://firebase.google.com/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) & [Material UI](https://mui.com/)
+- **State Management:** [Zustand](https://zustand-demo.pmnd.rs/)
+
+The old Flutter version is now a thing of the past. I'm too lazy to document everything, so your best bet is to check out the code.
+
+## Getting Started 🚀
+To get a local copy up and running, it's pretty straightforward:
+
+1.  Clone the repo
+2.  Install dependencies: `npm install`
+3.  Run the development server: `npm run dev`
+
+## Environments 🌐
+We have two environments fully set up:
+- **Production:** [kaeatsaan.web.app](https://kaeatsaan.web.app)
+- **Development:** [dev-kaeatsaan.web.app](https://dev-kaeatsaan.web.app)
+
+Each environment has its own hosting and database configuration.
+
+## Testing 🧪
+Do we have unit tests? Nope. I just test whatever locally before pushing. It is what it is.
 
 ## Contributing 🤝
-Want to help make KaEatSaan more awesome? Tara! Check out the contribution guidelines.
+I'm not strict about contributions, but if you want to help, check out the `CONTRIBUTING.md` file for some loose guidelines.
 
-## Bug Reports 🐛
-Found a bug? Create an issue! Wag mahiya, I appreciate your help in making the app better!
-
-## License 📄
-MIT License - Feel free to use our code, pero wag naman sobra sobra! 😉
-
-## About the Developer 👥
-Just a hungry developer who got tired of the "Ikaw bahala" syndrome.
-
-## Special Thanks 🙏
-- To all my indecisive food lover tropas out there
-- Sa mga karinderiang kinakainan ko during lunch time at sa mga bike rides
-- Sa lahat ng nag-suggest ng "Kahit saan" - you inspired this app!
+## Community 👨‍👩‍👧‍👦
+Join our Discord server to hang out, ask questions, or just share your favorite food spots:
+[https://discord.gg/WqspEkDK](https://discord.gg/WqspEkDK)
 
 ---
-Made with ❤️ and lots of chaolong in the Puerto Princesa, Palawan 🇵🇭
-
-*"Pag bumigay ang powers ng KaEatSaan, edi mag pares na lang tayo."* - Dada
-
-#SaanTayoKakain #KaEatSaanNa #NoMoreIkawBahala
+Made with ❤️ in Puerto Princesa, Palawan 🇵🇭
