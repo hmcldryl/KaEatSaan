@@ -14,9 +14,9 @@ export function calculateWinner(
   // Normalize rotation to 0-360 range
   const normalizedRotation = ((rotation % 360) + 360) % 360;
 
-  // Pointer is at the top (90 degrees), so we need to adjust
-  // We calculate from the top and go clockwise
-  const adjustedRotation = (450 - normalizedRotation) % 360;
+  // Adjust by half segment to align with segment centers
+  // This matches the formula used in RouletteWheel's onCurrentChange
+  const adjustedRotation = (normalizedRotation + degreesPerSegment / 2) % 360;
 
   // Calculate which segment the pointer is pointing at
   const segmentIndex = Math.floor(adjustedRotation / degreesPerSegment);
