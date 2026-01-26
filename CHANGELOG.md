@@ -1,3 +1,11 @@
+## [1.1.1-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0...v1.1.1-beta.1) (2026-01-26)
+
+
+### Bug Fixes
+
+* align wheel result calculation with visual display ([5c50c57](https://github.com/hmcldryl/KaEatSaan/commit/5c50c57f905b2ac81dc9888c36d77d248ce7b884))
+* calculate wheel result from exact final rotation value ([15a49b9](https://github.com/hmcldryl/KaEatSaan/commit/15a49b9fb0aef0ca6f9b023e0b935952c26d9bdb))
+
 # [1.1.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.0.0...v1.1.0) (2026-01-25)
 
 
