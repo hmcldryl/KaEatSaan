@@ -40,7 +40,7 @@ Do we have unit tests? Nope. I just test whatever locally before pushing. It is 
 
 ## Contributing 🤝
 
-I'm not strict about contributions, but if you want to help, check out the `CONTRIBUTING.md` file for some loose guidelines.
+I'm not strict about contributions, but if you want to help, check out the `CONTRIBUTING.md` file for some loose guidelines. There are also simple PR templates to keep things a bit organized, but no pressure to follow them religiously.
 
 ## Community 👨‍👩‍👧‍👦
 
