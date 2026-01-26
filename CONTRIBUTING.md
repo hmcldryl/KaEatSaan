@@ -29,7 +29,7 @@ If you have collaborator access, you can create branches directly on the repo.
 3.  **Pull Requests (PRs):** When you're ready, open a Pull Request from your branch to the `develop` branch.
 
 ## PRs, Templates, and Labels
-Honestly, I'm too lazy to enforce strict templates and a bunch of labels. Just give your PR a clear title and a brief description of what you changed. That's good enough for me.
+Honestly, I'm still too lazy to enforce strict templates and a bunch of labels. But there are some simple PR templates to help keep things a little organized. They're not required - just a guide to make PRs cleaner. Give your PR a clear title, fill in the template if you want, and that's good enough for me.
 
 ## Getting Help
 If you have any questions, want to discuss ideas, or just need help with something, feel free to hit me up on our Discord server.

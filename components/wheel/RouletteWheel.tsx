@@ -1,16 +1,11 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import WheelCanvas from "./WheelCanvas";
 import WheelResult from "./WheelResult";
 import { FoodOutlet } from "@/types/foodOutlet";
-import {
-  animateWheel,
-  generateFinalRotation,
-  calculateWinner,
-} from "@/lib/utils/wheelAnimation";
+import { animateWheel } from "@/lib/utils/wheelAnimation";
 
 interface RouletteWheelProps {
   outlets: FoodOutlet[];
@@ -18,6 +13,23 @@ interface RouletteWheelProps {
   onSpinEnd?: (outlet: FoodOutlet) => void;
   onCurrentChange?: (outlet: FoodOutlet) => void;
   triggerSpin?: boolean;
+}
+
+// Helper to get segment under pointer for a given rotation
+function getSegmentAtPointer(rotation: number, outlets: FoodOutlet[]): FoodOutlet | null {
+  if (outlets.length === 0) return null;
+
+  const segmentCount = outlets.length;
+  const segmentAngle = 360 / segmentCount;
+  const normalizedRotation = ((rotation % 360) + 360) % 360;
+
+  // Segment i appears at screen angle: (i * segmentAngle - 90 + rotation)
+  // Pointer is at 270 degrees (top)
+  // Solve for i: i * segmentAngle - 90 + rotation = 270
+  // i = (360 - rotation) / segmentAngle
+  const segmentIndex = Math.floor((360 - normalizedRotation) / segmentAngle) % segmentCount;
+
+  return outlets[segmentIndex] || null;
 }
 
 export default function RouletteWheel({
@@ -32,18 +44,16 @@ export default function RouletteWheel({
   const [result, setResult] = useState<FoodOutlet | null>(null);
   const [lastTrigger, setLastTrigger] = useState(false);
 
+  // Track current segment during spin
+  const currentSegmentRef = useRef<FoodOutlet | null>(null);
+
   // Calculate current restaurant under pointer
   useEffect(() => {
-    if (outlets.length === 0) return;
+    const current = getSegmentAtPointer(rotation, outlets);
+    currentSegmentRef.current = current;
 
-    const normalizedRotation = ((rotation % 360) + 360) % 360;
-    const segmentAngle = 360 / outlets.length;
-    const adjustedRotation = (normalizedRotation + segmentAngle / 2) % 360;
-    const segmentIndex = Math.floor(adjustedRotation / segmentAngle);
-    const currentRestaurant = outlets[segmentIndex];
-
-    if (currentRestaurant && onCurrentChange) {
-      onCurrentChange(currentRestaurant);
+    if (current && onCurrentChange) {
+      onCurrentChange(current);
     }
   }, [rotation, outlets, onCurrentChange]);
 
@@ -53,9 +63,10 @@ export default function RouletteWheel({
     setIsSpinning(true);
     onSpinStart?.();
 
-    // Select random target
-    const targetIndex = Math.floor(Math.random() * outlets.length);
-    const finalRotation = generateFinalRotation(targetIndex, outlets.length);
+    // Random rotation: 3-5 full spins plus random angle
+    const fullSpins = (3 + Math.random() * 2) * 360;
+    const randomAngle = Math.random() * 360;
+    const totalRotation = fullSpins + randomAngle;
 
     const startTime = performance.now();
     const duration = 3500; // 3.5 seconds
@@ -65,15 +76,18 @@ export default function RouletteWheel({
       startTime,
       duration,
       startRotation,
-      startRotation + finalRotation,
+      startRotation + totalRotation,
       (currentRotation) => {
         setRotation(currentRotation);
       },
-      () => {
-        const winner = calculateWinner(rotation + finalRotation, outlets);
-        setResult(winner);
+      (finalRotation) => {
+        // Calculate winner directly from the final rotation value
+        const winner = getSegmentAtPointer(finalRotation, outlets);
+        if (winner) {
+          setResult(winner);
+          onSpinEnd?.(winner);
+        }
         setIsSpinning(false);
-        onSpinEnd?.(winner);
       },
     );
   }, [isSpinning, outlets, rotation, onSpinStart, onSpinEnd]);
