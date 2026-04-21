@@ -5,7 +5,6 @@ import { useRouter, usePathname } from 'next/navigation';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import HomeIcon from '@mui/icons-material/Restaurant';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import HistoryIcon from '@mui/icons-material/History';
 
 export default function BottomNavBar() {
@@ -16,8 +15,7 @@ export default function BottomNavBar() {
   // Update active nav based on pathname
   useEffect(() => {
     if (pathname === '/') setValue(0);
-    else if (pathname === '/favorites') setValue(1);
-    else if (pathname === '/history') setValue(2);
+    else if (pathname === '/history') setValue(1);
   }, [pathname]);
 
   const handleNavigation = (event: React.SyntheticEvent, newValue: number) => {
@@ -28,9 +26,6 @@ export default function BottomNavBar() {
         router.push('/');
         break;
       case 1:
-        router.push('/favorites');
-        break;
-      case 2:
         router.push('/history');
         break;
     }
@@ -52,17 +47,6 @@ export default function BottomNavBar() {
       <BottomNavigationAction
         label="Home"
         icon={<HomeIcon />}
-        sx={{
-          '&.Mui-selected': {
-            '& .MuiBottomNavigationAction-label': {
-              fontWeight: 700,
-            },
-          },
-        }}
-      />
-      <BottomNavigationAction
-        label="Favorites"
-        icon={<FavoriteIcon />}
         sx={{
           '&.Mui-selected': {
             '& .MuiBottomNavigationAction-label': {
