@@ -29,7 +29,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
           backgroundColor: '#FAF9F7',
         }}
       >
-        <TopAppBar onFilterClick={() => setFiltersModalOpen(true)} />
+        <TopAppBar />
         {children}
         <BottomNavBar />
         <FiltersModal
