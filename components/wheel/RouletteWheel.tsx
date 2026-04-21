@@ -12,7 +12,7 @@ interface RouletteWheelProps {
   onSpinStart?: () => void;
   onSpinEnd?: (outlet: FoodOutlet) => void;
   onCurrentChange?: (outlet: FoodOutlet) => void;
-  triggerSpin?: boolean;
+  triggerSpin?: number;
 }
 
 // Helper to get segment under pointer for a given rotation
@@ -37,12 +37,12 @@ export default function RouletteWheel({
   onSpinStart,
   onSpinEnd,
   onCurrentChange,
-  triggerSpin = false,
+  triggerSpin = 0,
 }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState<FoodOutlet | null>(null);
-  const [lastTrigger, setLastTrigger] = useState(false);
+  const [lastTrigger, setLastTrigger] = useState(0);
 
   // Track current segment during spin
   const currentSegmentRef = useRef<FoodOutlet | null>(null);
