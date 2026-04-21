@@ -146,6 +146,7 @@ export default function RouletteWheel({
     <Box
       sx={{
         width: "100%",
+        maxWidth: "600px",
         aspectRatio: "1/1",
         margin: "0 auto",
         cursor: isSpinning || isEmpty ? "default" : "pointer",
