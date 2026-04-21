@@ -1,3 +1,10 @@
+## [1.1.1-beta.3](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.1-beta.2...v1.1.1-beta.3) (2026-04-21)
+
+
+### Bug Fixes
+
+* resolve TypeScript build errors in RouletteWheel and AppLayout ([07f44e3](https://github.com/hmcldryl/KaEatSaan/commit/07f44e3320cc5855ddef3123aa376ce0b14be449))
+
 ## [1.1.1-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.1-beta.1...v1.1.1-beta.2) (2026-04-21)
 
 
