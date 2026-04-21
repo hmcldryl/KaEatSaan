@@ -1,3 +1,10 @@
+## [1.1.1-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.1-beta.1...v1.1.1-beta.2) (2026-04-21)
+
+
+### Bug Fixes
+
+* roleta alignment on wide screens, update .gitignore file ([1219f94](https://github.com/hmcldryl/KaEatSaan/commit/1219f94c44621d53508c3643b40830c9beb6a3da))
+
 ## [1.1.1-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0...v1.1.1-beta.1) (2026-01-26)
 
 
