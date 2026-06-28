@@ -1,3 +1,10 @@
+# [1.2.0-beta.10](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.9...v1.2.0-beta.10) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** handle already-active-version error with post-deploy site check ([dc36f5e](https://github.com/hmcldryl/KaEatSaan/commit/dc36f5ed7e94e4afee43c8c1de61e759daa32eba))
+
 # [1.2.0-beta.9](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.8...v1.2.0-beta.9) (2026-06-28)
 
 
