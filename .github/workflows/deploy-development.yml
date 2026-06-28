@@ -53,7 +53,7 @@ jobs:
       - run: npm ci
 
       - name: Build
-        run: npm run build
+        run: npm run build && echo "${{ github.sha }}" > out/build-id.txt
         env:
           NEXT_PUBLIC_BUILD_ID: ${{ github.sha }}
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
