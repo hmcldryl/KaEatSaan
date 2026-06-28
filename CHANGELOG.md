@@ -1,3 +1,10 @@
+# [1.2.0-beta.3](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** remove environment context from release and notify jobs ([5ef3bd7](https://github.com/hmcldryl/KaEatSaan/commit/5ef3bd7a7218c7f012b0fa4dbe159b6254fdfc17))
+
 # [1.2.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2026-06-28)
 
 
