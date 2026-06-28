@@ -43,8 +43,8 @@ export function drawSegment(
 
   ctx.restore();
 
-  // Draw border - lighter for the pastel theme
-  ctx.strokeStyle = "#F5F5F5";
+  // Draw border between segments
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.6)";
   ctx.lineWidth = 2;
   ctx.stroke();
 
@@ -55,14 +55,15 @@ export function drawSegment(
   ctx.textAlign = "right";
   ctx.textBaseline = "middle";
 
-  // Use dark text for both light colors
-  ctx.fillStyle = "#1F2937";
+  // White text on orange segments, dark orange on white segments
+  const isOrange = color === "#FF6B35";
+  ctx.fillStyle = isOrange ? "#FFFFFF" : "#AB3500";
 
-  ctx.font = "11px Montserrat, sans-serif";
+  ctx.font = "bold 12px Montserrat, sans-serif";
 
-  // Light shadow for better readability
-  ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
-  ctx.shadowBlur = 2;
+  // Shadow for readability
+  ctx.shadowColor = isOrange ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.8)";
+  ctx.shadowBlur = 3;
   ctx.shadowOffsetX = 1;
   ctx.shadowOffsetY = 1;
 
@@ -198,42 +199,32 @@ export function drawOuterRing(
   ctx.shadowOffsetX = 0;
   ctx.shadowOffsetY = 5;
 
-  // Draw outer ring with gradient (lighter yellow/gold)
+  // White outer ring
   ctx.beginPath();
   ctx.arc(centerX, centerY, outerRadius, 0, Math.PI * 2);
   ctx.arc(centerX, centerY, innerRingRadius, 0, Math.PI * 2, true);
-
-  const gradient = ctx.createLinearGradient(
-    centerX - outerRadius,
-    centerY,
-    centerX + outerRadius,
-    centerY,
-  );
-  gradient.addColorStop(0, "#FFE4A3");
-  gradient.addColorStop(0.5, "#FFD966");
-  gradient.addColorStop(1, "#FFE4A3");
-  ctx.fillStyle = gradient;
+  ctx.fillStyle = "#FFFFFF";
   ctx.fill();
 
   ctx.restore();
 
-  // Add inner shadow to ring
-  ctx.strokeStyle = "#FFCC33";
-  ctx.lineWidth = 2;
+  // Inner border of ring
+  ctx.strokeStyle = "rgba(255, 107, 53, 0.3)";
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(centerX, centerY, innerRingRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Add outer shadow to ring
-  ctx.strokeStyle = "#FFF5D6";
-  ctx.lineWidth = 2;
+  // Outer border of ring
+  ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.arc(centerX, centerY, outerRadius, 0, Math.PI * 2);
   ctx.stroke();
 
-  // Draw decorative dots on the ring
+  // Decorative dots — alternating orange and white
   const dotCount = 16;
-  const dotRadius = 6;
+  const dotRadius = 5;
   const dotRingRadius = innerRingRadius + ringThickness / 2;
 
   for (let i = 0; i < dotCount; i++) {
@@ -241,31 +232,17 @@ export function drawOuterRing(
     const dotX = centerX + dotRingRadius * Math.cos(angle);
     const dotY = centerY + dotRingRadius * Math.sin(angle);
 
-    // Draw dot shadow
-    ctx.beginPath();
-    ctx.arc(dotX, dotY + 1, dotRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
-    ctx.fill();
-
-    // Draw white dot
     ctx.beginPath();
     ctx.arc(dotX, dotY, dotRadius, 0, Math.PI * 2);
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fill();
-
-    // Add highlight to dot
-    ctx.beginPath();
-    ctx.arc(dotX - 1.5, dotY - 1.5, dotRadius / 2.5, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
+    ctx.fillStyle = i % 2 === 0 ? "#FF6B35" : "#FFD4C4";
     ctx.fill();
   }
 }
 
 export function getSegmentColors(count: number): string[] {
-  // Light orange and white stripes
   const colors: string[] = [];
   for (let i = 0; i < count; i++) {
-    colors.push(i % 2 === 0 ? "#FFCBB8" : "#FFFFFF");
+    colors.push(i % 2 === 0 ? "#FF6B35" : "#FFFFFF");
   }
   return colors;
 }

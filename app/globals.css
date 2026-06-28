@@ -56,12 +56,13 @@ html {
 
 /* Floating food emoji */
 @keyframes drift-up {
-  from { transform: translateY(110vh) rotate(0deg); }
-  to   { transform: translateY(-10vh) rotate(360deg); }
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(-130vh) rotate(360deg); }
 }
 
 .floating-food-emoji {
   position: absolute;
+  display: block;
   pointer-events: none;
   user-select: none;
   opacity: 0.18;

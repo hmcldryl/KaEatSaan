@@ -218,28 +218,21 @@ export default function Home() {
           px: "20px",
         }}
       >
-        {/* Bouncing logo banner */}
-        <Box
-          className="glass-card logo-bounce"
-          sx={{
-            borderRadius: "9999px",
-            px: 3,
-            py: 1,
-            display: "flex",
-            alignItems: "center",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+        {/* Floating logo — CSS filter inverts orange to white on the orange bg */}
+        <Image
+          src="/logo.png"
+          alt="KaEatSaan"
+          height={72}
+          width={190}
+          className="logo-bounce"
+          style={{
+            height: 72,
+            width: "auto",
+            filter: "brightness(0) invert(1) drop-shadow(0 4px 16px rgba(0,0,0,0.25))",
             flexShrink: 0,
           }}
-        >
-          <Image
-            src="/logo.png"
-            alt="KaEatSaan"
-            height={44}
-            width={130}
-            style={{ height: 44, width: "auto" }}
-            priority
-          />
-        </Box>
+          priority
+        />
 
         {/* Result pill */}
         {currentOutlet && (
