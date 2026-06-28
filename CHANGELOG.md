@@ -1,3 +1,10 @@
+# [1.2.0-beta.5](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.4...v1.2.0-beta.5) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** inject GITHUB_SHA into bundle to guarantee unique Firebase versions ([cdd1b70](https://github.com/hmcldryl/KaEatSaan/commit/cdd1b702aade7499bcb09660c0d31272a8950826))
+
 # [1.2.0-beta.4](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2026-06-28)
 
 
