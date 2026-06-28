@@ -1,3 +1,10 @@
+# [1.2.0-beta.8](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.7...v1.2.0-beta.8) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** stamp out/ with commit SHA after build to force unique Firebase version ([8b176ea](https://github.com/hmcldryl/KaEatSaan/commit/8b176ea24b3bec794053dcd21f2943a55984d1c1))
+
 # [1.2.0-beta.7](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.6...v1.2.0-beta.7) (2026-06-28)
 
 
