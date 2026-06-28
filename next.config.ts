@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version,
   },
+  generateBuildId: async () => {
+    return process.env.NEXT_PUBLIC_BUILD_ID || `local-${Date.now()}`;
+  },
 };
 
 export default nextConfig;
