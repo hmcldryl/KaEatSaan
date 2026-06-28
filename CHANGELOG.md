@@ -1,3 +1,10 @@
+# [1.2.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** add environment context to build job for secret access ([532cc03](https://github.com/hmcldryl/KaEatSaan/commit/532cc038b706f765fbb518d9f10d06e753143386))
+
 # [1.2.0-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.1-beta.3...v1.2.0-beta.1) (2026-06-28)
 
 
