@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import {
@@ -102,8 +102,8 @@ export default function ReviewForm({ onSubmit, onCancel }: ReviewFormProps) {
           onClick={handleSubmit}
           disabled={isSubmitting || rating === 0 || !summary.trim()}
           sx={{
-            backgroundColor: '#FF6B35',
-            '&:hover': { backgroundColor: '#E55A2B' },
+            backgroundColor: '#E37725',
+            '&:hover': { backgroundColor: '#C4621B' },
           }}
         >
           {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Submit Review'}

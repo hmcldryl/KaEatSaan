@@ -1,4 +1,4 @@
-export function getScaledCanvas(
+﻿export function getScaledCanvas(
   canvas: HTMLCanvasElement,
 ): CanvasRenderingContext2D | null {
   const ctx = canvas.getContext("2d");
@@ -101,7 +101,7 @@ export function drawPointer(
   ctx.closePath();
 
   // Fill with orange color
-  ctx.fillStyle = "#FF6B35";
+  ctx.fillStyle = "#E37725";
   ctx.fill();
 
   // Reset shadow
@@ -141,9 +141,9 @@ export function drawCenterCircle(
     centerY,
     buttonRadius,
   );
-  gradient.addColorStop(0, "#FF8A5B");
-  gradient.addColorStop(0.5, "#FF6B35");
-  gradient.addColorStop(1, "#E55A2B");
+  gradient.addColorStop(0, "#F59842");
+  gradient.addColorStop(0.5, "#E37725");
+  gradient.addColorStop(1, "#C4621B");
   ctx.fillStyle = gradient;
   ctx.fill();
 

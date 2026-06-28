@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
@@ -98,7 +98,7 @@ export default function WheelResult({
             component="div"
             sx={{
               fontWeight: 800,
-              color: "#FF6B35",
+              color: "#E37725",
               letterSpacing: "-0.02em",
             }}
           >
@@ -107,7 +107,7 @@ export default function WheelResult({
           <IconButton
             onClick={handleToggleFavorite}
             sx={{
-              color: favorite ? "#FF6B35" : "#6B7280",
+              color: favorite ? "#E37725" : "#6B7280",
               "&:hover": {
                 background: "rgba(255, 107, 53, 0.08)",
               },
@@ -131,7 +131,7 @@ export default function WheelResult({
             <Chip
               label={outlet.cuisine}
               sx={{
-                backgroundColor: "#FF6B35",
+                backgroundColor: "#E37725",
                 color: "white",
                 fontWeight: 600,
               }}

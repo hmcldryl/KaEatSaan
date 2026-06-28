@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
@@ -243,8 +243,8 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
           onClick={onClose}
           variant="contained"
           sx={{
-            backgroundColor: '#FF6B35',
-            '&:hover': { backgroundColor: '#E55A2B' },
+            backgroundColor: '#E37725',
+            '&:hover': { backgroundColor: '#C4621B' },
           }}
         >
           Done

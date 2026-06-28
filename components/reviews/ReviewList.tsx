@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import {
   Box,
@@ -70,7 +70,7 @@ export default function ReviewList({ reviews, isLoading, onDelete }: ReviewListP
               <Avatar
                 src={review.userPhotoUrl || undefined}
                 alt={review.userName}
-                sx={{ width: 40, height: 40, bgcolor: '#FF6B35' }}
+                sx={{ width: 40, height: 40, bgcolor: '#E37725' }}
               >
                 {review.userName[0]?.toUpperCase()}
               </Avatar>

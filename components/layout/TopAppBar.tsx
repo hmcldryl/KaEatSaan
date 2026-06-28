@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -10,7 +11,6 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
@@ -41,33 +41,15 @@ export default function TopAppBar() {
     <>
       <AppBar position="fixed" elevation={0}>
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: "8px",
-                background: "linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 2px 8px rgba(255, 107, 53, 0.3)",
-              }}
-            >
-              <RestaurantIcon sx={{ fontSize: 22, color: "white" }} />
-            </Box>
-            <Typography
-              variant="h6"
-              component="h1"
-              sx={{
-                fontWeight: 800,
-                fontSize: { xs: "1.25rem", sm: "1.5rem" },
-                letterSpacing: "-0.02em",
-                color: "#1F2937",
-              }}
-            >
-              KaEatSaan
-            </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Image
+              src="/logo.png"
+              alt="KaEatSaan"
+              height={40}
+              width={43}
+              style={{ width: "auto" }}
+              priority
+            />
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             {user && (
@@ -77,7 +59,7 @@ export default function TopAppBar() {
                 sx={{
                   color: "#6B7280",
                   "&:hover": {
-                    color: "#FF6B35",
+                    color: "#E37725",
                     backgroundColor: "rgba(255, 107, 53, 0.08)",
                   },
                 }}
@@ -101,7 +83,7 @@ export default function TopAppBar() {
                   sx={{
                     width: 34,
                     height: 34,
-                    bgcolor: "#FF6B35",
+                    bgcolor: "#E37725",
                     color: "#FFFFFF",
                     fontSize: "0.9rem",
                     fontWeight: 600,
@@ -117,7 +99,7 @@ export default function TopAppBar() {
                 sx={{
                   color: "#6B7280",
                   "&:hover": {
-                    color: "#FF6B35",
+                    color: "#E37725",
                     backgroundColor: "rgba(255, 107, 53, 0.08)",
                   },
                 }}

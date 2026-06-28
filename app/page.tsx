@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Box from "@mui/material/Box";
@@ -62,7 +62,7 @@ export default function Home() {
     <Box
       sx={{
         minHeight: "calc(100vh - 144px)",
-        backgroundColor: "#FAF9F7",
+        backgroundColor: "#FFF8F2",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -88,7 +88,7 @@ export default function Home() {
             gap: 2,
           }}
         >
-          <CircularProgress size={48} sx={{ color: "#FF6B35" }} />
+          <CircularProgress size={48} sx={{ color: "#E37725" }} />
           <Typography variant="body1" color="text.secondary">
             Loading...
           </Typography>
@@ -131,8 +131,8 @@ export default function Home() {
               startIcon={<AddIcon />}
               onClick={() => setAddModalOpen(true)}
               sx={{
-                backgroundColor: "#FF6B35",
-                "&:hover": { backgroundColor: "#E55A2B" },
+                backgroundColor: "#E37725",
+                "&:hover": { backgroundColor: "#C4621B" },
               }}
             >
               Add Kainan
@@ -154,11 +154,11 @@ export default function Home() {
             mx: "auto",
             mb: 0,
             position: "relative",
-            background: "linear-gradient(90deg, #FFE4A3 0%, #FFD966 50%, #FFE4A3 100%)",
+            background: "linear-gradient(90deg, #FFF3E8 0%, #FFE4D0 50%, #FFF3E8 100%)",
             borderRadius: "50px",
             padding: "14px 24px",
             boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-            border: "2px solid #FFCC33",
+            border: "2px solid #F0C898",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -273,11 +273,11 @@ export default function Home() {
             gap: 0,
             mt: -2,
             position: "relative",
-            background: "linear-gradient(90deg, #FFE4A3 0%, #FFD966 50%, #FFE4A3 100%)",
+            background: "linear-gradient(90deg, #FFF3E8 0%, #FFE4D0 50%, #FFF3E8 100%)",
             borderRadius: "50px",
             padding: "6px",
             boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-            border: "2px solid #FFCC33",
+            border: "2px solid #F0C898",
           }}
         >
           {/* Filter button */}
@@ -291,7 +291,7 @@ export default function Home() {
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
               "&:hover": {
                 backgroundColor: "#FFF5F0",
-                color: "#FF6B35",
+                color: "#E37725",
               },
             }}
           >
@@ -299,7 +299,7 @@ export default function Home() {
               badgeContent={activeFiltersCount}
               sx={{
                 "& .MuiBadge-badge": {
-                  background: "#FF6B35",
+                  background: "#E37725",
                   color: "#FFFFFF",
                   fontWeight: 600,
                   fontSize: "0.65rem",
@@ -317,7 +317,7 @@ export default function Home() {
             onClick={handleSpin}
             variant="contained"
             sx={{
-              backgroundColor: "#FF6B35",
+              backgroundColor: "#E37725",
               color: "#FFFFFF",
               fontWeight: 700,
               fontSize: "1.1rem",
@@ -327,7 +327,7 @@ export default function Home() {
               borderRadius: "50px",
               boxShadow: "0 4px 12px rgba(255, 107, 53, 0.4)",
               "&:hover": {
-                backgroundColor: "#E55A2B",
+                backgroundColor: "#C4621B",
               },
             }}
           >
@@ -345,7 +345,7 @@ export default function Home() {
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
               "&:hover": {
                 backgroundColor: "#FFF5F0",
-                color: "#FF6B35",
+                color: "#E37725",
               },
             }}
           >

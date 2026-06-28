@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -94,7 +94,7 @@ export default function FoodOutletDetailModal({
       <Box
         sx={{
           position: "relative",
-          background: "linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%)",
+          background: "linear-gradient(135deg, #E37725 0%, #F59842 100%)",
           color: "white",
           p: 3,
           pb: 2,
