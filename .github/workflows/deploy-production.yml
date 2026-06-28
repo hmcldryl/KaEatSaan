@@ -86,9 +86,12 @@ jobs:
           name: build-${{ github.sha }}
           path: out/
 
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_75E29 }}
+
       - name: Deploy to Firebase Hosting (prod)
         run: |
-          echo "$FIREBASE_SA" > /tmp/sa.json
           npx --yes firebase-tools@13 deploy \
             --only hosting:prod \
             --project kaeatsaan-75e29 \
@@ -99,9 +102,6 @@ jobs:
             exit 0
           fi
           exit $EXIT
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa.json
-          FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_75E29 }}
 
   notify:
     name: Notify Discord
