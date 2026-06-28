@@ -2,63 +2,84 @@
 
 import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Restaurant';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import HistoryIcon from '@mui/icons-material/History';
+import TuneIcon from '@mui/icons-material/Tune';
+
+const NAV = [
+  { Icon: HomeIcon, path: '/', label: 'Home' },
+  { Icon: FavoriteIcon, path: '/favorites', label: 'Favorites' },
+  { Icon: HistoryIcon, path: '/history', label: 'History' },
+  { Icon: TuneIcon, path: '/filters', label: 'Filters' },
+] as const;
 
 export default function BottomNavBar() {
   const router = useRouter();
   const pathname = usePathname();
-  const value = pathname === '/history' ? 1 : 0;
-
-  const handleNavigation = (event: React.SyntheticEvent, newValue: number) => {
-
-    switch (newValue) {
-      case 0:
-        router.push('/');
-        break;
-      case 1:
-        router.push('/history');
-        break;
-    }
-  };
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={handleNavigation}
-      showLabels
+    <Box
       sx={{
-        '& .MuiBottomNavigationAction-label': {
-          fontSize: '0.75rem',
-          fontWeight: 600,
-          letterSpacing: '0.02em',
-        },
+        position: 'fixed',
+        bottom: '24px',
+        left: 0,
+        right: 0,
+        zIndex: 1200,
+        display: 'flex',
+        justifyContent: 'center',
+        px: '20px',
+        pointerEvents: 'none',
       }}
     >
-      <BottomNavigationAction
-        label="Home"
-        icon={<HomeIcon />}
+      <Box
         sx={{
-          '&.Mui-selected': {
-            '& .MuiBottomNavigationAction-label': {
-              fontWeight: 700,
-            },
-          },
+          background: 'rgba(255, 255, 255, 0.92)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderRadius: '9999px',
+          border: '1px solid rgba(255, 255, 255, 0.5)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around',
+          gap: 0.5,
+          px: 1,
+          py: 0.75,
+          width: '100%',
+          maxWidth: '400px',
+          pointerEvents: 'auto',
         }}
-      />
-      <BottomNavigationAction
-        label="History"
-        icon={<HistoryIcon />}
-        sx={{
-          '&.Mui-selected': {
-            '& .MuiBottomNavigationAction-label': {
-              fontWeight: 700,
-            },
-          },
-        }}
-      />
-    </BottomNavigation>
+      >
+        {NAV.map(({ Icon, path, label }) => {
+          const active = pathname === path;
+          return (
+            <IconButton
+              key={path}
+              onClick={() => router.push(path)}
+              aria-label={label}
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: '9999px',
+                backgroundColor: active ? '#FF6B35' : 'transparent',
+                color: active ? '#ffffff' : '#9CA3AF',
+                boxShadow: active ? '0 4px 12px rgba(255, 107, 53, 0.4)' : 'none',
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  backgroundColor: active ? '#E55A20' : 'rgba(255, 107, 53, 0.08)',
+                  color: active ? '#ffffff' : '#FF6B35',
+                },
+                '&:active': { transform: 'scale(0.88)' },
+              }}
+            >
+              <Icon sx={{ fontSize: 22 }} />
+            </IconButton>
+          );
+        })}
+      </Box>
+    </Box>
   );
 }

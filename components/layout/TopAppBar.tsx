@@ -47,7 +47,7 @@ export default function TopAppBar() {
               alt="KaEatSaan"
               height={40}
               width={43}
-              style={{ width: "auto" }}
+              style={{ height: 40, width: "auto" }}
               priority
             />
           </Box>

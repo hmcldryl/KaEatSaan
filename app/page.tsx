@@ -1,15 +1,24 @@
-﻿"use client";
+"use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import CircularProgress from "@mui/material/CircularProgress";
-import AddIcon from "@mui/icons-material/Add";
 import TuneIcon from "@mui/icons-material/Tune";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Badge from "@mui/material/Badge";
+import CasinoIcon from "@mui/icons-material/Casino";
+import PersonIcon from "@mui/icons-material/Person";
+import AddIcon from "@mui/icons-material/Add";
+import LogoutIcon from "@mui/icons-material/Logout";
 import RouletteWheel from "@/components/wheel/RouletteWheel";
 import { useFoodOutlets } from "@/hooks/useFoodOutlets";
 import { useUIStore } from "@/lib/store/uiStore";
@@ -17,24 +26,49 @@ import { useHistoryStore } from "@/lib/store/historyStore";
 import { useFiltersStore } from "@/lib/store/filtersStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import { FoodOutlet } from "@/types/foodOutlet";
+import { HistoryEntry } from "@/types/history";
 import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
-import { useRouter } from "next/navigation";
+import AuthDialog from "@/components/auth/AuthDialog";
+
+function computeStreak(history: HistoryEntry[]): number {
+  if (!history.length) return 0;
+  const days = new Set(
+    history.map((e) => {
+      const d = new Date(e.timestamp);
+      d.setHours(0, 0, 0, 0);
+      return d.getTime();
+    })
+  );
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let streak = 0;
+  let cur = today.getTime();
+  if (!days.has(cur)) cur -= 86400000;
+  while (days.has(cur)) {
+    streak++;
+    cur -= 86400000;
+  }
+  return streak;
+}
 
 export default function Home() {
   const { outlets, isLoading } = useFoodOutlets();
   const { setIsSpinning, setFiltersModalOpen } = useUIStore();
-  const addHistoryEntry = useHistoryStore((state) => state.addEntry);
+  const { history, addEntry: addHistoryEntry } = useHistoryStore();
   const filters = useFiltersStore();
   const activeFiltersCount = filters.getActiveFiltersCount();
-  const { user } = useAuthStore();
-  const [currentOutlet, setCurrentOutlet] = useState<FoodOutlet | null>(null);
-  const [addModalOpen, setAddModalOpen] = useState(false);
-  const [spinTrigger, setSpinTrigger] = useState(0);
+  const { user, signOut } = useAuthStore();
   const router = useRouter();
 
-  const handleSpinStart = () => {
-    setIsSpinning(true);
-  };
+  const [currentOutlet, setCurrentOutlet] = useState<FoodOutlet | null>(null);
+  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [spinTrigger, setSpinTrigger] = useState(0);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+
+  const spinCount = history.length;
+  const level = Math.floor(spinCount / 5) + 1;
+  const streak = useMemo(() => computeStreak(history), [history]);
 
   const handleSpinEnd = (outlet: FoodOutlet) => {
     setIsSpinning(false);
@@ -49,315 +83,353 @@ export default function Home() {
     });
   };
 
-  const handleSpin = () => {
-    setSpinTrigger((prev) => prev + 1);
-  };
-
-  const hasFoodOutlets = outlets.length > 0;
-
-  // White dots for the decorative elements
-  const dots = Array.from({ length: 12 }, (_, i) => i);
-
   return (
     <Box
       sx={{
-        minHeight: "calc(100vh - 144px)",
-        backgroundColor: "#FFF8F2",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        pt: 1,
-        pb: 2,
+        justifyContent: "space-between",
+        py: "20px",
+        overflow: "hidden",
       }}
     >
-      {/* Loading overlay */}
-      {isLoading && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: 64,
-            left: 0,
-            right: 0,
-            bottom: 80,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(250, 249, 247, 0.9)",
-            zIndex: 1100,
-            gap: 2,
-          }}
-        >
-          <CircularProgress size={48} sx={{ color: "#E37725" }} />
-          <Typography variant="body1" color="text.secondary">
-            Loading...
-          </Typography>
-        </Box>
-      )}
-
-      {/* Empty state message */}
-      {!isLoading && !hasFoodOutlets && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            px: 3,
-            py: 4,
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 700,
-              color: "#1F2937",
-              mb: 1,
-            }}
-          >
-            No Kainan Yet
-          </Typography>
-          <Typography
-            variant="body1"
-            color="text.secondary"
-            sx={{ mb: 3, maxWidth: 280 }}
-          >
-            Add your favorite kainan!
-          </Typography>
-          {user ? (
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() => setAddModalOpen(true)}
+      {/* TOP: Profile chip */}
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end", px: "20px" }}>
+        {user ? (
+          <>
+            <Box
+              onClick={(e) => setMenuAnchor(e.currentTarget as HTMLElement)}
               sx={{
-                backgroundColor: "#E37725",
-                "&:hover": { backgroundColor: "#C4621B" },
+                background: "rgba(255,255,255,0.88)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                borderRadius: "9999px",
+                border: "1px solid rgba(255,255,255,0.4)",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+                px: 1.5,
+                py: 0.75,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                cursor: "pointer",
+                userSelect: "none",
+                transition: "transform 0.15s ease",
+                "&:active": { transform: "scale(0.95)" },
               }}
             >
-              Add Kainan
-            </Button>
-          ) : (
-            <Typography variant="body2" color="text.secondary">
-              Sign in to add your favorite kainan
+              <Typography
+                sx={{ fontWeight: 800, fontSize: "0.7rem", color: "#AB3500", letterSpacing: "0.04em" }}
+              >
+                LVL {level}
+              </Typography>
+              <Box sx={{ width: "1px", height: 12, bgcolor: "rgba(139,90,60,0.3)" }} />
+              <Typography
+                sx={{ fontWeight: 700, fontSize: "0.7rem", color: "#6B7280", display: "flex", alignItems: "center", gap: 0.5 }}
+              >
+                🔥 {streak}
+              </Typography>
+              <Avatar
+                src={user.photoURL || undefined}
+                alt={user.displayName || "User"}
+                sx={{
+                  width: 32,
+                  height: 32,
+                  bgcolor: "#FF6B35",
+                  fontSize: "0.8rem",
+                  fontWeight: 700,
+                  border: "2px solid rgba(255,107,53,0.3)",
+                  ml: 0.5,
+                }}
+              >
+                {user.displayName?.[0] || user.email?.[0]?.toUpperCase()}
+              </Avatar>
+            </Box>
+
+            <Menu
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={() => setMenuAnchor(null)}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              PaperProps={{ sx: { borderRadius: "12px", boxShadow: "0 8px 24px rgba(0,0,0,0.12)", mt: 1 } }}
+            >
+              <MenuItem disabled sx={{ opacity: 1 }}>
+                <Typography variant="body2" color="text.secondary">
+                  {user.displayName || user.email}
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={() => { setAddModalOpen(true); setMenuAnchor(null); }}>
+                <ListItemIcon><AddIcon fontSize="small" sx={{ color: "#6B7280" }} /></ListItemIcon>
+                Add Kainan
+              </MenuItem>
+              <MenuItem onClick={async () => { await signOut(); setMenuAnchor(null); }}>
+                <ListItemIcon><LogoutIcon fontSize="small" sx={{ color: "#6B7280" }} /></ListItemIcon>
+                Sign Out
+              </MenuItem>
+              <MenuItem disabled sx={{ opacity: 0.5, justifyContent: "center" }}>
+                <Typography variant="caption" color="text.secondary">
+                  v{process.env.NEXT_PUBLIC_APP_VERSION}
+                </Typography>
+              </MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <Box
+            onClick={() => setAuthDialogOpen(true)}
+            sx={{
+              background: "rgba(255,255,255,0.88)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              borderRadius: "9999px",
+              border: "1px solid rgba(255,255,255,0.4)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+              px: 1.5,
+              py: 0.75,
+              display: "flex",
+              alignItems: "center",
+              gap: 0.75,
+              cursor: "pointer",
+              userSelect: "none",
+              transition: "transform 0.15s ease",
+              "&:active": { transform: "scale(0.95)" },
+            }}
+          >
+            <PersonIcon sx={{ fontSize: 18, color: "#6B7280" }} />
+            <Typography sx={{ fontWeight: 700, fontSize: "0.75rem", color: "#6B7280" }}>
+              Sign in
             </Typography>
-          )}
-        </Box>
-      )}
-
-      {/* Current segment banner - styled like wheel outer ring */}
-      {hasFoodOutlets && (
-        <Box
-          sx={{
-            width: "90%",
-            maxWidth: "500px",
-            mx: "auto",
-            mb: 0,
-            position: "relative",
-            background: "linear-gradient(90deg, #FFF3E8 0%, #FFE4D0 50%, #FFF3E8 100%)",
-            borderRadius: "50px",
-            padding: "14px 24px",
-            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-            border: "2px solid #F0C898",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-        >
-          {/* Decorative dots - left side */}
-          <Box
-            sx={{
-              position: "absolute",
-              left: 8,
-              top: "50%",
-              transform: "translateY(-50%)",
-              display: "flex",
-              gap: "6px",
-            }}
-          >
-            {dots.slice(0, 3).map((i) => (
-              <Box
-                key={`left-${i}`}
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  backgroundColor: "#FFFFFF",
-                  boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
-                }}
-              />
-            ))}
           </Box>
-
-          {/* Text */}
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 700,
-              color: "#1F2937",
-              fontSize: { xs: "1.1rem", sm: "1.4rem" },
-              textAlign: "center",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              maxWidth: "70%",
-              textShadow: "0 1px 2px rgba(255,255,255,0.5)",
-            }}
-          >
-            {currentOutlet?.name || "Tap Saan?"}
-          </Typography>
-
-          {/* Decorative dots - right side */}
-          <Box
-            sx={{
-              position: "absolute",
-              right: 8,
-              top: "50%",
-              transform: "translateY(-50%)",
-              display: "flex",
-              gap: "6px",
-            }}
-          >
-            {dots.slice(0, 3).map((i) => (
-              <Box
-                key={`right-${i}`}
-                sx={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  backgroundColor: "#FFFFFF",
-                  boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
-                }}
-              />
-            ))}
-          </Box>
-        </Box>
-      )}
-
-      {/* Wheel */}
-      <Box
-        sx={{
-          width: "100%",
-          overflow: "hidden",
-          mt: -1,
-        }}
-      >
-        <Box
-          sx={{
-            width: { xs: "130%", sm: "100%" },
-            maxWidth: { xs: "none", sm: "600px" },
-            margin: "0 auto",
-            position: "relative",
-            left: { xs: "50%", sm: "0" },
-            transform: { xs: "translateX(-50%)", sm: "none" },
-          }}
-        >
-          <RouletteWheel
-            outlets={outlets}
-            onSpinStart={handleSpinStart}
-            onSpinEnd={handleSpinEnd}
-            onCurrentChange={setCurrentOutlet}
-            triggerSpin={spinTrigger > 0 ? spinTrigger : undefined}
-          />
-        </Box>
+        )}
       </Box>
 
-      {/* Button group - circus styled */}
-      {hasFoodOutlets && (
+      {/* CENTER: Logo + Wheel */}
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 2,
+          width: "100%",
+          overflow: "hidden",
+          px: "20px",
+        }}
+      >
+        {/* Bouncing logo banner */}
         <Box
+          className="glass-card logo-bounce"
           sx={{
+            borderRadius: "9999px",
+            px: 3,
+            py: 1,
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            gap: 0,
-            mt: -2,
-            position: "relative",
-            background: "linear-gradient(90deg, #FFF3E8 0%, #FFE4D0 50%, #FFF3E8 100%)",
-            borderRadius: "50px",
-            padding: "6px",
-            boxShadow: "0 4px 15px rgba(0, 0, 0, 0.15)",
-            border: "2px solid #F0C898",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
+            flexShrink: 0,
           }}
         >
-          {/* Filter button */}
-          <IconButton
-            onClick={() => setFiltersModalOpen(true)}
+          <Image
+            src="/logo.png"
+            alt="KaEatSaan"
+            height={44}
+            width={130}
+            style={{ height: 44, width: "auto" }}
+            priority
+          />
+        </Box>
+
+        {/* Result pill */}
+        {currentOutlet && (
+          <Box
             sx={{
-              backgroundColor: "#FFFFFF",
-              color: "#6B7280",
-              width: 48,
-              height: 48,
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              "&:hover": {
-                backgroundColor: "#FFF5F0",
-                color: "#E37725",
-              },
+              background: "rgba(255,255,255,0.92)",
+              backdropFilter: "blur(8px)",
+              borderRadius: "9999px",
+              px: 2.5,
+              py: 0.75,
+              boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+              maxWidth: "90%",
             }}
           >
-            <Badge
-              badgeContent={activeFiltersCount}
+            <Typography
               sx={{
-                "& .MuiBadge-badge": {
-                  background: "#E37725",
-                  color: "#FFFFFF",
-                  fontWeight: 600,
-                  fontSize: "0.65rem",
-                  minWidth: 16,
-                  height: 16,
-                },
+                fontWeight: 800,
+                fontSize: "0.9rem",
+                color: "#AB3500",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
-              <TuneIcon />
-            </Badge>
-          </IconButton>
+              {currentOutlet.name}
+            </Typography>
+          </Box>
+        )}
 
-          {/* Saan? button */}
-          <Button
-            onClick={handleSpin}
-            variant="contained"
+        {/* Loading */}
+        {isLoading && (
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <CircularProgress size={20} sx={{ color: "rgba(255,255,255,0.8)" }} />
+            <Typography sx={{ color: "rgba(255,255,255,0.8)", fontSize: "0.85rem", fontWeight: 600 }}>
+              Loading...
+            </Typography>
+          </Box>
+        )}
+
+        {/* Wheel */}
+        {outlets.length > 0 && (
+          <Box
             sx={{
-              backgroundColor: "#E37725",
-              color: "#FFFFFF",
-              fontWeight: 700,
-              fontSize: "1.1rem",
-              px: 4,
-              py: 1.5,
-              mx: 1,
-              borderRadius: "50px",
-              boxShadow: "0 4px 12px rgba(255, 107, 53, 0.4)",
-              "&:hover": {
-                backgroundColor: "#C4621B",
-              },
+              width: { xs: "280px", sm: "340px" },
+              height: { xs: "280px", sm: "340px" },
+              flexShrink: 0,
             }}
           >
-            Saan?
-          </Button>
+            <RouletteWheel
+              outlets={outlets}
+              onSpinStart={() => setIsSpinning(true)}
+              onSpinEnd={handleSpinEnd}
+              onCurrentChange={setCurrentOutlet}
+              triggerSpin={spinTrigger > 0 ? spinTrigger : undefined}
+            />
+          </Box>
+        )}
 
-          {/* Favorites button */}
-          <IconButton
-            onClick={() => router.push("/favorites")}
+        {/* Empty state */}
+        {!isLoading && outlets.length === 0 && (
+          <Box
+            className="glass-card"
+            sx={{ borderRadius: "20px", p: 3, textAlign: "center", width: "100%" }}
+          >
+            <Typography sx={{ fontWeight: 800, color: "#1F2937", mb: 1, fontSize: "1.1rem" }}>
+              No Kainan Yet
+            </Typography>
+            <Typography sx={{ color: "#6B7280", mb: 2, fontSize: "0.9rem" }}>
+              Add your favorite kainan to get started!
+            </Typography>
+            {user ? (
+              <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={() => setAddModalOpen(true)}
+                sx={{
+                  bgcolor: "#FF6B35",
+                  borderRadius: "9999px",
+                  fontWeight: 700,
+                  "&:hover": { bgcolor: "#E55A20" },
+                }}
+              >
+                Add Kainan
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                onClick={() => setAuthDialogOpen(true)}
+                sx={{
+                  borderColor: "#FF6B35",
+                  color: "#FF6B35",
+                  borderRadius: "9999px",
+                  fontWeight: 700,
+                }}
+              >
+                Sign in to add
+              </Button>
+            )}
+          </Box>
+        )}
+      </Box>
+
+      {/* BOTTOM: Action row */}
+      <Box sx={{ width: "100%", px: "20px", pb: "96px", flexShrink: 0 }}>
+        {outlets.length > 0 && (
+          <Box
+            className="glass-card"
             sx={{
-              backgroundColor: "#FFFFFF",
-              color: "#6B7280",
-              width: 48,
-              height: 48,
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              "&:hover": {
-                backgroundColor: "#FFF5F0",
-                color: "#E37725",
-              },
+              borderRadius: "9999px",
+              p: "6px",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
             }}
           >
-            <FavoriteIcon />
-          </IconButton>
-        </Box>
-      )}
+            <IconButton
+              onClick={() => setFiltersModalOpen(true)}
+              aria-label="filters"
+              sx={{
+                width: 56,
+                height: 56,
+                borderRadius: "9999px",
+                color: "#6B7280",
+                flexShrink: 0,
+                "&:hover": { color: "#FF6B35", bgcolor: "rgba(255,107,53,0.08)" },
+                "&:active": { transform: "scale(0.88)" },
+                transition: "all 0.15s ease",
+              }}
+            >
+              <Badge
+                badgeContent={activeFiltersCount}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    bgcolor: "#FF6B35",
+                    color: "#fff",
+                    fontWeight: 700,
+                    fontSize: "0.65rem",
+                    minWidth: 16,
+                    height: 16,
+                  },
+                }}
+              >
+                <TuneIcon />
+              </Badge>
+            </IconButton>
 
-      <AddFoodOutletModal
-        open={addModalOpen}
-        onClose={() => setAddModalOpen(false)}
-      />
+            <Button
+              onClick={() => setSpinTrigger((p) => p + 1)}
+              variant="contained"
+              endIcon={<CasinoIcon />}
+              sx={{
+                flex: 1,
+                height: 56,
+                borderRadius: "9999px",
+                bgcolor: "#FF6B35",
+                fontWeight: 800,
+                fontSize: "1.05rem",
+                letterSpacing: "0.08em",
+                boxShadow: "0 12px 32px rgba(255,107,53,0.4)",
+                "&:hover": { bgcolor: "#E55A20" },
+                "&:active": { transform: "scale(0.96)" },
+                transition: "all 0.15s ease",
+              }}
+            >
+              SAAN?
+            </Button>
+
+            <IconButton
+              onClick={() => router.push("/favorites")}
+              aria-label="favorites"
+              sx={{
+                width: 56,
+                height: 56,
+                borderRadius: "9999px",
+                color: "#6B7280",
+                flexShrink: 0,
+                "&:hover": { color: "#FF6B35", bgcolor: "rgba(255,107,53,0.08)" },
+                "&:active": { transform: "scale(0.88)" },
+                transition: "all 0.15s ease",
+              }}
+            >
+              <FavoriteIcon />
+            </IconButton>
+          </Box>
+        )}
+      </Box>
+
+      <AddFoodOutletModal open={addModalOpen} onClose={() => setAddModalOpen(false)} />
+      <AuthDialog open={authDialogOpen} onClose={() => setAuthDialogOpen(false)} />
     </Box>
   );
 }
