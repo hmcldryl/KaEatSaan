@@ -1,3 +1,10 @@
+# [1.2.0-beta.9](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.8...v1.2.0-beta.9) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** add nanosecond timestamp to build-id.txt for unique Firebase versions ([e56aa9e](https://github.com/hmcldryl/KaEatSaan/commit/e56aa9e20ac3af1b205b7dc290a6516956b45132))
+
 # [1.2.0-beta.8](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.7...v1.2.0-beta.8) (2026-06-28)
 
 
