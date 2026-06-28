@@ -12,7 +12,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,6 +37,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    environment: production
     needs: release
     steps:
       - uses: actions/checkout@v4
