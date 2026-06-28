@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   },
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version,
+    NEXT_PUBLIC_BUILD_ID: process.env.GITHUB_SHA || 'local',
   },
 };
 

@@ -86,22 +86,14 @@ jobs:
           name: build-${{ github.sha }}
           path: out/
 
-      - uses: google-github-actions/auth@v2
-        with:
-          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_75E29 }}
-
       - name: Deploy to Firebase Hosting (prod)
-        run: |
-          npx --yes firebase-tools@13 deploy \
-            --only hosting:prod \
-            --project kaeatsaan-75e29 \
-            --non-interactive 2>&1 | tee /tmp/deploy.log
-          EXIT=${PIPESTATUS[0]}
-          if [ $EXIT -ne 0 ] && grep -q "is the current active version\|FAILED_PRECONDITION" /tmp/deploy.log; then
-            echo "Already active version — no-op."
-            exit 0
-          fi
-          exit $EXIT
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_75E29 }}
+          channelId: live
+          projectId: kaeatsaan-75e29
+          target: prod
 
   notify:
     name: Notify Discord
