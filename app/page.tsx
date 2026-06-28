@@ -18,19 +18,17 @@ import { useFiltersStore } from "@/lib/store/filtersStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import { FoodOutlet } from "@/types/foodOutlet";
 import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
-import FiltersModal from "@/components/filters/FiltersModal";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { outlets, isLoading } = useFoodOutlets();
-  const { setIsSpinning } = useUIStore();
+  const { setIsSpinning, setFiltersModalOpen } = useUIStore();
   const addHistoryEntry = useHistoryStore((state) => state.addEntry);
   const filters = useFiltersStore();
-  const activeFiltersCount = useFiltersStore((state) => state.getActiveFiltersCount());
+  const activeFiltersCount = filters.getActiveFiltersCount();
   const { user } = useAuthStore();
   const [currentOutlet, setCurrentOutlet] = useState<FoodOutlet | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const [filtersModalOpen, setFiltersModalOpen] = useState(false);
   const [spinTrigger, setSpinTrigger] = useState(0);
   const router = useRouter();
 
@@ -359,11 +357,6 @@ export default function Home() {
       <AddFoodOutletModal
         open={addModalOpen}
         onClose={() => setAddModalOpen(false)}
-      />
-
-      <FiltersModal
-        open={filtersModalOpen}
-        onClose={() => setFiltersModalOpen(false)}
       />
     </Box>
   );

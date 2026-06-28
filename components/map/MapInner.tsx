@@ -7,7 +7,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import { LatLngExpression, Icon, LeafletMouseEvent } from "leaflet";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 // Fix for default marker icon in Leaflet with webpack/Next.js
 const defaultIcon = new Icon({
@@ -51,11 +51,7 @@ export default function MapInner({
   onMapClick,
   height = 300,
 }: MapInnerProps) {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
   if (!isMounted) {
     return (

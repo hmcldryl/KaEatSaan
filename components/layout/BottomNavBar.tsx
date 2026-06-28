@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -10,16 +10,9 @@ import HistoryIcon from '@mui/icons-material/History';
 export default function BottomNavBar() {
   const router = useRouter();
   const pathname = usePathname();
-  const [value, setValue] = useState(0);
-
-  // Update active nav based on pathname
-  useEffect(() => {
-    if (pathname === '/') setValue(0);
-    else if (pathname === '/history') setValue(1);
-  }, [pathname]);
+  const value = pathname === '/history' ? 1 : 0;
 
   const handleNavigation = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
 
     switch (newValue) {
       case 0:

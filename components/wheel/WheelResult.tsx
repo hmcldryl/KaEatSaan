@@ -82,7 +82,7 @@ export default function WheelResult({
             fontSize: "0.875rem",
           }}
         >
-          You're eating at...
+          You&apos;re eating at...
         </Typography>
         <Box
           sx={{
@@ -240,7 +240,7 @@ export default function WheelResult({
           Spin Again
         </Button>
         <Button onClick={onClose} variant="contained" size="large">
-          Let's Go!
+          Let&apos;s Go!
         </Button>
       </DialogActions>
 

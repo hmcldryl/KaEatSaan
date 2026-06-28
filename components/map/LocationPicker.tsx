@@ -60,20 +60,14 @@ export default function LocationPicker({
     ? ([value.latitude, value.longitude] as [number, number])
     : null;
 
-  // Debounced search
+  // Debounced search — only runs when query is long enough
   useEffect(() => {
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
+    if (searchQuery.trim().length < 3) return;
 
-    if (searchQuery.trim().length < 3) {
-      setSearchResults([]);
-      setShowResults(false);
-      return;
-    }
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
 
-    setIsSearching(true);
     searchTimeoutRef.current = setTimeout(async () => {
+      setIsSearching(true);
       const results = await searchLocation(searchQuery);
       setSearchResults(results);
       setShowResults(results.length > 0);
@@ -81,9 +75,7 @@ export default function LocationPicker({
     }, 500);
 
     return () => {
-      if (searchTimeoutRef.current) {
-        clearTimeout(searchTimeoutRef.current);
-      }
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
     };
   }, [searchQuery]);
 
@@ -128,7 +120,8 @@ export default function LocationPicker({
   // Auto-set location when user location becomes available
   useEffect(() => {
     if (userLocation && !value) {
-      handleMapClick(userLocation.latitude, userLocation.longitude);
+      const id = setTimeout(() => handleMapClick(userLocation.latitude, userLocation.longitude), 0);
+      return () => clearTimeout(id);
     }
   }, [userLocation, value, handleMapClick]);
 
@@ -139,7 +132,14 @@ export default function LocationPicker({
           fullWidth
           placeholder="Search for a location..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSearchQuery(val);
+            if (val.trim().length < 3) {
+              setSearchResults([]);
+              setShowResults(false);
+            }
+          }}
           slotProps={{
             input: {
               startAdornment: (

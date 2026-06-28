@@ -42,16 +42,12 @@ export default function RouletteWheel({
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState<FoodOutlet | null>(null);
-  const [lastTrigger, setLastTrigger] = useState(0);
+  const lastTriggerRef = useRef(0);
+  const rotationRef = useRef(0);
 
-  // Track current segment during spin
-  const currentSegmentRef = useRef<FoodOutlet | null>(null);
-
-  // Calculate current restaurant under pointer
+  // Notify parent of current segment under pointer
   useEffect(() => {
     const current = getSegmentAtPointer(rotation, outlets);
-    currentSegmentRef.current = current;
-
     if (current && onCurrentChange) {
       onCurrentChange(current);
     }
@@ -70,7 +66,7 @@ export default function RouletteWheel({
 
     const startTime = performance.now();
     const duration = 3500; // 3.5 seconds
-    const startRotation = rotation % 360;
+    const startRotation = rotationRef.current % 360;
 
     animateWheel(
       startTime,
@@ -78,6 +74,7 @@ export default function RouletteWheel({
       startRotation,
       startRotation + totalRotation,
       (currentRotation) => {
+        rotationRef.current = currentRotation;
         setRotation(currentRotation);
       },
       (finalRotation) => {
@@ -90,17 +87,18 @@ export default function RouletteWheel({
         setIsSpinning(false);
       },
     );
-  }, [isSpinning, outlets, rotation, onSpinStart, onSpinEnd]);
+  }, [isSpinning, outlets, onSpinStart, onSpinEnd]);
 
   // Handle external spin trigger
   useEffect(() => {
-    if (triggerSpin !== lastTrigger) {
+    if (triggerSpin !== lastTriggerRef.current) {
+      lastTriggerRef.current = triggerSpin;
       if (triggerSpin && !isSpinning) {
-        spin();
+        const id = setTimeout(spin, 0);
+        return () => clearTimeout(id);
       }
-      setLastTrigger(triggerSpin);
     }
-  }, [triggerSpin, lastTrigger, isSpinning, spin]);
+  }, [triggerSpin, isSpinning, spin]);
 
   const handleCloseResult = () => {
     setResult(null);
@@ -131,9 +129,9 @@ export default function RouletteWheel({
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // Check if click is within center circle
-    // Button is 0.85 * wheel radius, and wheel radius is approximately (rect.width/2 - 70)
+    // drawCenterCircle draws at radius * 0.5; wheel radius is approximately (rect.width/2 - 70)
     const wheelRadius = rect.width / 2 - 70;
-    const centerRadius = wheelRadius * 0.85;
+    const centerRadius = wheelRadius * 0.5;
 
     if (distance <= centerRadius) {
       spin();

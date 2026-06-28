@@ -32,7 +32,7 @@ Each domain has own Zustand store in `/lib/store/`. Several stores use `persist(
 - `foodOutletStore` - CRUD against Firebase Realtime Database
 - `filtersStore` / `favoritesStore` / `historyStore` / `locationStore` - Persisted client-side state
 - `reviewStore` - Reviews from Firebase
-- `uiStore` - Transient UI state
+- `uiStore` - Transient UI state (`filtersModalOpen`, `isSpinning`, `triggerSpin`). Use `uiStore.setFiltersModalOpen()` to open the filters modal — `AppLayout` owns the single `<FiltersModal>` instance; do not add local state or a second instance in pages.
 
 ### Data Flow
 
@@ -41,7 +41,6 @@ Firebase Realtime Database is source of truth for food outlets and reviews. `/li
 - `useFoodOutlets` — fetch & filter outlets from Firebase
 - `useGeolocation` — user location via browser API
 - `useReviews` — fetch reviews from Firebase
-- `useWheel` — wheel animation state & selection logic
 
 Filtering and distance computation (`/lib/utils/distance.ts`, `/lib/utils/geocoding.ts`) happen client-side in memory.
 
@@ -53,7 +52,7 @@ Map uses Leaflet + react-leaflet. Framer Motion handles UI animations (separate 
 
 ### Wheel Implementation
 
-Roulette wheel uses HTML Canvas (`/lib/utils/canvasHelpers.ts`) with `requestAnimationFrame` animation and ease-out-cubic easing (`/lib/utils/wheelAnimation.ts`). Selected result calculated from exact final rotation angle, not random selection.
+Roulette wheel uses HTML Canvas (`/lib/utils/canvasHelpers.ts`) with `requestAnimationFrame` animation and ease-out-cubic easing (`/lib/utils/wheelAnimation.ts`). Selected result calculated from exact final rotation angle, not random selection. Spin logic lives in `RouletteWheel.tsx` directly — `hooks/useWheel.ts` exists but is unused (old timeout-based implementation).
 
 ### Types
 
