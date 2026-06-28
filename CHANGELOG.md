@@ -1,3 +1,16 @@
+# [1.2.0-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.1-beta.3...v1.2.0-beta.1) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** fix git auth for semantic-release by setting remote URL explicitly ([067b371](https://github.com/hmcldryl/KaEatSaan/commit/067b3713b0031c017f6cfad0e3351215996355f4))
+* resolve bugs, lint errors, and update docs ([940dcd8](https://github.com/hmcldryl/KaEatSaan/commit/940dcd8fd463771304192f09a9f227870c7123c0))
+
+
+### Features
+
+* update branding, theme colors, and curvy MUI style ([f668ffc](https://github.com/hmcldryl/KaEatSaan/commit/f668ffc37765cffa745dcbccd4d31d0009e35275)), closes [#FF6B35](https://github.com/hmcldryl/KaEatSaan/issues/FF6B35) [#E37725](https://github.com/hmcldryl/KaEatSaan/issues/E37725) [#FFF8F2](https://github.com/hmcldryl/KaEatSaan/issues/FFF8F2) [#F0DFD0](https://github.com/hmcldryl/KaEatSaan/issues/F0DFD0)
+
 ## [1.1.1-beta.3](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.1-beta.2...v1.1.1-beta.3) (2026-04-21)
 
 
