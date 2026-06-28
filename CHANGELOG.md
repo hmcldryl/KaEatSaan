@@ -1,3 +1,10 @@
+# [1.2.0-beta.7](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.6...v1.2.0-beta.7) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** use generateBuildId to guarantee unique Firebase versions per commit ([5b1cf4c](https://github.com/hmcldryl/KaEatSaan/commit/5b1cf4c900cada66482dbf3071f3317111adcd42))
+
 # [1.2.0-beta.6](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.5...v1.2.0-beta.6) (2026-06-28)
 
 
