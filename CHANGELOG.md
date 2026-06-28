@@ -1,3 +1,10 @@
+# [1.2.0-beta.4](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** skip build/deploy when semantic-release cuts no new release ([43ef001](https://github.com/hmcldryl/KaEatSaan/commit/43ef001d2141f5b338d97435208c8fb250ea8e17))
+
 # [1.2.0-beta.3](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2026-06-28)
 
 
