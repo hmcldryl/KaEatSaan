@@ -81,7 +81,6 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    environment: development
     needs: [release, build]
     if: needs.release.outputs.released == 'true'
     steps:
@@ -97,13 +96,21 @@ jobs:
           path: out/
 
       - name: Deploy to Firebase Hosting (dev)
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_DEV_EBFB7 }}
-          channelId: live
-          projectId: kaeatsaan-dev-ebfb7
-          target: dev
+        run: |
+          echo "$FIREBASE_SA" > /tmp/sa.json
+          npx --yes firebase-tools@13 deploy \
+            --only hosting:dev \
+            --project kaeatsaan-dev-ebfb7 \
+            --non-interactive 2>&1 | tee /tmp/deploy.log
+          EXIT=${PIPESTATUS[0]}
+          if [ $EXIT -ne 0 ] && grep -q "is the current active version\|FAILED_PRECONDITION" /tmp/deploy.log; then
+            echo "Already active version — no-op."
+            exit 0
+          fi
+          exit $EXIT
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa.json
+          FIREBASE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_DEV_EBFB7 }}
 
   notify:
     name: Notify Discord
