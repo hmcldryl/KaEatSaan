@@ -1,3 +1,15 @@
+# [1.2.0-beta.6](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.5...v1.2.0-beta.6) (2026-06-28)
+
+
+### Bug Fixes
+
+* **ci:** pass NEXT_PUBLIC_BUILD_ID explicitly from github.sha in build step ([e3a5d57](https://github.com/hmcldryl/KaEatSaan/commit/e3a5d57a1478ef784dd369123a243d9ed2c7f0de))
+
+
+### Features
+
+* **map:** custom styled tiles, animated marker, and entry animation ([4276228](https://github.com/hmcldryl/KaEatSaan/commit/427622837ab21f8daa5136bf46fca5d97d55b982))
+
 # [1.2.0-beta.5](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.4...v1.2.0-beta.5) (2026-06-28)
 
 
