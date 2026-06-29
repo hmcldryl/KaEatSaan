@@ -1,3 +1,24 @@
+# [1.3.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0...v1.3.0) (2026-06-29)
+
+
+### Bug Fixes
+
+* **about-modal:** changelog as single accordion section, versions flat inside ([538701f](https://github.com/hmcldryl/KaEatSaan/commit/538701f19d420365544dc6e5658255bf212befb4))
+* **cards:** move delete IconButton outside CardActionArea to fix nested button error ([e5e2030](https://github.com/hmcldryl/KaEatSaan/commit/e5e2030a933c1aa1341fcc6939359359328dcadb))
+* **detail-modal:** fix header spacing, center rating, remove chip/location border ([7d11192](https://github.com/hmcldryl/KaEatSaan/commit/7d1119268b257a4c0f9e0ecd4ba1c9674aa9bcbc))
+* **detail-modal:** remove icon from location link, tighten header padding ([7f100f0](https://github.com/hmcldryl/KaEatSaan/commit/7f100f06d9497384e65c5051adc155e90fd81ace))
+* **edit-modal:** guard against undefined/invalid Select values from DB ([fb522aa](https://github.com/hmcldryl/KaEatSaan/commit/fb522aa8cc6fa618a20ac26fd177b84ae982d60e))
+* **edit-modal:** remove hCaptcha, gate edits on auth only ([30949be](https://github.com/hmcldryl/KaEatSaan/commit/30949bed76233e19c1ceadc09889be3ce6e23d6a))
+* **map:** default borderRadius to 0, remove hardcoded 16px on loading state ([c9c686c](https://github.com/hmcldryl/KaEatSaan/commit/c9c686cb40f1e3c7237f7efc81dc0ee20e354542))
+* use live review count/rating in detail modal, always show rating in result modal ([b280d25](https://github.com/hmcldryl/KaEatSaan/commit/b280d2578532c07d6a8b0a4d4dc9bb2ce1e0de71))
+
+
+### Features
+
+* add community editing, gamification sync, update logs, about modal, and UI polish ([d5dfc8f](https://github.com/hmcldryl/KaEatSaan/commit/d5dfc8f23e0099ffe51db6bdb70d204354bb63e5))
+* **ui:** add spring animations to cards, accordion changelog, compact filters, update about modal ([f9f1cbc](https://github.com/hmcldryl/KaEatSaan/commit/f9f1cbc1448b96c50f4c315d2923d01c6871a787))
+* **ui:** unify text scale, spacing, and layout across all screens ([f075564](https://github.com/hmcldryl/KaEatSaan/commit/f075564c06ef80f8313afbead94a78daddbc9b2d))
+
 # [1.2.0-beta.17](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.16...v1.2.0-beta.17) (2026-06-29)
 
 
