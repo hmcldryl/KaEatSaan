@@ -1,3 +1,13 @@
+# [1.2.0-beta.11](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.10...v1.2.0-beta.11) (2026-06-29)
+
+
+### Features
+
+* polish gamified home screen UI ([26ab454](https://github.com/hmcldryl/KaEatSaan/commit/26ab454c23823b50a01dad879cea246282b19bfd)), closes [#FF6B35](https://github.com/hmcldryl/KaEatSaan/issues/FF6B35)
+* redesign home screen with gamified PWA UI ([d343067](https://github.com/hmcldryl/KaEatSaan/commit/d343067862377efe95474d4f4658483110475a70))
+* **ui:** overhaul home screen and make layout fully responsive ([1548050](https://github.com/hmcldryl/KaEatSaan/commit/1548050f9e019cb17309bbbea759511e021f4e12))
+* **wheel:** polish UI, optimize canvas perf, update primary color ([65e0a9e](https://github.com/hmcldryl/KaEatSaan/commit/65e0a9ecc2604c580b62578b089ffd87b1a65bdb)), closes [#E37725](https://github.com/hmcldryl/KaEatSaan/issues/E37725) [#FF6B35](https://github.com/hmcldryl/KaEatSaan/issues/FF6B35)
+
 # [1.2.0-beta.10](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.9...v1.2.0-beta.10) (2026-06-28)
 
 
