@@ -151,15 +151,15 @@ export default function WheelResult({
               }
             </Box>
 
+            <Typography sx={{ textAlign: "center", fontSize: "0.75rem", color: "#9CA3AF", fontWeight: 500 }}>
+              📍 {outlet.location.address}
+            </Typography>
+
             {outlet.description && (
               <Typography sx={{ textAlign: "center", fontSize: "0.78rem", color: "#6B7280", lineHeight: 1.4 }}>
                 {outlet.description}
               </Typography>
             )}
-
-            <Typography sx={{ textAlign: "center", fontSize: "0.75rem", color: "#9CA3AF", fontWeight: 500 }}>
-              📍 {outlet.location.address}
-            </Typography>
 
             {outlet.tags && outlet.tags.length > 0 && (
               <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", justifyContent: "center" }}>

@@ -56,16 +56,16 @@ const theme = createTheme({
       letterSpacing: "-0.01em",
     },
     h4: {
-      fontWeight: 600,
-      fontSize: "1.5rem",
+      fontWeight: 700,
+      fontSize: "1.1rem",
     },
     h5: {
-      fontWeight: 600,
-      fontSize: "1.25rem",
+      fontWeight: 700,
+      fontSize: "0.95rem",
     },
     h6: {
-      fontWeight: 600,
-      fontSize: "1.125rem",
+      fontWeight: 700,
+      fontSize: "0.88rem",
     },
     button: {
       textTransform: "none",
@@ -73,12 +73,23 @@ const theme = createTheme({
       letterSpacing: "0.02em",
     },
     body1: {
-      fontSize: "1rem",
-      lineHeight: 1.6,
+      fontSize: "0.82rem",
+      lineHeight: 1.5,
     },
     body2: {
-      fontSize: "0.875rem",
-      lineHeight: 1.5,
+      fontSize: "0.75rem",
+      lineHeight: 1.4,
+    },
+    subtitle1: {
+      fontSize: "0.78rem",
+      fontWeight: 600,
+    },
+    subtitle2: {
+      fontSize: "0.72rem",
+      fontWeight: 600,
+    },
+    caption: {
+      fontSize: "0.65rem",
     },
   },
   shape: {
@@ -120,7 +131,7 @@ const theme = createTheme({
           color: "#1F2937",
           boxShadow: "none",
           borderBottom: "1px solid #F0DFD0",
-          borderRadius: "0 0 20px 20px",
+          borderRadius: 0,
         },
       },
     },
@@ -138,8 +149,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: "50px",
-          padding: "12px 28px",
-          fontSize: "0.9375rem",
+          padding: "8px 20px",
+          fontSize: "0.82rem",
           boxShadow: "none",
           "&:hover": {
             boxShadow: `0 4px 16px ${PRIMARY_SHADOW}`,

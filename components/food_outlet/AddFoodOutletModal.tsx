@@ -183,8 +183,8 @@ export default function AddFoodOutletModal({
         <CloseIcon fontSize="small" />
       </IconButton>
 
-      <DialogTitle sx={{ borderBottom: "1px solid #F3F4F6", py: 2, pr: 5 }}>
-        <Typography variant="h6" fontWeight={700} color="text.primary">
+      <DialogTitle sx={{ borderBottom: "1px solid #F3F4F6", py: 1.75, pr: 5 }}>
+        <Typography sx={{ fontSize: "0.92rem", fontWeight: 700, color: "#1F2937" }}>
           Add New Kainan
         </Typography>
       </DialogTitle>
@@ -196,17 +196,18 @@ export default function AddFoodOutletModal({
           </Alert>
         )}
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
             label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
             required
+            size="small"
             placeholder="e.g., Jollibee, Mang Inasal"
           />
 
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel>Classification</InputLabel>
             <Select
               value={classification}
@@ -223,7 +224,7 @@ export default function AddFoodOutletModal({
             </Select>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel>Cuisine Type</InputLabel>
             <Select
               value={cuisine}
@@ -238,7 +239,7 @@ export default function AddFoodOutletModal({
             </Select>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel>Budget Level</InputLabel>
             <Select
               value={budget}
@@ -264,7 +265,7 @@ export default function AddFoodOutletModal({
             <LocationPicker
               value={location}
               onChange={setLocation}
-              height={250}
+              height={200}
             />
           </Box>
 
@@ -275,6 +276,7 @@ export default function AddFoodOutletModal({
             fullWidth
             multiline
             rows={2}
+            size="small"
             placeholder="Brief description of the food place..."
           />
 
@@ -329,6 +331,7 @@ export default function AddFoodOutletModal({
                 value={contactNumber}
                 onChange={(e) => setContactNumber(e.target.value)}
                 fullWidth
+                size="small"
                 placeholder="e.g., 09xx-xxx-xxxx"
                 inputProps={{ inputMode: "tel" }}
               />
@@ -337,6 +340,7 @@ export default function AddFoodOutletModal({
                 value={facebookUrl}
                 onChange={(e) => setFacebookUrl(e.target.value)}
                 fullWidth
+                size="small"
                 placeholder="https://facebook.com/pagename"
               />
               <TextField
@@ -344,6 +348,7 @@ export default function AddFoodOutletModal({
                 value={messengerUsername}
                 onChange={(e) => setMessengerUsername(e.target.value)}
                 fullWidth
+                size="small"
                 placeholder="username (without m.me/)"
               />
             </Box>

@@ -147,8 +147,8 @@ export default function EditFoodOutletModal({
         <CloseIcon fontSize="small" />
       </IconButton>
 
-      <DialogTitle sx={{ borderBottom: "1px solid #F3F4F6", py: 2, pr: 5 }}>
-        <Typography variant="h6" fontWeight={700} color="text.primary">
+      <DialogTitle sx={{ borderBottom: "1px solid #F3F4F6", py: 1.75, pr: 5 }}>
+        <Typography sx={{ fontSize: "0.92rem", fontWeight: 700, color: "#1F2937" }}>
           Edit Kainan
         </Typography>
         <Typography sx={{ fontSize: "0.72rem", color: "#9CA3AF", mt: 0.25 }}>
@@ -159,30 +159,31 @@ export default function EditFoodOutletModal({
       <DialogContent sx={{ pt: 3 }}>
         {error && <Alert severity="error" sx={{ mb: 2, fontSize: "0.75rem" }}>{error}</Alert>}
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <TextField
             label="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             fullWidth
             required
+            size="small"
           />
 
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel>Classification</InputLabel>
             <Select value={classification} label="Classification" onChange={(e) => setClassification(e.target.value as ClassificationType)}>
               {CLASSIFICATIONS.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
             </Select>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel>Cuisine Type</InputLabel>
             <Select value={cuisine} label="Cuisine Type" onChange={(e) => setCuisine(e.target.value as CuisineType)}>
               {CUISINES.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
             </Select>
           </FormControl>
 
-          <FormControl fullWidth>
+          <FormControl fullWidth size="small">
             <InputLabel>Budget Level</InputLabel>
             <Select value={budget} label="Budget Level" onChange={(e) => setBudget(e.target.value as BudgetLevel)}>
               {([1, 2, 3, 4, 5] as BudgetLevel[]).map((b) => <MenuItem key={b} value={b}>{BUDGET_LABELS[b]}</MenuItem>)}
@@ -191,7 +192,7 @@ export default function EditFoodOutletModal({
 
           <FormControlLabel
             control={<Switch checked={isOpen} onChange={(e) => setIsOpen(e.target.checked)} sx={{ "& .Mui-checked + .MuiSwitch-track": { bgcolor: "#FF6B35" } }} />}
-            label={<Typography sx={{ fontSize: "0.85rem", fontWeight: 600 }}>Currently open</Typography>}
+            label={<Typography sx={{ fontSize: "0.78rem", fontWeight: 600 }}>Currently open</Typography>}
           />
 
           <TextField
@@ -201,6 +202,7 @@ export default function EditFoodOutletModal({
             fullWidth
             multiline
             rows={2}
+            size="small"
           />
 
           <Box>
@@ -239,6 +241,7 @@ export default function EditFoodOutletModal({
             value={contactNumber}
             onChange={(e) => setContactNumber(e.target.value)}
             fullWidth
+            size="small"
             placeholder="e.g., 09xx-xxx-xxxx"
             inputProps={{ inputMode: "tel" }}
           />
@@ -248,6 +251,7 @@ export default function EditFoodOutletModal({
             value={facebookUrl}
             onChange={(e) => setFacebookUrl(e.target.value)}
             fullWidth
+            size="small"
             placeholder="https://facebook.com/pagename"
           />
 
@@ -256,6 +260,7 @@ export default function EditFoodOutletModal({
             value={messengerUsername}
             onChange={(e) => setMessengerUsername(e.target.value)}
             fullWidth
+            size="small"
             placeholder="username (without m.me/)"
           />
 

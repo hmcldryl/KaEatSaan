@@ -17,7 +17,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import RateReviewIcon from "@mui/icons-material/RateReview";
-import DirectionsIcon from "@mui/icons-material/Directions";
 import EditIcon from "@mui/icons-material/Edit";
 import PhoneIcon from "@mui/icons-material/Phone";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -109,11 +108,6 @@ export default function FoodOutletDetailModal({
     await deleteReview(reviewId, outlet.id);
   };
 
-  const handleGetDirections = () => {
-    const { latitude, longitude } = outlet.location;
-    window.open(`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`, "_blank");
-  };
-
   const userHasReviewed = reviews.some((r) => r.userId === user?.uid);
 
   return (
@@ -161,35 +155,45 @@ export default function FoodOutletDetailModal({
         </Box>
 
         <DialogContent sx={{ p: 0 }}>
+          {/* Location link — above map, centered, opens Google Maps */}
+          <Box
+            component="a"
+            href={`https://www.google.com/maps/dir/?api=1&destination=${outlet.location.latitude},${outlet.location.longitude}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 0.5,
+              py: 0.75,
+              px: 2,
+              textDecoration: "none",
+              color: "#6B7280",
+              borderBottom: "1px solid #F3F4F6",
+              transition: "color 0.15s",
+              "&:hover": { color: "#FF6B35" },
+            }}
+          >
+            <LocationOnIcon sx={{ fontSize: 13, flexShrink: 0 }} />
+            <Typography sx={{ fontSize: "0.72rem", lineHeight: 1.3, textAlign: "center" }}>
+              {outlet.location.address}
+            </Typography>
+          </Box>
+
           {/* Map */}
-          <Box sx={{ height: 160 }}>
+          <Box sx={{ height: 200 }}>
             <MapContainer
               center={[outlet.location.latitude, outlet.location.longitude]}
               zoom={16}
               markerPosition={[outlet.location.latitude, outlet.location.longitude]}
-              height={160}
+              height={200}
+              borderRadius={0}
               userLocation={userGeoLocation ? [userGeoLocation.latitude, userGeoLocation.longitude] : undefined}
             />
           </Box>
 
           <Box sx={{ p: 1.5 }}>
-            {/* Address & Directions */}
-            <Box sx={{ display: "flex", alignItems: "flex-start", gap: 0.75, mb: 1 }}>
-              <LocationOnIcon color="action" sx={{ mt: 0.25, fontSize: 16 }} />
-              <Box sx={{ flex: 1 }}>
-                <Typography sx={{ fontSize: "0.72rem", lineHeight: 1.3 }}>{outlet.location.address}</Typography>
-              </Box>
-              <Button
-                size="small"
-                variant="outlined"
-                startIcon={<DirectionsIcon sx={{ fontSize: "14px !important" }} />}
-                onClick={handleGetDirections}
-                sx={{ fontSize: "0.72rem", whiteSpace: "nowrap", borderRadius: "9999px", fontWeight: 700, borderColor: "#E5E7EB", color: "#6B7280", borderWidth: 1.5, "&:hover": { borderWidth: 1.5 } }}
-              >
-                Directions
-              </Button>
-            </Box>
-
             {/* Contact & Social */}
             {(outlet.contactNumber || outlet.facebookUrl || outlet.messengerUsername) && (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1, justifyContent: "center" }}>

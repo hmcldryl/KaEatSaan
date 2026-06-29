@@ -33,15 +33,16 @@ interface MapContainerProps {
   onMapClick?: (lat: number, lng: number) => void;
   height?: string | number;
   userLocation?: [number, number];
+  borderRadius?: string | number;
 }
 
-export default function MapContainer(props: MapContainerProps) {
+export default function MapContainer({ borderRadius = "16px", ...props }: MapContainerProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.97 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      style={{ borderRadius: "16px", overflow: "hidden" }}
+      style={{ borderRadius, overflow: "hidden" }}
     >
       <MapInner {...props} />
     </motion.div>

@@ -95,13 +95,10 @@ export default function AboutModal({ open, onClose }: AboutModalProps) {
           alt="KaEatSaan"
           width={200}
           height={67}
-          style={{ width: "auto", height: 52, objectFit: "contain" }}
+          style={{ width: "auto", height: 64, objectFit: "contain" }}
           priority
         />
-        <Typography sx={{ fontWeight: 800, fontSize: "1.1rem", color: "#FF6B35", letterSpacing: "-0.02em", mt: 1 }}>
-          KaEatSaan
-        </Typography>
-        <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", lineHeight: 1.5, mt: 0.5, px: 1 }}>
+        <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", lineHeight: 1.5, mt: 1, px: 1 }}>
           Can&apos;t decide where to eat? Spin the wheel and let fate choose your next kainan.
         </Typography>
 
