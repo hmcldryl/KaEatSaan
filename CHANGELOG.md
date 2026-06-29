@@ -1,3 +1,10 @@
+# [1.2.0-beta.15](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.14...v1.2.0-beta.15) (2026-06-29)
+
+
+### Features
+
+* **ui:** unify text scale, spacing, and layout across all screens ([f075564](https://github.com/hmcldryl/KaEatSaan/commit/f075564c06ef80f8313afbead94a78daddbc9b2d))
+
 # [1.2.0-beta.14](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.13...v1.2.0-beta.14) (2026-06-29)
 
 
