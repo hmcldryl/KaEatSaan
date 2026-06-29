@@ -130,12 +130,18 @@ export default function FoodOutletDetailModal({
         </IconButton>
 
         {/* Header */}
-        <Box sx={{ textAlign: "center", pt: 2.5, px: 5, borderBottom: "1px solid #F3F4F6" }}>
-          <Typography sx={{ fontWeight: 800, fontSize: "1.1rem", color: "#FF6B35", letterSpacing: "-0.02em", lineHeight: 1.2, mb: 1 }}>
+        <Box sx={{ textAlign: "center", pt: 2.5, pb: 1.25, px: 5 }}>
+          <Typography sx={{ fontWeight: 800, fontSize: "1.1rem", color: "#FF6B35", letterSpacing: "-0.02em", lineHeight: 1.2, mb: 0.5 }}>
             {outlet.name}
           </Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", justifyContent: "center", mb: 1 }}>
+          {averageRating > 0 && (
+            <Box sx={{ mb: 0.75, display: "flex", justifyContent: "center" }}>
+              <StarRating value={averageRating} readonly size="small" showValue count={reviewCount} />
+            </Box>
+          )}
+
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", justifyContent: "center" }}>
             <Chip label={outlet.cuisine} size="small" sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.72rem", height: 24 }} />
             <Chip label={BUDGET_SYMBOLS[outlet.budget]} size="small" variant="outlined" sx={{ fontWeight: 600, fontSize: "0.72rem", height: 24, borderColor: "#E5E7EB" }} />
             {outlet.distance !== undefined && (
@@ -148,10 +154,6 @@ export default function FoodOutletDetailModal({
               />
             )}
           </Box>
-
-          {averageRating > 0 && (
-            <StarRating value={averageRating} readonly size="small" showValue count={reviewCount} />
-          )}
         </Box>
 
         <DialogContent sx={{ p: 0 }}>
@@ -166,7 +168,8 @@ export default function FoodOutletDetailModal({
               alignItems: "center",
               justifyContent: "center",
               gap: 0.5,
-              py: 0.75,
+              pt: 0,
+              pb: 1,
               px: 2,
               textDecoration: "none",
               color: "#6B7280",
