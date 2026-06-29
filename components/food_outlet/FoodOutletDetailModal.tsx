@@ -88,7 +88,7 @@ export default function FoodOutletDetailModal({
 }: FoodOutletDetailModalProps) {
   const { user } = useAuthStore();
   const { location: userGeoLocation } = useLocationStore();
-  const { reviews, isLoading: reviewsLoading, addReview, deleteReview } = useReviews(
+  const { reviews, isLoading: reviewsLoading, addReview, deleteReview, reviewCount, averageRating } = useReviews(
     open && outlet ? outlet.id : null,
   );
   const { logs, isLoading: logsLoading } = useUpdateLogs(open && outlet ? outlet.id : null);
@@ -155,8 +155,8 @@ export default function FoodOutletDetailModal({
             )}
           </Box>
 
-          {(outlet.averageRating || 0) > 0 && (
-            <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
+          {averageRating > 0 && (
+            <StarRating value={averageRating} readonly size="small" showValue count={reviewCount} />
           )}
         </Box>
 
@@ -270,7 +270,7 @@ export default function FoodOutletDetailModal({
             {/* Reviews Section */}
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1 }}>
               <Typography fontWeight={700} sx={{ fontSize: "0.82rem" }}>
-                Reviews ({outlet.reviewCount || 0})
+                Reviews ({reviewCount})
               </Typography>
               {user && !userHasReviewed && !showReviewForm && (
                 <Button

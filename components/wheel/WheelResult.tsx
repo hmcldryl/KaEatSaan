@@ -144,11 +144,12 @@ export default function WheelResult({
               )}
             </Box>
 
-            {(outlet.averageRating || 0) > 0 && (
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
-              </Box>
-            )}
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              {(outlet.averageRating || 0) > 0
+                ? <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
+                : <Typography sx={{ fontSize: "0.7rem", color: "#D1D5DB", fontStyle: "italic" }}>No reviews yet</Typography>
+              }
+            </Box>
 
             {outlet.description && (
               <Typography sx={{ textAlign: "center", fontSize: "0.78rem", color: "#6B7280", lineHeight: 1.4 }}>
