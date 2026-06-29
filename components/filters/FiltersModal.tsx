@@ -97,7 +97,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
           flexShrink: 0,
         }}
       >
-        <Typography variant="h6" fontWeight={700} color="text.primary">
+        <Typography sx={{ fontSize: "0.92rem", fontWeight: 700, color: "#1F2937" }}>
           Filters & Settings
         </Typography>
         {activeFiltersCount > 0 && (
@@ -112,15 +112,15 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
       </Box>
 
       {/* Scrollable content */}
-      <Box sx={{ overflowY: 'auto', flex: 1, px: 3, py: 3 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pb: 2 }}>
+      <Box sx={{ overflowY: 'auto', flex: 1, px: 3, py: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pb: 2 }}>
 
           {/* Budget Filter */}
           <Box>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
               Budget Range
             </Typography>
-            <Box sx={{ px: 1, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 1.5 }}>
               <Slider
                 value={filters.budget}
                 onChange={handleBudgetChange}
@@ -139,13 +139,13 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
 
           {/* Distance Filter */}
           <Box>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
               Distance
             </Typography>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
+            <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", mb: 0.5 }}>
               Show kainan within {filters.distance} km
             </Typography>
-            <Box sx={{ px: 1, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 1.5 }}>
               <Slider
                 value={filters.distance}
                 onChange={handleDistanceChange}
@@ -164,13 +164,13 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
 
           {/* Max Kainan */}
           <Box>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
               Max Kainan
             </Typography>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
+            <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", mb: 0.5 }}>
               Show up to {filters.maxOutlets} kainan in the wheel
             </Typography>
-            <Box sx={{ px: 1, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 1.5 }}>
               <Slider
                 value={filters.maxOutlets}
                 onChange={handleMaxOutletsChange}
@@ -188,10 +188,10 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
 
           {/* Cuisine Filter */}
           <Box>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
               Cuisine Types
             </Typography>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
+            <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", mb: 0.5 }}>
               {filters.cuisines.length === 0
                 ? 'All cuisines selected'
                 : `${filters.cuisines.length} cuisine${filters.cuisines.length !== 1 ? 's' : ''} selected`}
@@ -204,7 +204,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                   onClick={() => filters.toggleCuisine(cuisine)}
                   color={filters.cuisines.includes(cuisine) ? 'primary' : 'default'}
                   variant={filters.cuisines.includes(cuisine) ? 'filled' : 'outlined'}
-                  size="medium"
+                  size="small"
                 />
               ))}
             </Box>
@@ -214,7 +214,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
 
           {/* Other Settings */}
           <Box>
-            <Typography variant="subtitle1" fontWeight={600} gutterBottom>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
               Other Settings
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 1 }}>
@@ -226,7 +226,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                     sx={{ '& .MuiSwitch-thumb': { bgcolor: '#FF6B35' }, '& .Mui-checked + .MuiSwitch-track': { bgcolor: '#FF6B35' } }}
                   />
                 }
-                label="Include closed kainan"
+                label={<Typography sx={{ fontSize: "0.78rem" }}>Include closed kainan</Typography>}
               />
               <FormControlLabel
                 control={
@@ -236,7 +236,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                     sx={{ '& .MuiSwitch-thumb': { bgcolor: '#FF6B35' }, '& .Mui-checked + .MuiSwitch-track': { bgcolor: '#FF6B35' } }}
                   />
                 }
-                label="Only show new places (added in last 30 days)"
+                label={<Typography sx={{ fontSize: "0.78rem" }}>Only show new places (added in last 30 days)</Typography>}
               />
             </Box>
           </Box>
@@ -258,11 +258,11 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
           variant="contained"
           fullWidth
           sx={{
-            height: 52,
+            height: 44,
             borderRadius: '9999px',
             backgroundColor: '#FF6B35',
             fontWeight: 700,
-            fontSize: '1rem',
+            fontSize: '0.82rem',
             boxShadow: '0 4px 16px rgba(255, 107, 53, 0.35)',
             '&:hover': { backgroundColor: '#E55A20' },
           }}

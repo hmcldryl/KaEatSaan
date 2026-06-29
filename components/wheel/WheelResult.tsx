@@ -144,21 +144,22 @@ export default function WheelResult({
               )}
             </Box>
 
-            {(outlet.averageRating || 0) > 0 && (
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
-              </Box>
-            )}
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              {(outlet.averageRating || 0) > 0
+                ? <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
+                : <Typography sx={{ fontSize: "0.7rem", color: "#D1D5DB", fontStyle: "italic" }}>No reviews yet</Typography>
+              }
+            </Box>
+
+            <Typography sx={{ textAlign: "center", fontSize: "0.75rem", color: "#9CA3AF", fontWeight: 500 }}>
+              📍 {outlet.location.address}
+            </Typography>
 
             {outlet.description && (
               <Typography sx={{ textAlign: "center", fontSize: "0.78rem", color: "#6B7280", lineHeight: 1.4 }}>
                 {outlet.description}
               </Typography>
             )}
-
-            <Typography sx={{ textAlign: "center", fontSize: "0.75rem", color: "#9CA3AF", fontWeight: 500 }}>
-              📍 {outlet.location.address}
-            </Typography>
 
             {outlet.tags && outlet.tags.length > 0 && (
               <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", justifyContent: "center" }}>
@@ -173,7 +174,7 @@ export default function WheelResult({
 
       {!showRemoveConfirm && (
         <DialogActions sx={{ flexDirection: "column", pb: 2.5, px: 2, pt: 0, gap: 1, alignItems: "stretch" }}>
-          {/* Details â€” text, no outline, above */}
+          {/* Details – text, no outline, above */}
           <Button
             onClick={() => setDetailOpen(true)}
             variant="text"
@@ -182,7 +183,7 @@ export default function WheelResult({
           >
             Details
           </Button>
-          {/* Spin Again + Fave circle â€” same row */}
+          {/* Spin Again + Fave circle – same row */}
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Button
               onClick={handleSpinAgainClick}
@@ -199,7 +200,7 @@ export default function WheelResult({
               {favorite ? <FavoriteIcon sx={{ fontSize: 18 }} /> : <FavoriteBorderIcon sx={{ fontSize: 18 }} />}
             </IconButton>
           </Box>
-          {/* Let's Go â€” full width */}
+          {/* Let's Go – full width */}
           <Button
             onClick={onClose}
             variant="contained"

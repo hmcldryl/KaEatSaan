@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Box from "@mui/material/Box";
@@ -17,16 +17,19 @@ import TuneIcon from "@mui/icons-material/Tune";
 import PersonIcon from "@mui/icons-material/Person";
 import AddIcon from "@mui/icons-material/Add";
 import LogoutIcon from "@mui/icons-material/Logout";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import RouletteWheel from "@/components/wheel/RouletteWheel";
 import { useFoodOutlets } from "@/hooks/useFoodOutlets";
 import { useUIStore } from "@/lib/store/uiStore";
 import { useHistoryStore } from "@/lib/store/historyStore";
 import { useFiltersStore } from "@/lib/store/filtersStore";
 import { useAuthStore } from "@/lib/store/authStore";
+import { useUserProfileStore } from "@/lib/store/userProfileStore";
 import { FoodOutlet } from "@/types/foodOutlet";
 import { HistoryEntry } from "@/types/history";
 import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
 import AuthDialog from "@/components/auth/AuthDialog";
+import AboutModal from "@/components/layout/AboutModal";
 
 function computeStreak(history: HistoryEntry[]): number {
   if (!history.length) return 0;
@@ -59,14 +62,24 @@ export default function Home() {
   const filters = useFiltersStore();
   const activeFiltersCount = filters.getActiveFiltersCount();
   const { user, signOut } = useAuthStore();
+  const { profile, listen: listenProfile, stopListening: stopListeningProfile, syncSpin } = useUserProfileStore();
 
   const [currentOutlet, setCurrentOutlet] = useState<FoodOutlet | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
 
-  const level = Math.floor(history.length / 5) + 1;
-  const streak = useMemo(() => computeStreak(history), [history]);
+  useEffect(() => {
+    if (!user) return;
+    const unsub = listenProfile(user.uid);
+    return () => { stopListeningProfile(user.uid); unsub(); };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.uid]);
+
+  const localStreak = useMemo(() => computeStreak(history), [history]);
+  const level = profile?.level ?? Math.floor(history.length / 5) + 1;
+  const streak = profile?.streak ?? localStreak;
 
   const handleSpinEnd = (outlet: FoodOutlet) => {
     setIsSpinning(false);
@@ -79,6 +92,7 @@ export default function Home() {
       onlyNewPlaces: filters.onlyNewPlaces,
       maxOutlets: filters.maxOutlets,
     });
+    if (user) syncSpin(user.uid);
   };
 
   return (
@@ -146,6 +160,10 @@ export default function Home() {
               <MenuItem onClick={() => { setAddModalOpen(true); setMenuAnchor(null); }}>
                 <ListItemIcon><AddIcon fontSize="small" sx={{ color: "#6B7280" }} /></ListItemIcon>
                 Add Kainan
+              </MenuItem>
+              <MenuItem onClick={() => { setAboutOpen(true); setMenuAnchor(null); }}>
+                <ListItemIcon><InfoOutlinedIcon fontSize="small" sx={{ color: "#6B7280" }} /></ListItemIcon>
+                About
               </MenuItem>
               <MenuItem onClick={async () => { await signOut(); setMenuAnchor(null); }}>
                 <ListItemIcon><LogoutIcon fontSize="small" sx={{ color: "#6B7280" }} /></ListItemIcon>
@@ -335,6 +353,7 @@ export default function Home() {
 
       <AddFoodOutletModal open={addModalOpen} onClose={() => setAddModalOpen(false)} />
       <AuthDialog open={authDialogOpen} onClose={() => setAuthDialogOpen(false)} />
+      <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
     </Box>
   );
 }

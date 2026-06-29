@@ -61,9 +61,14 @@ export interface FoodOutlet {
   isOpen?: boolean;
   description?: string;
   tags?: string[];
+  contactNumber?: string;
+  facebookUrl?: string;
+  messengerUsername?: string;
   createdAt: string; // ISO date string
   createdBy?: string; // User ID who added the food outlet
   updatedAt?: string; // ISO date string
+  updatedBy?: string; // User ID of last community editor
+  updatedByName?: string;
   reviewCount?: number; // Total number of reviews
   averageRating?: number; // Calculated average rating (1-5)
 }

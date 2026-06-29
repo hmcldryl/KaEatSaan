@@ -4,18 +4,18 @@
       ".read": true,
       ".write": "auth != null",
       "$outletId": {
-        ".validate": "newData.hasChildren(['name', 'classification', 'cuisine', 'budget', 'location', 'createdAt'])",
+        ".validate": "newData.hasChildren(['name', 'cuisine', 'budget', 'location', 'createdAt'])",
         "name": {
           ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
         },
         "classification": {
-          ".validate": "newData.isString()"
+          ".validate": "!newData.exists() || newData.isString()"
         },
         "cuisine": {
           ".validate": "newData.isString()"
         },
         "budget": {
-          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 4"
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 5"
         },
         "location": {
           ".validate": "newData.hasChildren(['latitude', 'longitude', 'address'])"
@@ -31,6 +31,15 @@
         },
         "isOpen": {
           ".validate": "!newData.exists() || newData.isBoolean()"
+        },
+        "contactNumber": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "facebookUrl": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "messengerUsername": {
+          ".validate": "!newData.exists() || newData.isString()"
         },
         "rating": {
           ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0 && newData.val() <= 5)"
@@ -48,6 +57,12 @@
           ".validate": "!newData.exists() || newData.isString()"
         },
         "updatedAt": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "updatedBy": {
+          ".validate": "!newData.exists() || newData.isString()"
+        },
+        "updatedByName": {
           ".validate": "!newData.exists() || newData.isString()"
         }
       }
@@ -80,10 +95,27 @@
         }
       }
     },
+    "update_logs": {
+      "$outletId": {
+        ".read": true,
+        ".write": "auth != null",
+        "$logId": {
+          ".validate": "newData.hasChildren(['userId', 'userName', 'timestamp'])",
+          "userId": { ".validate": "newData.isString()" },
+          "userName": { ".validate": "newData.isString()" },
+          "userPhotoUrl": { ".validate": "!newData.exists() || newData.isString()" },
+          "timestamp": { ".validate": "newData.isString()" }
+        }
+      }
+    },
     "users": {
       "$userId": {
         ".read": "auth != null && auth.uid == $userId",
-        ".write": "auth != null && auth.uid == $userId"
+        ".write": "auth != null && auth.uid == $userId",
+        "spinCount": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "level": { ".validate": "newData.isNumber() && newData.val() >= 1" },
+        "streak": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "lastSpinDate": { ".validate": "newData.isString()" }
       }
     }
   }

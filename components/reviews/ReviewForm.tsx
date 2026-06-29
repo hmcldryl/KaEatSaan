@@ -61,52 +61,59 @@ export default function ReviewForm({ onSubmit, onCancel }: ReviewFormProps) {
   };
 
   return (
-    <Box sx={{ py: 2 }}>
-      <Typography variant="subtitle2" fontWeight={600} gutterBottom>
+    <Box sx={{ py: 0 }}>
+      <Typography sx={{ fontSize: '0.78rem', fontWeight: 700, color: '#374151', mb: 1 }}>
         Write a Review
       </Typography>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={{ mb: 1, fontSize: '0.72rem', py: 0.5 }}>
           {error}
         </Alert>
       )}
 
-      <Box sx={{ mb: 2 }}>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
+      <Box sx={{ mb: 1.25 }}>
+        <Typography sx={{ fontSize: '0.68rem', color: '#9CA3AF', mb: 0.5 }}>
           Your rating
         </Typography>
-        <StarRating value={rating} onChange={setRating} size="large" />
+        <StarRating value={rating} onChange={setRating} size="small" />
       </Box>
 
       <TextField
         fullWidth
         multiline
-        rows={3}
+        rows={2}
         placeholder="Share your experience..."
         value={summary}
         onChange={(e) => setSummary(e.target.value)}
-        sx={{ mb: 2 }}
-        helperText={`${summary.length}/500 characters`}
+        sx={{
+          mb: 1.25,
+          '& .MuiInputBase-input': { fontSize: '0.75rem' },
+          '& .MuiFormHelperText-root': { fontSize: '0.65rem', mx: 0 },
+        }}
+        helperText={`${summary.length}/500`}
         error={summary.length > 500}
       />
 
-      <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+      <Box sx={{ display: 'flex', gap: 1 }}>
         {onCancel && (
-          <Button onClick={onCancel} color="inherit">
+          <Button
+            onClick={onCancel}
+            variant="outlined"
+            fullWidth
+            sx={{ borderRadius: '9999px', fontWeight: 700, fontSize: '0.72rem', borderColor: '#E5E7EB', color: '#6B7280', borderWidth: 1.5, '&:hover': { borderWidth: 1.5 } }}
+          >
             Cancel
           </Button>
         )}
         <Button
           variant="contained"
+          fullWidth
           onClick={handleSubmit}
           disabled={isSubmitting || rating === 0 || !summary.trim()}
-          sx={{
-            backgroundColor: '#FF6B35',
-            '&:hover': { backgroundColor: '#C4621B' },
-          }}
+          sx={{ borderRadius: '9999px', fontWeight: 700, fontSize: '0.72rem', bgcolor: '#FF6B35', '&:hover': { bgcolor: '#E55A20' } }}
         >
-          {isSubmitting ? <CircularProgress size={24} color="inherit" /> : 'Submit Review'}
+          {isSubmitting ? <CircularProgress size={16} color="inherit" /> : 'Submit'}
         </Button>
       </Box>
     </Box>

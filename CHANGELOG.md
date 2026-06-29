@@ -1,3 +1,47 @@
+# [1.2.0-beta.17](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.16...v1.2.0-beta.17) (2026-06-29)
+
+
+### Bug Fixes
+
+* **cards**: move delete IconButton outside CardActionArea to fix nested button error ([e5e2030](https://github.com/hmcldryl/KaEatSaan/commit/e5e2030a))
+* **edit-modal:** guard against undefined/invalid Select values from DB ([fb522aa](https://github.com/hmcldryl/KaEatSaan/commit/fb522aa8cc6fa618a20ac26fd177b84ae982d60e))
+* **edit-modal:** remove hCaptcha, gate edits on auth only ([30949be](https://github.com/hmcldryl/KaEatSaan/commit/30949bed76233e19c1ceadc09889be3ce6e23d6a))
+
+
+### Features
+
+* **ui:** add spring animations to cards, accordion changelog, compact filters, update about modal ([f9f1cbc](https://github.com/hmcldryl/KaEatSaan/commit/f9f1cbc1))
+
+# [1.2.0-beta.16](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.15...v1.2.0-beta.16) (2026-06-29)
+
+
+### Bug Fixes
+
+* **detail-modal:** fix header spacing, center rating, remove chip/location border ([7d11192](https://github.com/hmcldryl/KaEatSaan/commit/7d1119268b257a4c0f9e0ecd4ba1c9674aa9bcbc))
+* **detail-modal:** remove icon from location link, tighten header padding ([7f100f0](https://github.com/hmcldryl/KaEatSaan/commit/7f100f06d9497384e65c5051adc155e90fd81ace))
+* **map:** default borderRadius to 0, remove hardcoded 16px on loading state ([c9c686c](https://github.com/hmcldryl/KaEatSaan/commit/c9c686cb40f1e3c7237f7efc81dc0ee20e354542))
+
+# [1.2.0-beta.15](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.14...v1.2.0-beta.15) (2026-06-29)
+
+
+### Features
+
+* **ui:** unify text scale, spacing, and layout across all screens ([f075564](https://github.com/hmcldryl/KaEatSaan/commit/f075564c06ef80f8313afbead94a78daddbc9b2d))
+
+# [1.2.0-beta.14](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.13...v1.2.0-beta.14) (2026-06-29)
+
+
+### Bug Fixes
+
+* use live review count/rating in detail modal, always show rating in result modal ([b280d25](https://github.com/hmcldryl/KaEatSaan/commit/b280d2578532c07d6a8b0a4d4dc9bb2ce1e0de71))
+
+# [1.2.0-beta.13](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.12...v1.2.0-beta.13) (2026-06-29)
+
+
+### Features
+
+* add community editing, gamification sync, update logs, about modal, and UI polish ([d5dfc8f](https://github.com/hmcldryl/KaEatSaan/commit/d5dfc8f23e0099ffe51db6bdb70d204354bb63e5))
+
 # [1.2.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0...v1.2.0) (2026-06-29)
 
 

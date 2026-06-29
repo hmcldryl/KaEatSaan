@@ -1,6 +1,8 @@
 import { ClassificationType, CuisineType } from '@/types/foodOutlet';
 
 export const CLASSIFICATIONS: ClassificationType[] = [
+  'Karinderia',
+  'Tusok-tusok',
   'Restaurant',
   'Fast Food',
   'Cafe',
