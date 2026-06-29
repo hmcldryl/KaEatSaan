@@ -5,6 +5,7 @@ import { FoodOutlet } from "@/types/foodOutlet";
 import { FilterState } from "@/types/filter";
 import { UserLocation } from "@/types/geolocation";
 import { calculateDistance } from "@/lib/utils/distance";
+import { UpdateLogChange } from "@/types/updateLog";
 
 interface FoodOutletStore {
   outlets: FoodOutlet[];
@@ -20,6 +21,13 @@ interface FoodOutletStore {
   calculateDistances: (userLocation: UserLocation) => void;
   addFoodOutlet: (outlet: Omit<FoodOutlet, "id">) => Promise<string | null>;
   updateOutlet: (id: string, updates: Partial<FoodOutlet>) => Promise<void>;
+  communityUpdateOutlet: (
+    outlet: FoodOutlet,
+    updates: Partial<FoodOutlet>,
+    userId: string,
+    userName: string,
+    userPhotoUrl?: string
+  ) => Promise<boolean>;
   deleteOutlet: (id: string) => Promise<void>;
 }
 
@@ -181,6 +189,51 @@ export const useFoodOutletStore = create<FoodOutletStore>((set, get) => ({
             ? error.message
             : "Failed to update food outlet",
       });
+    }
+  },
+
+  communityUpdateOutlet: async (outlet, updates, userId, userName, userPhotoUrl) => {
+    try {
+      const editableFields: (keyof FoodOutlet)[] = [
+        "name", "classification", "cuisine", "budget", "isOpen",
+        "description", "tags", "contactNumber", "facebookUrl", "messengerUsername",
+      ];
+
+      const changes: Record<string, UpdateLogChange> = {};
+      for (const field of editableFields) {
+        const oldVal = outlet[field];
+        const newVal = updates[field];
+        if (newVal !== undefined && JSON.stringify(oldVal) !== JSON.stringify(newVal)) {
+          changes[field] = { from: oldVal ?? null, to: newVal };
+        }
+      }
+
+      if (Object.keys(changes).length === 0) return true;
+
+      const logRef = push(ref(database, `update_logs/${outlet.id}`));
+      const rootRef = ref(database);
+      const multiPathUpdates: Record<string, unknown> = {};
+
+      for (const [field, val] of Object.entries(updates)) {
+        multiPathUpdates[`food_outlets/${outlet.id}/${field}`] = val;
+      }
+      multiPathUpdates[`food_outlets/${outlet.id}/updatedAt`] = new Date().toISOString();
+      multiPathUpdates[`food_outlets/${outlet.id}/updatedBy`] = userId;
+      multiPathUpdates[`food_outlets/${outlet.id}/updatedByName`] = userName;
+
+      multiPathUpdates[`update_logs/${outlet.id}/${logRef.key}/userId`] = userId;
+      multiPathUpdates[`update_logs/${outlet.id}/${logRef.key}/userName`] = userName;
+      if (userPhotoUrl) {
+        multiPathUpdates[`update_logs/${outlet.id}/${logRef.key}/userPhotoUrl`] = userPhotoUrl;
+      }
+      multiPathUpdates[`update_logs/${outlet.id}/${logRef.key}/changes`] = changes;
+      multiPathUpdates[`update_logs/${outlet.id}/${logRef.key}/timestamp`] = new Date().toISOString();
+
+      await update(rootRef, multiPathUpdates);
+      return true;
+    } catch (error) {
+      set({ error: error instanceof Error ? error.message : "Failed to update outlet" });
+      return false;
     }
   },
 

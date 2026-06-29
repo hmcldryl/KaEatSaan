@@ -61,6 +61,9 @@ export default function AddFoodOutletModal({
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+  const [messengerUsername, setMessengerUsername] = useState("");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -74,6 +77,9 @@ export default function AddFoodOutletModal({
     setDescription("");
     setTags([]);
     setTagInput("");
+    setContactNumber("");
+    setFacebookUrl("");
+    setMessengerUsername("");
     setError(null);
   };
 
@@ -124,6 +130,9 @@ export default function AddFoodOutletModal({
         classification,
         description: description.trim() || undefined,
         tags: tags.length > 0 ? tags : undefined,
+        contactNumber: contactNumber.trim() || undefined,
+        facebookUrl: facebookUrl.trim() || undefined,
+        messengerUsername: messengerUsername.trim() || undefined,
         isOpen: true,
         createdAt: new Date().toISOString(),
         createdBy: user?.uid,
@@ -153,27 +162,31 @@ export default function AddFoodOutletModal({
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: "8px",
-          maxHeight: "90vh",
+          borderRadius: "16px",
+          maxHeight: "90dvh",
+          mx: 0.5,
+          bgcolor: "#FFFFFF",
         },
       }}
     >
-      <DialogTitle
+      <IconButton
+        onClick={handleClose}
+        size="small"
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          backgroundColor: "#FFFFFF",
-          borderBottom: "1px solid #F3F4F6",
-          py: 2,
+          position: "absolute",
+          top: 8,
+          right: 8,
+          color: "#9CA3AF",
+          "&:hover": { color: "#6B7280", bgcolor: "#F3F4F6" },
         }}
       >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+
+      <DialogTitle sx={{ borderBottom: "1px solid #F3F4F6", py: 2, pr: 5 }}>
         <Typography variant="h6" fontWeight={700} color="text.primary">
           Add New Kainan
         </Typography>
-        <IconButton onClick={handleClose} sx={{ color: "#6B7280" }}>
-          <CloseIcon />
-        </IconButton>
       </DialogTitle>
 
       <DialogContent sx={{ pt: 3 }}>
@@ -305,21 +318,59 @@ export default function AddFoodOutletModal({
               </Box>
             )}
           </Box>
+
+          <Box sx={{ borderTop: "1px solid #F3F4F6", pt: 2 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ color: "text.secondary", fontWeight: 700 }}>
+              Contact & Social (optional)
+            </Typography>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              <TextField
+                label="Contact Number"
+                value={contactNumber}
+                onChange={(e) => setContactNumber(e.target.value)}
+                fullWidth
+                placeholder="e.g., 09xx-xxx-xxxx"
+                inputProps={{ inputMode: "tel" }}
+              />
+              <TextField
+                label="Facebook Page URL"
+                value={facebookUrl}
+                onChange={(e) => setFacebookUrl(e.target.value)}
+                fullWidth
+                placeholder="https://facebook.com/pagename"
+              />
+              <TextField
+                label="Messenger Username"
+                value={messengerUsername}
+                onChange={(e) => setMessengerUsername(e.target.value)}
+                fullWidth
+                placeholder="username (without m.me/)"
+              />
+            </Box>
+          </Box>
         </Box>
       </DialogContent>
 
-      <DialogActions sx={{ px: 3, pb: 3, pt: 2 }}>
-        <Button onClick={handleClose} color="inherit">
+      <DialogActions sx={{ px: 2.5, pb: 2.5, pt: 1.5, gap: 1 }}>
+        <Button
+          onClick={handleClose}
+          variant="outlined"
+          fullWidth
+          sx={{ borderRadius: "9999px", fontWeight: 700, fontSize: "0.75rem", borderColor: "#E5E7EB", color: "#6B7280", borderWidth: 1.5, "&:hover": { borderWidth: 1.5 } }}
+        >
           Cancel
         </Button>
         <Button
           onClick={handleSubmit}
           variant="contained"
+          fullWidth
           disabled={isSubmitting}
           sx={{
-            backgroundColor: "#FF6B35",
-            "&:hover": { backgroundColor: "#C4621B" },
-            px: 4,
+            borderRadius: "9999px",
+            fontWeight: 700,
+            fontSize: "0.75rem",
+            bgcolor: "#FF6B35",
+            "&:hover": { bgcolor: "#E55A20" },
           }}
         >
           {isSubmitting ? (

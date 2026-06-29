@@ -173,7 +173,7 @@ export default function WheelResult({
 
       {!showRemoveConfirm && (
         <DialogActions sx={{ flexDirection: "column", pb: 2.5, px: 2, pt: 0, gap: 1, alignItems: "stretch" }}>
-          {/* Details â€” text, no outline, above */}
+          {/* Details – text, no outline, above */}
           <Button
             onClick={() => setDetailOpen(true)}
             variant="text"
@@ -182,7 +182,7 @@ export default function WheelResult({
           >
             Details
           </Button>
-          {/* Spin Again + Fave circle â€” same row */}
+          {/* Spin Again + Fave circle – same row */}
           <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
             <Button
               onClick={handleSpinAgainClick}
@@ -199,7 +199,7 @@ export default function WheelResult({
               {favorite ? <FavoriteIcon sx={{ fontSize: 18 }} /> : <FavoriteBorderIcon sx={{ fontSize: 18 }} />}
             </IconButton>
           </Box>
-          {/* Let's Go â€” full width */}
+          {/* Let's Go – full width */}
           <Button
             onClick={onClose}
             variant="contained"

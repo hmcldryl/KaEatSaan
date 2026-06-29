@@ -21,7 +21,7 @@ const MapInner = dynamic(() => import("./MapInner"), {
         fontWeight: 500,
       }}
     >
-      Loading mapâ€¦
+      Loading map…
     </Box>
   ),
 });

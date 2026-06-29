@@ -53,8 +53,8 @@ export default function ReviewList({ reviews, isLoading, onDelete }: ReviewListP
 
   if (reviews.length === 0) {
     return (
-      <Box sx={{ py: 4, textAlign: 'center' }}>
-        <Typography color="text.secondary">
+      <Box sx={{ py: 2, textAlign: 'center' }}>
+        <Typography sx={{ fontSize: '0.75rem', color: '#9CA3AF' }}>
           No reviews yet. Be the first to review!
         </Typography>
       </Box>
@@ -65,24 +65,24 @@ export default function ReviewList({ reviews, isLoading, onDelete }: ReviewListP
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
       {reviews.map((review, index) => (
         <Box key={review.id}>
-          <Box sx={{ py: 2 }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}>
+          <Box sx={{ py: 1.25 }}>
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1 }}>
               <Avatar
                 src={review.userPhotoUrl || undefined}
                 alt={review.userName}
-                sx={{ width: 40, height: 40, bgcolor: '#FF6B35' }}
+                sx={{ width: 28, height: 28, bgcolor: '#FF6B35', fontSize: '0.7rem' }}
               >
                 {review.userName[0]?.toUpperCase()}
               </Avatar>
               <Box sx={{ flex: 1 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Box>
-                    <Typography variant="subtitle2" fontWeight={600}>
+                    <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#374151', lineHeight: 1.2 }}>
                       {review.userName}
                     </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mt: 0.25 }}>
                       <StarRating value={review.rating} readonly size="small" />
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography sx={{ fontSize: '0.65rem', color: '#9CA3AF' }}>
                         {formatDate(review.createdAt)}
                       </Typography>
                     </Box>
@@ -92,13 +92,13 @@ export default function ReviewList({ reviews, isLoading, onDelete }: ReviewListP
                       size="small"
                       onClick={() => onDelete(review.id)}
                       color="error"
-                      sx={{ opacity: 0.6, '&:hover': { opacity: 1 } }}
+                      sx={{ opacity: 0.5, '&:hover': { opacity: 1 } }}
                     >
-                      <DeleteIcon fontSize="small" />
+                      <DeleteIcon sx={{ fontSize: 14 }} />
                     </IconButton>
                   )}
                 </Box>
-                <Typography variant="body2" sx={{ mt: 1 }}>
+                <Typography sx={{ fontSize: '0.72rem', color: '#6B7280', lineHeight: 1.4, mt: 0.5 }}>
                   {review.summary}
                 </Typography>
               </Box>

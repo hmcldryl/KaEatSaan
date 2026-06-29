@@ -44,11 +44,11 @@ async function updateOutletRating(outletId: string) {
 
     const averageRating = reviewCount > 0 ? totalRating / reviewCount : 0;
 
-    const outletRef = ref(database, `food_outlets/${outletId}`);
-    await update(outletRef, {
-      reviewCount,
-      averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal
-      updatedAt: new Date().toISOString(),
+    const rootRef = ref(database);
+    await update(rootRef, {
+      [`food_outlets/${outletId}/reviewCount`]: reviewCount,
+      [`food_outlets/${outletId}/averageRating`]: Math.round(averageRating * 10) / 10,
+      [`food_outlets/${outletId}/updatedAt`]: new Date().toISOString(),
     });
   } catch (error) {
     console.error('Failed to update outlet rating:', error);

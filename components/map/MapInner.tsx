@@ -123,7 +123,7 @@ export default function MapInner({
           fontWeight: 500,
         }}
       >
-        Loading mapâ€¦
+        Loading map…
       </div>
     );
   }
