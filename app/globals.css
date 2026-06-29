@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -98,7 +98,7 @@ html {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(227, 119, 37, 0.35);
+  background: rgba(255, 107, 53, 0.35);
   top: 0;
   left: 0;
   animation: map-pulse 2s ease-out infinite;

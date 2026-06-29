@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import dynamic from "next/dynamic";
 import { LatLngExpression } from "leaflet";
@@ -16,12 +16,12 @@ const MapInner = dynamic(() => import("./MapInner"), {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        color: "#E37725",
+        color: "#FF6B35",
         fontSize: "14px",
         fontWeight: 500,
       }}
     >
-      Loading map…
+      Loading mapâ€¦
     </Box>
   ),
 });
@@ -32,6 +32,7 @@ interface MapContainerProps {
   markerPosition?: LatLngExpression | null;
   onMapClick?: (lat: number, lng: number) => void;
   height?: string | number;
+  userLocation?: [number, number];
 }
 
 export default function MapContainer(props: MapContainerProps) {

@@ -34,7 +34,7 @@ export default function AuthDialog({ open, onClose }: AuthDialogProps) {
 
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-      <DialogTitle sx={{ textAlign: 'center', fontWeight: 700, color: '#E37725', pb: 1 }}>
+      <DialogTitle sx={{ textAlign: 'center', fontWeight: 700, color: '#FF6B35', pb: 1 }}>
         Welcome to KaEatSaan!
       </DialogTitle>
       <DialogContent sx={{ textAlign: 'center', pb: 4 }}>

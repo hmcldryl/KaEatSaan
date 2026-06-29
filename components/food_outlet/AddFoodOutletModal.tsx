@@ -196,7 +196,7 @@ export default function AddFoodOutletModal({
           <FormControl fullWidth>
             <InputLabel>Classification</InputLabel>
             <Select
-              value={cuisine}
+              value={classification}
               label="Classification"
               onChange={(e) =>
                 setClassification(e.target.value as ClassificationType)
@@ -317,7 +317,7 @@ export default function AddFoodOutletModal({
           variant="contained"
           disabled={isSubmitting}
           sx={{
-            backgroundColor: "#E37725",
+            backgroundColor: "#FF6B35",
             "&:hover": { backgroundColor: "#C4621B" },
             px: 4,
           }}

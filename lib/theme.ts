@@ -1,11 +1,11 @@
-"use client";
+﻿"use client";
 
 import { createTheme } from "@mui/material/styles";
 
-const PRIMARY = "#E37725";
-const PRIMARY_LIGHT = "#F59842";
-const PRIMARY_DARK = "#C4621B";
-const PRIMARY_SHADOW = "rgba(227, 119, 37, 0.25)";
+const PRIMARY = "#FF6B35";
+const PRIMARY_LIGHT = "#FF8C5A";
+const PRIMARY_DARK = "#E55A20";
+const PRIMARY_SHADOW = "rgba(255, 107, 53, 0.25)";
 
 const theme = createTheme({
   palette: {
@@ -97,7 +97,7 @@ const theme = createTheme({
           zIndex: 1000,
           backgroundColor: "#FFFFFF",
           borderTop: "1px solid #F0DFD0",
-          boxShadow: "0 -4px 24px rgba(227, 119, 37, 0.08)",
+          boxShadow: "0 -4px 24px rgba(255, 107, 53, 0.08)",
           borderRadius: "20px 20px 0 0",
         },
       },
@@ -128,7 +128,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           backgroundColor: "#FFFFFF",
-          boxShadow: "0 2px 16px rgba(227, 119, 37, 0.07)",
+          boxShadow: "0 2px 16px rgba(255, 107, 53, 0.07)",
           borderRadius: "20px",
           border: "1px solid #F0DFD0",
         },
@@ -158,7 +158,7 @@ const theme = createTheme({
           "&:hover": {
             borderWidth: 1.5,
             borderColor: PRIMARY,
-            backgroundColor: "rgba(227, 119, 37, 0.04)",
+            backgroundColor: "rgba(255, 107, 53, 0.04)",
           },
         },
       },
@@ -193,7 +193,7 @@ const theme = createTheme({
       styleOverrides: {
         paper: {
           borderRadius: "16px",
-          boxShadow: "0 8px 32px rgba(227, 119, 37, 0.12)",
+          boxShadow: "0 8px 32px rgba(255, 107, 53, 0.12)",
           border: "1px solid #F0DFD0",
         },
       },
@@ -234,7 +234,7 @@ const theme = createTheme({
         paper: {
           backgroundColor: "#FFFFFF",
           borderRadius: "24px",
-          boxShadow: "0 24px 64px rgba(227, 119, 37, 0.15)",
+          boxShadow: "0 24px 64px rgba(255, 107, 53, 0.15)",
         },
       },
     },

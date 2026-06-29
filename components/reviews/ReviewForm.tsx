@@ -102,7 +102,7 @@ export default function ReviewForm({ onSubmit, onCancel }: ReviewFormProps) {
           onClick={handleSubmit}
           disabled={isSubmitting || rating === 0 || !summary.trim()}
           sx={{
-            backgroundColor: '#E37725',
+            backgroundColor: '#FF6B35',
             '&:hover': { backgroundColor: '#C4621B' },
           }}
         >

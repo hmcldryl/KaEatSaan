@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Image from "next/image";
@@ -59,7 +59,7 @@ export default function TopAppBar() {
                 sx={{
                   color: "#6B7280",
                   "&:hover": {
-                    color: "#E37725",
+                    color: "#FF6B35",
                     backgroundColor: "rgba(255, 107, 53, 0.08)",
                   },
                 }}
@@ -83,7 +83,7 @@ export default function TopAppBar() {
                   sx={{
                     width: 34,
                     height: 34,
-                    bgcolor: "#E37725",
+                    bgcolor: "#FF6B35",
                     color: "#FFFFFF",
                     fontSize: "0.9rem",
                     fontWeight: 600,
@@ -99,7 +99,7 @@ export default function TopAppBar() {
                 sx={{
                   color: "#6B7280",
                   "&:hover": {
-                    color: "#E37725",
+                    color: "#FF6B35",
                     backgroundColor: "rgba(255, 107, 53, 0.08)",
                   },
                 }}
