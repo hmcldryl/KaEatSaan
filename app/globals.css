@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -52,4 +52,72 @@ html {
 /* Smooth transitions */
 * {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+/* Floating food emoji */
+@keyframes drift-up {
+  from { transform: translateY(0) rotate(0deg); }
+  to   { transform: translateY(-130vh) rotate(360deg); }
+}
+
+.floating-food-emoji {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.25;
+  animation: drift-up var(--drift-duration, 20s) linear infinite;
+}
+
+/* Glass card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Logo bounce */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.logo-bounce {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+/* Map marker pulse animation */
+@keyframes map-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+.kaeatsaan-marker-pulse {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 107, 53, 0.35);
+  top: 0;
+  left: 0;
+  animation: map-pulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.leaflet-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(4px);
+  border-radius: 8px 0 0 0 !important;
+  padding: 2px 6px !important;
+}
+
+.leaflet-control-zoom a {
+  border-radius: 8px !important;
 }

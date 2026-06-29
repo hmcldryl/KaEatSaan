@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -196,7 +196,7 @@ export default function AddFoodOutletModal({
           <FormControl fullWidth>
             <InputLabel>Classification</InputLabel>
             <Select
-              value={cuisine}
+              value={classification}
               label="Classification"
               onChange={(e) =>
                 setClassification(e.target.value as ClassificationType)
@@ -318,7 +318,7 @@ export default function AddFoodOutletModal({
           disabled={isSubmitting}
           sx={{
             backgroundColor: "#FF6B35",
-            "&:hover": { backgroundColor: "#E55A2B" },
+            "&:hover": { backgroundColor: "#C4621B" },
             px: 4,
           }}
         >

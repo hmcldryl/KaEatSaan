@@ -1,29 +1,45 @@
 name: Deploy to Production
+
 on:
   push:
     branches:
       - main
+
 permissions:
   contents: write
+
 jobs:
-  build_and_deploy:
+  deploy:
+    name: Release, Build & Deploy
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
-          persist-credentials: true
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+
+      - name: Configure Git
+        run: git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: "npm"
-      - run: npm ci
-      - run: npm run release
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Release
+        run: npm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-      - run: npm run build
+
+      - name: Build
+        run: npm run build
         env:
           NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
@@ -32,14 +48,30 @@ jobs:
           NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
           NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
           NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+
+      - name: Deploy
+        id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        continue-on-error: true
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KAEATSAAN_75E29 }}
           channelId: live
           projectId: kaeatsaan-75e29
           target: prod
-      - name: Notify Discord - Success
+
+      - name: Verify deployment
+        if: steps.deploy.outcome == 'failure'
+        run: |
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" https://kaeatsaan.web.app)
+          if [ "$HTTP" = "200" ]; then
+            echo "Site is live (HTTP $HTTP) — already active version is not a real failure"
+          else
+            echo "Deploy failed and site returned HTTP $HTTP"
+            exit 1
+          fi
+
+      - name: Notify Discord — success
         if: success()
         run: |
           curl -H "Content-Type: application/json" -X POST -d '{
@@ -51,7 +83,8 @@ jobs:
               "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"
             }]
           }' ${{ secrets.DISCORD_DEPLOYMENTS_WEBHOOK_URL }}
-      - name: Notify Discord - Failure
+
+      - name: Notify Discord — failure
         if: failure()
         run: |
           curl -H "Content-Type: application/json" -X POST -d '{

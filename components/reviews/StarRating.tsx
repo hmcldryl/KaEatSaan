@@ -12,6 +12,8 @@ interface StarRatingProps {
   size?: 'small' | 'medium' | 'large';
   showValue?: boolean;
   count?: number;
+  starColor?: string;
+  textColor?: string;
 }
 
 const sizeMap = {
@@ -27,6 +29,8 @@ export default function StarRating({
   size = 'medium',
   showValue = false,
   count,
+  starColor,
+  textColor = 'text.secondary',
 }: StarRatingProps) {
   const iconSize = sizeMap[size];
 
@@ -43,13 +47,16 @@ export default function StarRating({
 
     const StarComponent = filled ? StarIcon : halfFilled ? StarHalfIcon : StarBorderIcon;
 
+    const activeColor = starColor || 'warning.main';
+    const inactiveColor = starColor || 'grey.400';
+
     if (readonly) {
       return (
         <StarComponent
           key={index}
           sx={{
             fontSize: iconSize,
-            color: filled || halfFilled ? 'warning.main' : 'grey.400',
+            color: filled || halfFilled ? activeColor : inactiveColor,
           }}
         />
       );
@@ -70,10 +77,10 @@ export default function StarRating({
         <StarComponent
           sx={{
             fontSize: iconSize,
-            color: filled ? 'warning.main' : 'grey.400',
+            color: filled ? activeColor : inactiveColor,
             transition: 'color 0.2s',
             '&:hover': {
-              color: 'warning.main',
+              color: activeColor,
             },
           }}
         />
@@ -89,8 +96,11 @@ export default function StarRating({
       {showValue && (
         <Typography
           variant="body2"
-          color="text.secondary"
-          sx={{ ml: 0.5, fontSize: size === 'small' ? '0.75rem' : '0.875rem' }}
+          sx={{ 
+            ml: 0.5, 
+            fontSize: size === 'small' ? '0.75rem' : '0.875rem',
+            color: textColor
+          }}
         >
           {value.toFixed(1)}
           {count !== undefined && ` (${count})`}

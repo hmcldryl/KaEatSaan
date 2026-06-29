@@ -1,23 +1,41 @@
 "use client";
 
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import WheelCanvas from "./WheelCanvas";
 import WheelResult from "./WheelResult";
 import { FoodOutlet } from "@/types/foodOutlet";
-import {
-  animateWheel,
-  generateFinalRotation,
-  calculateWinner,
-} from "@/lib/utils/wheelAnimation";
+import { animateWheel } from "@/lib/utils/wheelAnimation";
+
+export const SPIN_AGAIN_PREFIX = "__spin_again__";
+const MIN_SEGMENTS = 4;
+
+function makeSpinAgainOutlet(index: number): FoodOutlet {
+  return {
+    id: `${SPIN_AGAIN_PREFIX}${index}`,
+    name: "Spin Again",
+    classification: "Other",
+    cuisine: "Other",
+    budget: 1,
+    location: { latitude: 0, longitude: 0, address: "" },
+    createdAt: "",
+  };
+}
 
 interface RouletteWheelProps {
   outlets: FoodOutlet[];
   onSpinStart?: () => void;
   onSpinEnd?: (outlet: FoodOutlet) => void;
-  onCurrentChange?: (outlet: FoodOutlet) => void;
-  triggerSpin?: boolean;
+  onCurrentChange?: (outlet: FoodOutlet | null) => void;
+  triggerSpin?: number;
+}
+
+function getSegmentAtPointer(rotation: number, outlets: FoodOutlet[]): FoodOutlet | null {
+  if (outlets.length === 0) return null;
+  const segmentAngle = 360 / outlets.length;
+  const normalizedRotation = ((rotation % 360) + 360) % 360;
+  const segmentIndex = Math.floor((360 - normalizedRotation) / segmentAngle) % outlets.length;
+  return outlets[segmentIndex] || null;
 }
 
 export default function RouletteWheel({
@@ -25,126 +43,196 @@ export default function RouletteWheel({
   onSpinStart,
   onSpinEnd,
   onCurrentChange,
-  triggerSpin = false,
+  triggerSpin = 0,
 }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState<FoodOutlet | null>(null);
-  const [lastTrigger, setLastTrigger] = useState(false);
+  const [excludedIds, setExcludedIds] = useState<Set<string>>(new Set());
 
-  // Calculate current restaurant under pointer
+  const lastTriggerRef = useRef(0);
+  const rotationRef = useRef(0);
+  const isSpinningRef = useRef(false);
+  const spinRef = useRef<(() => void) | null>(null);
+  const lastOutletIdRef = useRef<string | null>("__init__");
+
+  // Real outlets after exclusions
+  const activeOutlets = useMemo(
+    () => outlets.filter((o) => !excludedIds.has(o.id)),
+    [outlets, excludedIds],
+  );
+
+  // Pad to minimum 4 segments with "Spin Again" placeholders
+  const paddedOutlets = useMemo(() => {
+    if (activeOutlets.length >= MIN_SEGMENTS) return activeOutlets;
+    const needed = MIN_SEGMENTS - activeOutlets.length;
+    return [
+      ...activeOutlets,
+      ...Array.from({ length: needed }, (_, i) => makeSpinAgainOutlet(i)),
+    ];
+  }, [activeOutlets]);
+
+  // Ref always points to latest padded outlets for use in animation callbacks
+  const activeOutletsRef = useRef<FoodOutlet[]>([]);
+  useEffect(() => { activeOutletsRef.current = paddedOutlets; }, [paddedOutlets]);
+
+  // Drag/swipe state
+  const isDragging = useRef(false);
+  const hasMoved = useRef(false);
+  const dragStartPos = useRef<{ x: number; y: number } | null>(null);
+  const dragLastAngle = useRef(0);
+  const dragLastTime = useRef(0);
+  const angularVelocity = useRef(0);
+
   useEffect(() => {
-    if (outlets.length === 0) return;
-
-    const normalizedRotation = ((rotation % 360) + 360) % 360;
-    const segmentAngle = 360 / outlets.length;
-    const adjustedRotation = (normalizedRotation + segmentAngle / 2) % 360;
-    const segmentIndex = Math.floor(adjustedRotation / segmentAngle);
-    const currentRestaurant = outlets[segmentIndex];
-
-    if (currentRestaurant && onCurrentChange) {
-      onCurrentChange(currentRestaurant);
+    const current = getSegmentAtPointer(rotation, paddedOutlets);
+    const newId = (!current || current.id.startsWith(SPIN_AGAIN_PREFIX)) ? null : current.id;
+    // Only propagate when segment actually changes — avoids 60 re-renders/sec for same segment
+    if (newId === lastOutletIdRef.current) return;
+    lastOutletIdRef.current = newId;
+    if (onCurrentChange) {
+      onCurrentChange(newId !== null ? current! : null);
     }
-  }, [rotation, outlets, onCurrentChange]);
+  }, [rotation, paddedOutlets, onCurrentChange]);
 
+  // spin() uses refs instead of closed-over state so it stays stable and
+  // can be safely called from animation callbacks and auto-spin timeouts.
   const spin = useCallback(() => {
-    if (isSpinning || outlets.length === 0) return;
+    const active = activeOutletsRef.current;
+    if (isSpinningRef.current || active.length === 0) return;
 
+    isSpinningRef.current = true;
     setIsSpinning(true);
     onSpinStart?.();
 
-    // Select random target
-    const targetIndex = Math.floor(Math.random() * outlets.length);
-    const finalRotation = generateFinalRotation(targetIndex, outlets.length);
-
+    const totalRotation = (3 + Math.random() * 2) * 360 + Math.random() * 360;
     const startTime = performance.now();
-    const duration = 3500; // 3.5 seconds
-    const startRotation = rotation % 360;
+    const startRotation = rotationRef.current % 360;
 
     animateWheel(
       startTime,
-      duration,
+      3500,
       startRotation,
-      startRotation + finalRotation,
-      (currentRotation) => {
-        setRotation(currentRotation);
-      },
-      () => {
-        const winner = calculateWinner(rotation + finalRotation, outlets);
-        setResult(winner);
+      startRotation + totalRotation,
+      (r) => { rotationRef.current = r; setRotation(r); },
+      (finalRotation) => {
+        const winner = getSegmentAtPointer(finalRotation, activeOutletsRef.current);
+        isSpinningRef.current = false;
         setIsSpinning(false);
-        onSpinEnd?.(winner);
+
+        if (winner?.id.startsWith(SPIN_AGAIN_PREFIX)) {
+          // Land on "Spin Again" → auto-spin after short pause
+          setTimeout(() => spinRef.current?.(), 500);
+        } else if (winner) {
+          setResult(winner);
+          onSpinEnd?.(winner);
+        }
       },
     );
-  }, [isSpinning, outlets, rotation, onSpinStart, onSpinEnd]);
+  }, [onSpinStart, onSpinEnd]);
 
-  // Handle external spin trigger
+  // Keep spinRef pointing to latest spin callback
+  useEffect(() => { spinRef.current = spin; }, [spin]);
+
   useEffect(() => {
-    if (triggerSpin !== lastTrigger) {
+    if (triggerSpin !== lastTriggerRef.current) {
+      lastTriggerRef.current = triggerSpin;
       if (triggerSpin && !isSpinning) {
-        spin();
+        const id = setTimeout(spin, 0);
+        return () => clearTimeout(id);
       }
-      setLastTrigger(triggerSpin);
     }
-  }, [triggerSpin, lastTrigger, isSpinning, spin]);
+  }, [triggerSpin, isSpinning, spin]);
 
-  const handleCloseResult = () => {
-    setResult(null);
-  };
+  const handlePointerDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (isSpinning || activeOutletsRef.current.length === 0) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
 
-  const handleSpinAgain = () => {
-    setResult(null);
-    setTimeout(() => {
-      spin();
-    }, 300);
-  };
+    const rect = e.currentTarget.getBoundingClientRect();
+    const dx = e.clientX - rect.left - rect.width / 2;
+    const dy = e.clientY - rect.top - rect.height / 2;
 
-  const handleWheelClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (isSpinning || outlets.length === 0) return;
+    dragStartPos.current = { x: e.clientX, y: e.clientY };
+    dragLastAngle.current = Math.atan2(dy, dx);
+    dragLastTime.current = performance.now();
+    isDragging.current = true;
+    hasMoved.current = false;
+    angularVelocity.current = 0;
+  }, [isSpinning]);
 
-    const target = event.currentTarget;
-    const rect = target.getBoundingClientRect();
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging.current || isSpinning) return;
 
-    // Get click position relative to the element
-    const clickX = event.clientX - rect.left;
-    const clickY = event.clientY - rect.top;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const dx = e.clientX - rect.left - rect.width / 2;
+    const dy = e.clientY - rect.top - rect.height / 2;
+    const currentAngle = Math.atan2(dy, dx);
+    const now = performance.now();
 
-    // Calculate distance from center
-    const dx = clickX - centerX;
-    const dy = clickY - centerY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+    let delta = currentAngle - dragLastAngle.current;
+    if (delta > Math.PI) delta -= 2 * Math.PI;
+    if (delta < -Math.PI) delta += 2 * Math.PI;
 
-    // Check if click is within center circle
-    // Button is 0.85 * wheel radius, and wheel radius is approximately (rect.width/2 - 70)
-    const wheelRadius = rect.width / 2 - 70;
-    const centerRadius = wheelRadius * 0.85;
+    const dt = now - dragLastTime.current;
+    if (dt > 0) angularVelocity.current = delta / dt;
 
-    if (distance <= centerRadius) {
-      spin();
+    if (dragStartPos.current) {
+      const mdx = e.clientX - dragStartPos.current.x;
+      const mdy = e.clientY - dragStartPos.current.y;
+      if (mdx * mdx + mdy * mdy > 64) hasMoved.current = true;
     }
-  };
 
-  const isEmpty = outlets.length === 0;
+    rotationRef.current += (delta * 180) / Math.PI;
+    setRotation(rotationRef.current);
+
+    dragLastAngle.current = currentAngle;
+    dragLastTime.current = now;
+  }, [isSpinning]);
+
+  const handlePointerUp = useCallback(() => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+
+    if (!hasMoved.current) {
+      spin();
+      return;
+    }
+
+    const speedDegPerMs = Math.abs(angularVelocity.current * 180 / Math.PI);
+    if (speedDegPerMs > 0.1) spin();
+  }, [spin]);
+
+  const handleSpinAgain = useCallback((removeOutlet?: boolean) => {
+    if (removeOutlet && result) {
+      setExcludedIds((prev) => new Set([...prev, result.id]));
+    }
+    setResult(null);
+    setTimeout(spin, 300);
+  }, [result, spin]);
+
+  const disabled = activeOutlets.length === 0 || !!result;
 
   return (
     <Box
       sx={{
         width: "100%",
-        aspectRatio: "1/1",
-        margin: "0 auto",
-        cursor: isSpinning || isEmpty ? "default" : "pointer",
+        height: "100%",
         position: "relative",
+        touchAction: "none",
+        userSelect: "none",
+        cursor: isSpinning ? "default" : disabled ? "default" : "grab",
+        "&:active": { cursor: isSpinning ? "default" : "grabbing" },
       }}
-      onClick={isEmpty ? undefined : handleWheelClick}
+      onPointerDown={disabled ? undefined : handlePointerDown}
+      onPointerMove={disabled ? undefined : handlePointerMove}
+      onPointerUp={disabled ? undefined : handlePointerUp}
+      onPointerCancel={disabled ? undefined : handlePointerUp}
     >
-      <WheelCanvas outlets={outlets} rotation={rotation} size={600} />
-
+      <WheelCanvas outlets={paddedOutlets} rotation={rotation} size={800} />
       <WheelResult
         outlet={result}
         open={!!result}
-        onClose={handleCloseResult}
+        onClose={() => setResult(null)}
         onSpinAgain={handleSpinAgain}
       />
     </Box>

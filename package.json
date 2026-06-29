@@ -1,6 +1,6 @@
 {
   "name": "ka-eat-saan",
-  "version": "1.1.0",
+  "version": "1.2.0-beta.12",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -19,7 +19,7 @@
     "firebase": "^12.8.0",
     "framer-motion": "^12.26.2",
     "leaflet": "^1.9.4",
-    "next": "16.1.1",
+    "next": "^16.2.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-leaflet": "^5.0.0",

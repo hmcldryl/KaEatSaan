@@ -1,24 +1,27 @@
-"use client";
+﻿"use client";
 
 import dynamic from "next/dynamic";
 import { LatLngExpression } from "leaflet";
-import { Box, CircularProgress } from "@mui/material";
+import { Box } from "@mui/material";
+import { motion } from "framer-motion";
 
-// Dynamic import for Leaflet - it requires window object
 const MapInner = dynamic(() => import("./MapInner"), {
   ssr: false,
   loading: () => (
     <Box
       sx={{
         height: 300,
+        background: "linear-gradient(135deg, #FFF3E8 0%, #FFE4D0 100%)",
+        borderRadius: "16px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "grey.100",
-        borderRadius: "8px",
+        color: "#FF6B35",
+        fontSize: "14px",
+        fontWeight: 500,
       }}
     >
-      <CircularProgress size={40} />
+      Loading mapâ€¦
     </Box>
   ),
 });
@@ -29,8 +32,18 @@ interface MapContainerProps {
   markerPosition?: LatLngExpression | null;
   onMapClick?: (lat: number, lng: number) => void;
   height?: string | number;
+  userLocation?: [number, number];
 }
 
 export default function MapContainer(props: MapContainerProps) {
-  return <MapInner {...props} />;
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.97 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      style={{ borderRadius: "16px", overflow: "hidden" }}
+    >
+      <MapInner {...props} />
+    </motion.div>
+  );
 }

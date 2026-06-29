@@ -1,34 +1,24 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import TuneIcon from "@mui/icons-material/Tune";
-import RestaurantIcon from "@mui/icons-material/Restaurant";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
-import { useFiltersStore } from "@/lib/store/filtersStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import AuthDialog from "@/components/auth/AuthDialog";
 import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
 
-interface TopAppBarProps {
-  onFilterClick: () => void;
-}
-
-export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
-  const activeFiltersCount = useFiltersStore((state) =>
-    state.getActiveFiltersCount(),
-  );
+export default function TopAppBar() {
   const { user, signOut } = useAuthStore();
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const [addFoodOutletOpen, setAddFoodOutletOpen] = useState(false);
@@ -50,34 +40,16 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
   return (
     <>
       <AppBar position="fixed" elevation={0}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-            <Box
-              sx={{
-                width: 40,
-                height: 40,
-                borderRadius: "8px",
-                background: "linear-gradient(135deg, #FF6B35 0%, #FF8A5B 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 2px 8px rgba(255, 107, 53, 0.3)",
-              }}
-            >
-              <RestaurantIcon sx={{ fontSize: 22, color: "white" }} />
-            </Box>
-            <Typography
-              variant="h6"
-              component="h1"
-              sx={{
-                fontWeight: 800,
-                fontSize: { xs: "1.25rem", sm: "1.5rem" },
-                letterSpacing: "-0.02em",
-                color: "#1F2937",
-              }}
-            >
-              KaEatSaan
-            </Typography>
+        <Toolbar sx={{ justifyContent: "space-between", maxWidth: 800, mx: "auto", width: "100%" }}>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Image
+              src="/logo.png"
+              alt="KaEatSaan"
+              height={40}
+              width={43}
+              style={{ height: 40, width: "auto" }}
+              priority
+            />
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
             {user && (
@@ -95,31 +67,6 @@ export default function TopAppBar({ onFilterClick }: TopAppBarProps) {
                 <AddIcon />
               </IconButton>
             )}
-            <IconButton
-              onClick={onFilterClick}
-              aria-label="filters"
-              sx={{
-                color: "#6B7280",
-                "&:hover": {
-                  color: "#FF6B35",
-                  backgroundColor: "rgba(255, 107, 53, 0.08)",
-                },
-              }}
-            >
-              <Badge
-                badgeContent={activeFiltersCount}
-                sx={{
-                  "& .MuiBadge-badge": {
-                    background: "#FF6B35",
-                    color: "#FFFFFF",
-                    fontWeight: 600,
-                    fontSize: "0.7rem",
-                  },
-                }}
-              >
-                <TuneIcon />
-              </Badge>
-            </IconButton>
             {user ? (
               <IconButton
                 onClick={handleMenuOpen}

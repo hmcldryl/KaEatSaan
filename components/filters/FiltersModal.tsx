@@ -1,10 +1,7 @@
 'use client';
 
 import React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -13,8 +10,6 @@ import Chip from '@mui/material/Chip';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import { useFiltersStore } from '@/lib/store/filtersStore';
 import { BudgetLevel } from '@/types/foodOutlet';
 import { CUISINES } from '@/lib/constants/foodOutlets';
@@ -69,53 +64,63 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
   const activeFiltersCount = filters.getActiveFiltersCount();
 
   return (
-    <Dialog
+    <SwipeableDrawer
+      anchor="bottom"
       open={open}
       onClose={onClose}
-      fullWidth
-      maxWidth="sm"
+      onOpen={() => {}}
+      disableSwipeToOpen
       PaperProps={{
         sx: {
-          maxHeight: '90vh',
-          backgroundColor: '#FFFFFF',
+          borderRadius: '24px 24px 0 0',
+          maxHeight: '90dvh',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
         },
       }}
     >
-      <DialogTitle
+      {/* Drag handle */}
+      <Box sx={{ display: 'flex', justifyContent: 'center', pt: 1.5, pb: 0.5, flexShrink: 0 }}>
+        <Box sx={{ width: 40, height: 4, borderRadius: '9999px', bgcolor: '#E5E7EB' }} />
+      </Box>
+
+      {/* Header */}
+      <Box
         sx={{
-          backgroundColor: '#FFFFFF',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          px: 3,
+          py: 2,
           borderBottom: '1px solid #F3F4F6',
-          py: 2.5,
+          flexShrink: 0,
         }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="h6" component="div" fontWeight={700} color="text.primary">
-            Filters & Settings
-          </Typography>
-          <IconButton
-            edge="end"
-            onClick={onClose}
-            aria-label="close"
-            sx={{
-              color: '#6B7280',
-              '&:hover': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-              },
-            }}
+        <Typography variant="h6" fontWeight={700} color="text.primary">
+          Filters & Settings
+        </Typography>
+        {activeFiltersCount > 0 && (
+          <Button
+            onClick={filters.resetFilters}
+            size="small"
+            sx={{ color: '#6B7280', fontWeight: 600 }}
           >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-      </DialogTitle>
+            Reset all
+          </Button>
+        )}
+      </Box>
 
-      <DialogContent sx={{ py: 3 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, py: 1 }}>
+      {/* Scrollable content */}
+      <Box sx={{ overflowY: 'auto', flex: 1, px: 3, py: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pb: 2 }}>
+
           {/* Budget Filter */}
           <Box>
             <Typography variant="subtitle1" fontWeight={600} gutterBottom>
               Budget Range
             </Typography>
-            <Box sx={{ px: 2, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 2 }}>
               <Slider
                 value={filters.budget}
                 onChange={handleBudgetChange}
@@ -125,6 +130,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 max={4}
                 step={1}
                 marks={budgetMarks}
+                sx={{ color: '#FF6B35' }}
               />
             </Box>
           </Box>
@@ -139,7 +145,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
             <Typography variant="body2" color="text.secondary" gutterBottom>
               Show kainan within {filters.distance} km
             </Typography>
-            <Box sx={{ px: 2, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 2 }}>
               <Slider
                 value={filters.distance}
                 onChange={handleDistanceChange}
@@ -149,13 +155,14 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 max={10}
                 step={0.5}
                 marks={distanceMarks}
+                sx={{ color: '#FF6B35' }}
               />
             </Box>
           </Box>
 
           <Divider />
 
-          {/* Max Kainan Filter */}
+          {/* Max Kainan */}
           <Box>
             <Typography variant="subtitle1" fontWeight={600} gutterBottom>
               Max Kainan
@@ -163,7 +170,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
             <Typography variant="body2" color="text.secondary" gutterBottom>
               Show up to {filters.maxOutlets} kainan in the wheel
             </Typography>
-            <Box sx={{ px: 2, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 2 }}>
               <Slider
                 value={filters.maxOutlets}
                 onChange={handleMaxOutletsChange}
@@ -172,6 +179,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 max={20}
                 step={5}
                 marks={maxOutletsMarks}
+                sx={{ color: '#FF6B35' }}
               />
             </Box>
           </Box>
@@ -188,7 +196,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 ? 'All cuisines selected'
                 : `${filters.cuisines.length} cuisine${filters.cuisines.length !== 1 ? 's' : ''} selected`}
             </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 2 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1.5 }}>
               {CUISINES.map((cuisine) => (
                 <Chip
                   key={cuisine}
@@ -215,6 +223,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                   <Switch
                     checked={filters.includeClosedOutlets}
                     onChange={(e) => filters.setIncludeClosedOutlets(e.target.checked)}
+                    sx={{ '& .MuiSwitch-thumb': { bgcolor: '#FF6B35' }, '& .Mui-checked + .MuiSwitch-track': { bgcolor: '#FF6B35' } }}
                   />
                 }
                 label="Include closed kainan"
@@ -224,6 +233,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                   <Switch
                     checked={filters.onlyNewPlaces}
                     onChange={(e) => filters.setOnlyNewPlaces(e.target.checked)}
+                    sx={{ '& .MuiSwitch-thumb': { bgcolor: '#FF6B35' }, '& .Mui-checked + .MuiSwitch-track': { bgcolor: '#FF6B35' } }}
                   />
                 }
                 label="Only show new places (added in last 30 days)"
@@ -231,25 +241,35 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
             </Box>
           </Box>
         </Box>
-      </DialogContent>
+      </Box>
 
-      <DialogActions sx={{ px: 3, py: 2, borderTop: '1px solid #F3F4F6' }}>
-        {activeFiltersCount > 0 && (
-          <Button onClick={filters.resetFilters} sx={{ mr: 'auto', color: '#6B7280' }}>
-            Reset All
-          </Button>
-        )}
+      {/* Footer */}
+      <Box
+        sx={{
+          px: 3,
+          py: 2,
+          borderTop: '1px solid #F3F4F6',
+          flexShrink: 0,
+          pb: 'max(env(safe-area-inset-bottom), 16px)',
+        }}
+      >
         <Button
           onClick={onClose}
           variant="contained"
+          fullWidth
           sx={{
+            height: 52,
+            borderRadius: '9999px',
             backgroundColor: '#FF6B35',
-            '&:hover': { backgroundColor: '#E55A2B' },
+            fontWeight: 700,
+            fontSize: '1rem',
+            boxShadow: '0 4px 16px rgba(255, 107, 53, 0.35)',
+            '&:hover': { backgroundColor: '#E55A20' },
           }}
         >
           Done
         </Button>
-      </DialogActions>
-    </Dialog>
+      </Box>
+    </SwipeableDrawer>
   );
 }
