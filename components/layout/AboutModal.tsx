@@ -25,8 +25,7 @@ const LICENSES = [
   { name: "Zustand", license: "MIT", url: "https://zustand-demo.pmnd.rs" },
   { name: "Leaflet / React-Leaflet", license: "BSD 2-Clause", url: "https://leafletjs.com" },
   { name: "Framer Motion", license: "MIT", url: "https://www.framer.com/motion" },
-  { name: "hCaptcha React", license: "MIT", url: "https://www.hcaptcha.com" },
-  { name: "Tailwind CSS", license: "MIT", url: "https://tailwindcss.com" },
+{ name: "Tailwind CSS", license: "MIT", url: "https://tailwindcss.com" },
 ];
 
 interface ChangelogEntry {
