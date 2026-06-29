@@ -1,3 +1,12 @@
+# [1.2.0-beta.16](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.15...v1.2.0-beta.16) (2026-06-29)
+
+
+### Bug Fixes
+
+* **detail-modal:** fix header spacing, center rating, remove chip/location border ([7d11192](https://github.com/hmcldryl/KaEatSaan/commit/7d1119268b257a4c0f9e0ecd4ba1c9674aa9bcbc))
+* **detail-modal:** remove icon from location link, tighten header padding ([7f100f0](https://github.com/hmcldryl/KaEatSaan/commit/7f100f06d9497384e65c5051adc155e90fd81ace))
+* **map:** default borderRadius to 0, remove hardcoded 16px on loading state ([c9c686c](https://github.com/hmcldryl/KaEatSaan/commit/c9c686cb40f1e3c7237f7efc81dc0ee20e354542))
+
 # [1.2.0-beta.15](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.14...v1.2.0-beta.15) (2026-06-29)
 
 
