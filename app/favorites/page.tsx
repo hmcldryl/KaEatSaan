@@ -77,73 +77,68 @@ export default function FavoritesPage() {
               transition={{ type: "spring", stiffness: 400, damping: 22, delay: i * 0.05 }}
               whileTap={{ scale: 0.98 }}
             >
-            <Card sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+            <Card sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)", position: "relative" }}>
               <CardActionArea onClick={() => setSelectedOutlet(outlet)}>
-                <CardContent sx={{ py: 1.5, px: 2, "&:last-child": { pb: 1.5 } }}>
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography sx={{ fontWeight: 700, fontSize: "0.88rem", color: "#1F2937", mb: 0.75 }}>
-                        {outlet.name}
-                      </Typography>
+                <CardContent sx={{ py: 1.5, px: 2, pr: 5, "&:last-child": { pb: 1.5 } }}>
+                  <Typography sx={{ fontWeight: 700, fontSize: "0.88rem", color: "#1F2937", mb: 0.75 }}>
+                    {outlet.name}
+                  </Typography>
 
-                      <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mb: 0.75 }}>
-                        <Chip
-                          label={outlet.cuisine}
-                          size="small"
-                          sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.68rem", height: 20 }}
-                        />
-                        <Chip
-                          label={"₱".repeat(outlet.budget)}
-                          size="small"
-                          variant="outlined"
-                          sx={{ fontWeight: 600, fontSize: "0.68rem", height: 20, borderColor: "#E5E7EB" }}
-                        />
-                        {outlet.distance && (
-                          <Chip
-                            label={`${outlet.distance.toFixed(1)} km`}
-                            size="small"
-                            variant="outlined"
-                            sx={{ fontSize: "0.68rem", height: 20 }}
-                          />
-                        )}
-                      </Box>
-
-                      {(outlet.averageRating || 0) > 0 && (
-                        <Box sx={{ mb: 0.5 }}>
-                          <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
-                        </Box>
-                      )}
-
-                      <Typography sx={{ fontSize: "0.7rem", color: "#9CA3AF" }}>
-                        📍 {outlet.location.address}
-                      </Typography>
-
-                      {outlet.description && (
-                        <Typography sx={{ fontSize: "0.7rem", color: "#6B7280", mt: 0.5, lineHeight: 1.4 }}>
-                          {outlet.description}
-                        </Typography>
-                      )}
-
-                      {outlet.tags && outlet.tags.length > 0 && (
-                        <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mt: 0.75 }}>
-                          {outlet.tags.slice(0, 3).map((tag) => (
-                            <Chip key={tag} label={tag} size="small" variant="outlined" sx={{ fontSize: "0.62rem", height: 18 }} />
-                          ))}
-                        </Box>
-                      )}
-                    </Box>
-
-                    <IconButton
-                      aria-label="remove from favorites"
-                      onClick={(e) => { e.stopPropagation(); removeFavorite(outlet.id); }}
+                  <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mb: 0.75 }}>
+                    <Chip
+                      label={outlet.cuisine}
                       size="small"
-                      sx={{ ml: 1, flexShrink: 0, color: "#D1D5DB", "&:hover": { color: "#EF4444" } }}
-                    >
-                      <DeleteIcon sx={{ fontSize: 16 }} />
-                    </IconButton>
+                      sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.68rem", height: 20 }}
+                    />
+                    <Chip
+                      label={"₱".repeat(outlet.budget)}
+                      size="small"
+                      variant="outlined"
+                      sx={{ fontWeight: 600, fontSize: "0.68rem", height: 20, borderColor: "#E5E7EB" }}
+                    />
+                    {outlet.distance && (
+                      <Chip
+                        label={`${outlet.distance.toFixed(1)} km`}
+                        size="small"
+                        variant="outlined"
+                        sx={{ fontSize: "0.68rem", height: 20 }}
+                      />
+                    )}
                   </Box>
+
+                  {(outlet.averageRating || 0) > 0 && (
+                    <Box sx={{ mb: 0.5 }}>
+                      <StarRating value={outlet.averageRating || 0} readonly size="small" showValue count={outlet.reviewCount} />
+                    </Box>
+                  )}
+
+                  <Typography sx={{ fontSize: "0.7rem", color: "#9CA3AF" }}>
+                    📍 {outlet.location.address}
+                  </Typography>
+
+                  {outlet.description && (
+                    <Typography sx={{ fontSize: "0.7rem", color: "#6B7280", mt: 0.5, lineHeight: 1.4 }}>
+                      {outlet.description}
+                    </Typography>
+                  )}
+
+                  {outlet.tags && outlet.tags.length > 0 && (
+                    <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mt: 0.75 }}>
+                      {outlet.tags.slice(0, 3).map((tag) => (
+                        <Chip key={tag} label={tag} size="small" variant="outlined" sx={{ fontSize: "0.62rem", height: 18 }} />
+                      ))}
+                    </Box>
+                  )}
                 </CardContent>
               </CardActionArea>
+              <IconButton
+                aria-label="remove from favorites"
+                onClick={() => removeFavorite(outlet.id)}
+                size="small"
+                sx={{ position: "absolute", top: 8, right: 8, color: "#D1D5DB", "&:hover": { color: "#EF4444" } }}
+              >
+                <DeleteIcon sx={{ fontSize: 16 }} />
+              </IconButton>
             </Card>
             </motion.div>
           ))}

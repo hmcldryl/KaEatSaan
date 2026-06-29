@@ -61,60 +61,55 @@ export default function HistoryPage() {
               transition={{ type: "spring", stiffness: 400, damping: 22, delay: i * 0.05 }}
               whileTap={{ scale: 0.98 }}
             >
-            <Card sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+            <Card sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)", position: "relative" }}>
               <CardActionArea onClick={() => setSelectedOutlet(entry.outlet)}>
-                <CardContent sx={{ py: 1.25, px: 2, "&:last-child": { pb: 1.25 } }}>
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mb: 0.5 }}>
-                        <Typography sx={{ fontSize: "0.65rem", color: "#9CA3AF" }}>
-                          {formatTime(entry.timestamp)}
-                          {title === "Older" && ` · ${formatDate(entry.timestamp)}`}
-                        </Typography>
-                      </Box>
-
-                      <Typography sx={{ fontWeight: 700, fontSize: "0.88rem", color: "#1F2937", mb: 0.5 }}>
-                        {entry.outlet.name}
-                      </Typography>
-
-                      <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mb: 0.5 }}>
-                        <Chip
-                          label={entry.outlet.cuisine}
-                          size="small"
-                          sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.68rem", height: 20 }}
-                        />
-                        <Chip
-                          label={"₱".repeat(entry.outlet.budget)}
-                          size="small"
-                          variant="outlined"
-                          sx={{ fontWeight: 600, fontSize: "0.68rem", height: 20, borderColor: "#E5E7EB" }}
-                        />
-                        {entry.outlet.distance && (
-                          <Chip
-                            label={`${entry.outlet.distance.toFixed(1)} km`}
-                            size="small"
-                            variant="outlined"
-                            sx={{ fontSize: "0.68rem", height: 20 }}
-                          />
-                        )}
-                      </Box>
-
-                      <Typography sx={{ fontSize: "0.7rem", color: "#9CA3AF" }}>
-                        📍 {entry.outlet.location.address}
-                      </Typography>
-                    </Box>
-
-                    <IconButton
-                      aria-label="remove from history"
-                      onClick={(e) => { e.stopPropagation(); removeEntry(entry.id); }}
-                      size="small"
-                      sx={{ ml: 1, flexShrink: 0, color: "#D1D5DB", "&:hover": { color: "#EF4444" } }}
-                    >
-                      <DeleteIcon sx={{ fontSize: 16 }} />
-                    </IconButton>
+                <CardContent sx={{ py: 1.25, px: 2, pr: 5, "&:last-child": { pb: 1.25 } }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mb: 0.5 }}>
+                    <Typography sx={{ fontSize: "0.65rem", color: "#9CA3AF" }}>
+                      {formatTime(entry.timestamp)}
+                      {title === "Older" && ` · ${formatDate(entry.timestamp)}`}
+                    </Typography>
                   </Box>
+
+                  <Typography sx={{ fontWeight: 700, fontSize: "0.88rem", color: "#1F2937", mb: 0.5 }}>
+                    {entry.outlet.name}
+                  </Typography>
+
+                  <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mb: 0.5 }}>
+                    <Chip
+                      label={entry.outlet.cuisine}
+                      size="small"
+                      sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.68rem", height: 20 }}
+                    />
+                    <Chip
+                      label={"₱".repeat(entry.outlet.budget)}
+                      size="small"
+                      variant="outlined"
+                      sx={{ fontWeight: 600, fontSize: "0.68rem", height: 20, borderColor: "#E5E7EB" }}
+                    />
+                    {entry.outlet.distance && (
+                      <Chip
+                        label={`${entry.outlet.distance.toFixed(1)} km`}
+                        size="small"
+                        variant="outlined"
+                        sx={{ fontSize: "0.68rem", height: 20 }}
+                      />
+                    )}
+                  </Box>
+
+                  <Typography sx={{ fontSize: "0.7rem", color: "#9CA3AF" }}>
+                    📍 {entry.outlet.location.address}
+                  </Typography>
                 </CardContent>
               </CardActionArea>
+              <IconButton
+                aria-label="remove from history"
+                onClick={() => removeEntry(entry.id)}
+                size="small"
+                sx={{ position: "absolute", top: 8, right: 8, color: "#D1D5DB", "&:hover": { color: "#EF4444" } }}
+              >
+                <DeleteIcon sx={{ fontSize: 16 }} />
+              </IconButton>
             </Card>
             </motion.div>
           ))}
