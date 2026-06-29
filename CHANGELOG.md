@@ -1,3 +1,35 @@
+# [1.2.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.1.0...v1.2.0) (2026-06-29)
+
+
+### Bug Fixes
+
+* align wheel result calculation with visual display ([5c50c57](https://github.com/hmcldryl/KaEatSaan/commit/5c50c57f905b2ac81dc9888c36d77d248ce7b884))
+* calculate wheel result from exact final rotation value ([15a49b9](https://github.com/hmcldryl/KaEatSaan/commit/15a49b9fb0aef0ca6f9b023e0b935952c26d9bdb))
+* **ci:** add environment context to build job for secret access ([532cc03](https://github.com/hmcldryl/KaEatSaan/commit/532cc038b706f765fbb518d9f10d06e753143386))
+* **ci:** add nanosecond timestamp to build-id.txt for unique Firebase versions ([e56aa9e](https://github.com/hmcldryl/KaEatSaan/commit/e56aa9e20ac3af1b205b7dc290a6516956b45132))
+* **ci:** fix git auth for semantic-release by setting remote URL explicitly ([067b371](https://github.com/hmcldryl/KaEatSaan/commit/067b3713b0031c017f6cfad0e3351215996355f4))
+* **ci:** handle already-active-version error with post-deploy site check ([dc36f5e](https://github.com/hmcldryl/KaEatSaan/commit/dc36f5ed7e94e4afee43c8c1de61e759daa32eba))
+* **ci:** inject GITHUB_SHA into bundle to guarantee unique Firebase versions ([cdd1b70](https://github.com/hmcldryl/KaEatSaan/commit/cdd1b702aade7499bcb09660c0d31272a8950826))
+* **ci:** pass NEXT_PUBLIC_BUILD_ID explicitly from github.sha in build step ([e3a5d57](https://github.com/hmcldryl/KaEatSaan/commit/e3a5d57a1478ef784dd369123a243d9ed2c7f0de))
+* **ci:** remove environment context from release and notify jobs ([5ef3bd7](https://github.com/hmcldryl/KaEatSaan/commit/5ef3bd7a7218c7f012b0fa4dbe159b6254fdfc17))
+* **ci:** skip build/deploy when semantic-release cuts no new release ([43ef001](https://github.com/hmcldryl/KaEatSaan/commit/43ef001d2141f5b338d97435208c8fb250ea8e17))
+* **ci:** stamp out/ with commit SHA after build to force unique Firebase version ([8b176ea](https://github.com/hmcldryl/KaEatSaan/commit/8b176ea24b3bec794053dcd21f2943a55984d1c1))
+* **ci:** use generateBuildId to guarantee unique Firebase versions per commit ([5b1cf4c](https://github.com/hmcldryl/KaEatSaan/commit/5b1cf4c900cada66482dbf3071f3317111adcd42))
+* **favicon:** replace app favicon and add cache headers for icons ([34d5e7d](https://github.com/hmcldryl/KaEatSaan/commit/34d5e7dbea279d8ac1452bad94a2ccc1a121c33b))
+* resolve bugs, lint errors, and update docs ([940dcd8](https://github.com/hmcldryl/KaEatSaan/commit/940dcd8fd463771304192f09a9f227870c7123c0))
+* resolve TypeScript build errors in RouletteWheel and AppLayout ([07f44e3](https://github.com/hmcldryl/KaEatSaan/commit/07f44e3320cc5855ddef3123aa376ce0b14be449))
+* roleta alignment on wide screens, update .gitignore file ([1219f94](https://github.com/hmcldryl/KaEatSaan/commit/1219f94c44621d53508c3643b40830c9beb6a3da))
+
+
+### Features
+
+* **map:** custom styled tiles, animated marker, and entry animation ([4276228](https://github.com/hmcldryl/KaEatSaan/commit/427622837ab21f8daa5136bf46fca5d97d55b982))
+* polish gamified home screen UI ([26ab454](https://github.com/hmcldryl/KaEatSaan/commit/26ab454c23823b50a01dad879cea246282b19bfd)), closes [#FF6B35](https://github.com/hmcldryl/KaEatSaan/issues/FF6B35)
+* redesign home screen with gamified PWA UI ([d343067](https://github.com/hmcldryl/KaEatSaan/commit/d343067862377efe95474d4f4658483110475a70))
+* **ui:** overhaul home screen and make layout fully responsive ([1548050](https://github.com/hmcldryl/KaEatSaan/commit/1548050f9e019cb17309bbbea759511e021f4e12))
+* update branding, theme colors, and curvy MUI style ([f668ffc](https://github.com/hmcldryl/KaEatSaan/commit/f668ffc37765cffa745dcbccd4d31d0009e35275)), closes [#FF6B35](https://github.com/hmcldryl/KaEatSaan/issues/FF6B35) [#E37725](https://github.com/hmcldryl/KaEatSaan/issues/E37725) [#FFF8F2](https://github.com/hmcldryl/KaEatSaan/issues/FFF8F2) [#F0DFD0](https://github.com/hmcldryl/KaEatSaan/issues/F0DFD0)
+* **wheel:** polish UI, optimize canvas perf, update primary color ([65e0a9e](https://github.com/hmcldryl/KaEatSaan/commit/65e0a9ecc2604c580b62578b089ffd87b1a65bdb)), closes [#E37725](https://github.com/hmcldryl/KaEatSaan/issues/E37725) [#FF6B35](https://github.com/hmcldryl/KaEatSaan/issues/FF6B35)
+
 # [1.2.0-beta.12](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.11...v1.2.0-beta.12) (2026-06-29)
 
 
