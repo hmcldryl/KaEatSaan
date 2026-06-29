@@ -1,3 +1,10 @@
+# [1.2.0-beta.13](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.12...v1.2.0-beta.13) (2026-06-29)
+
+
+### Features
+
+* add community editing, gamification sync, update logs, about modal, and UI polish ([d5dfc8f](https://github.com/hmcldryl/KaEatSaan/commit/d5dfc8f23e0099ffe51db6bdb70d204354bb63e5))
+
 # [1.2.0-beta.12](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.11...v1.2.0-beta.12) (2026-06-29)
 
 
