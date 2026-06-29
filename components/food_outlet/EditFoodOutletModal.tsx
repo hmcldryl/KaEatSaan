@@ -59,9 +59,9 @@ export default function EditFoodOutletModal({
   const { user } = useAuthStore();
 
   const [name, setName] = useState(outlet.name);
-  const [classification, setClassification] = useState<ClassificationType>(outlet.classification);
-  const [cuisine, setCuisine] = useState<CuisineType>(outlet.cuisine);
-  const [budget, setBudget] = useState<BudgetLevel>(outlet.budget);
+  const [classification, setClassification] = useState<ClassificationType>(outlet.classification || CLASSIFICATIONS[0]);
+  const [cuisine, setCuisine] = useState<CuisineType>(CUISINES.includes(outlet.cuisine) ? outlet.cuisine : CUISINES[0]);
+  const [budget, setBudget] = useState<BudgetLevel>(outlet.budget || 1);
   const [isOpen, setIsOpen] = useState(outlet.isOpen !== false);
   const [description, setDescription] = useState(outlet.description || "");
   const [tags, setTags] = useState<string[]>(outlet.tags || []);
