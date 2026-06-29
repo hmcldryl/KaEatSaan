@@ -1,3 +1,16 @@
+# [1.2.0-beta.18](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.17...v1.2.0-beta.18) (2026-06-29)
+
+
+### Bug Fixes
+
+* **about-modal:** changelog as single accordion section, versions flat inside ([538701f](https://github.com/hmcldryl/KaEatSaan/commit/538701f19d420365544dc6e5658255bf212befb4))
+* **cards:** move delete IconButton outside CardActionArea to fix nested button error ([e5e2030](https://github.com/hmcldryl/KaEatSaan/commit/e5e2030a933c1aa1341fcc6939359359328dcadb))
+
+
+### Features
+
+* **ui:** add spring animations to cards, accordion changelog, compact filters, update about modal ([f9f1cbc](https://github.com/hmcldryl/KaEatSaan/commit/f9f1cbc1448b96c50f4c315d2923d01c6871a787))
+
 # [1.2.0-beta.17](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.16...v1.2.0-beta.17) (2026-06-29)
 
 
