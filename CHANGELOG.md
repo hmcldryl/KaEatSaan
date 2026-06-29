@@ -1,3 +1,10 @@
+# [1.2.0-beta.14](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.13...v1.2.0-beta.14) (2026-06-29)
+
+
+### Bug Fixes
+
+* use live review count/rating in detail modal, always show rating in result modal ([b280d25](https://github.com/hmcldryl/KaEatSaan/commit/b280d2578532c07d6a8b0a4d4dc9bb2ce1e0de71))
+
 # [1.2.0-beta.13](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.12...v1.2.0-beta.13) (2026-06-29)
 
 
