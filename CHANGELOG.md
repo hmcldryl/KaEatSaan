@@ -1,3 +1,10 @@
+# [1.2.0-beta.12](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.11...v1.2.0-beta.12) (2026-06-29)
+
+
+### Bug Fixes
+
+* **favicon:** replace app favicon and add cache headers for icons ([34d5e7d](https://github.com/hmcldryl/KaEatSaan/commit/34d5e7dbea279d8ac1452bad94a2ccc1a121c33b))
+
 # [1.2.0-beta.11](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.10...v1.2.0-beta.11) (2026-06-29)
 
 
