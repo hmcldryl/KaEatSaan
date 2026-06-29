@@ -7,13 +7,10 @@ import IconButton from '@mui/material/IconButton';
 import HomeIcon from '@mui/icons-material/Restaurant';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HistoryIcon from '@mui/icons-material/History';
-import TuneIcon from '@mui/icons-material/Tune';
-
 const NAV = [
   { Icon: HomeIcon, path: '/', label: 'Home' },
   { Icon: FavoriteIcon, path: '/favorites', label: 'Favorites' },
   { Icon: HistoryIcon, path: '/history', label: 'History' },
-  { Icon: TuneIcon, path: '/filters', label: 'Filters' },
 ] as const;
 
 export default function BottomNavBar() {
@@ -49,7 +46,7 @@ export default function BottomNavBar() {
           px: 1,
           py: 0.75,
           width: '100%',
-          maxWidth: '400px',
+          maxWidth: { xs: '360px', sm: '420px' },
           pointerEvents: 'auto',
         }}
       >

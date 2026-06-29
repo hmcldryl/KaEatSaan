@@ -40,7 +40,7 @@ export default function TopAppBar() {
   return (
     <>
       <AppBar position="fixed" elevation={0}>
-        <Toolbar sx={{ justifyContent: "space-between" }}>
+        <Toolbar sx={{ justifyContent: "space-between", maxWidth: 800, mx: "auto", width: "100%" }}>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Image
               src="/logo.png"

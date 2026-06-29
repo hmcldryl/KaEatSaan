@@ -65,7 +65,7 @@ html {
   display: block;
   pointer-events: none;
   user-select: none;
-  opacity: 0.18;
+  opacity: 0.25;
   animation: drift-up var(--drift-duration, 20s) linear infinite;
 }
 

@@ -86,28 +86,27 @@ export default function Home() {
   return (
     <Box
       sx={{
+        position: "relative",
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "space-between",
-        py: "20px",
         overflow: "hidden",
+        width: "100%",
+        maxWidth: { sm: "560px" },
+        mx: "auto",
       }}
     >
-      {/* TOP: Profile chip */}
-      <Box sx={{ width: "100%", display: "flex", justifyContent: "flex-end", px: "20px" }}>
+      {/* Floating user badge / sign-in FAB */}
+      <Box sx={{ position: "absolute", top: 14, right: 14, zIndex: 30 }}>
         {user ? (
           <>
             <Box
               onClick={(e) => setMenuAnchor(e.currentTarget as HTMLElement)}
               sx={{
-                background: "rgba(255,255,255,0.88)",
-                backdropFilter: "blur(12px)",
-                WebkitBackdropFilter: "blur(12px)",
+                bgcolor: "#FFFFFF",
                 borderRadius: "9999px",
-                border: "1px solid rgba(255,255,255,0.4)",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+                border: "1.5px solid rgba(0,0,0,0.08)",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
                 px: 1.5,
                 py: 0.75,
                 display: "flex",
@@ -120,13 +119,13 @@ export default function Home() {
               }}
             >
               <Typography
-                sx={{ fontWeight: 800, fontSize: "0.7rem", color: "#AB3500", letterSpacing: "0.04em" }}
+                sx={{ fontWeight: 800, fontSize: "0.68rem", color: "#AB3500", letterSpacing: "0.04em" }}
               >
                 LVL {level}
               </Typography>
-              <Box sx={{ width: "1px", height: 12, bgcolor: "rgba(139,90,60,0.3)" }} />
+              <Box sx={{ width: "1px", height: 12, bgcolor: "rgba(139,90,60,0.25)" }} />
               <Typography
-                sx={{ fontWeight: 700, fontSize: "0.7rem", color: "#6B7280", display: "flex", alignItems: "center", gap: 0.5 }}
+                sx={{ fontWeight: 700, fontSize: "0.68rem", color: "#6B7280", display: "flex", alignItems: "center", gap: 0.5 }}
               >
                 🔥 {streak}
               </Typography>
@@ -134,12 +133,12 @@ export default function Home() {
                 src={user.photoURL || undefined}
                 alt={user.displayName || "User"}
                 sx={{
-                  width: 32,
-                  height: 32,
+                  width: 28,
+                  height: 28,
                   bgcolor: "#FF6B35",
-                  fontSize: "0.8rem",
+                  fontSize: "0.72rem",
                   fontWeight: 700,
-                  border: "2px solid rgba(255,107,53,0.3)",
+                  border: "2px solid rgba(255,107,53,0.25)",
                   ml: 0.5,
                 }}
               >
@@ -179,12 +178,10 @@ export default function Home() {
           <Box
             onClick={() => setAuthDialogOpen(true)}
             sx={{
-              background: "rgba(255,255,255,0.88)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
+              bgcolor: "#FFFFFF",
               borderRadius: "9999px",
-              border: "1px solid rgba(255,255,255,0.4)",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+              border: "1.5px solid rgba(0,0,0,0.08)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
               px: 1.5,
               py: 0.75,
               display: "flex",
@@ -196,8 +193,8 @@ export default function Home() {
               "&:active": { transform: "scale(0.95)" },
             }}
           >
-            <PersonIcon sx={{ fontSize: 18, color: "#6B7280" }} />
-            <Typography sx={{ fontWeight: 700, fontSize: "0.75rem", color: "#6B7280" }}>
+            <PersonIcon sx={{ fontSize: 16, color: "#6B7280" }} />
+            <Typography sx={{ fontWeight: 700, fontSize: "0.72rem", color: "#6B7280" }}>
               Sign in
             </Typography>
           </Box>
@@ -212,45 +209,38 @@ export default function Home() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 2,
-          width: "100%",
-          overflow: "hidden",
+          gap: 1.5,
           px: "20px",
+          pt: "64px",
+          overflow: "hidden",
         }}
       >
-        {/* Floating logo — CSS filter inverts orange to white on the orange bg */}
         <Image
           src="/logo.png"
           alt="KaEatSaan"
-          height={72}
+          height={52}
           width={190}
           className="logo-bounce"
-          style={{
-            height: 72,
-            width: "auto",
-            filter: "brightness(0) invert(1) drop-shadow(0 4px 16px rgba(0,0,0,0.25))",
-            flexShrink: 0,
-          }}
+          style={{ height: "clamp(44px, 7vw, 64px)", width: "auto", flexShrink: 0 }}
           priority
         />
 
-        {/* Result pill */}
         {currentOutlet && (
           <Box
             sx={{
-              background: "rgba(255,255,255,0.92)",
-              backdropFilter: "blur(8px)",
+              bgcolor: "#FFF4F0",
+              border: "1px solid rgba(255,107,53,0.25)",
               borderRadius: "9999px",
               px: 2.5,
               py: 0.75,
-              boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
               maxWidth: "90%",
             }}
           >
             <Typography
               sx={{
                 fontWeight: 800,
-                fontSize: "0.9rem",
+                fontSize: "0.85rem",
                 color: "#AB3500",
                 whiteSpace: "nowrap",
                 overflow: "hidden",
@@ -262,22 +252,20 @@ export default function Home() {
           </Box>
         )}
 
-        {/* Loading */}
         {isLoading && (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <CircularProgress size={20} sx={{ color: "rgba(255,255,255,0.8)" }} />
-            <Typography sx={{ color: "rgba(255,255,255,0.8)", fontSize: "0.85rem", fontWeight: 600 }}>
+            <CircularProgress size={18} sx={{ color: "#FF6B35" }} />
+            <Typography sx={{ color: "#6B7280", fontSize: "0.8rem", fontWeight: 600 }}>
               Loading...
             </Typography>
           </Box>
         )}
 
-        {/* Wheel */}
         {outlets.length > 0 && (
           <Box
             sx={{
-              width: { xs: "280px", sm: "340px" },
-              height: { xs: "280px", sm: "340px" },
+              width: { xs: "260px", sm: "340px", md: "420px" },
+              height: { xs: "260px", sm: "340px", md: "420px" },
               flexShrink: 0,
             }}
           >
@@ -291,16 +279,22 @@ export default function Home() {
           </Box>
         )}
 
-        {/* Empty state */}
         {!isLoading && outlets.length === 0 && (
           <Box
-            className="glass-card"
-            sx={{ borderRadius: "20px", p: 3, textAlign: "center", width: "100%" }}
+            sx={{
+              bgcolor: "#FFFFFF",
+              border: "1px solid rgba(0,0,0,0.08)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+              borderRadius: "20px",
+              p: 3,
+              textAlign: "center",
+              width: "100%",
+            }}
           >
-            <Typography sx={{ fontWeight: 800, color: "#1F2937", mb: 1, fontSize: "1.1rem" }}>
+            <Typography sx={{ fontWeight: 800, color: "#1F2937", mb: 1, fontSize: "1rem" }}>
               No Kainan Yet
             </Typography>
-            <Typography sx={{ color: "#6B7280", mb: 2, fontSize: "0.9rem" }}>
+            <Typography sx={{ color: "#6B7280", mb: 2, fontSize: "0.85rem" }}>
               Add your favorite kainan to get started!
             </Typography>
             {user ? (
@@ -339,22 +333,23 @@ export default function Home() {
       <Box sx={{ width: "100%", px: "20px", pb: "96px", flexShrink: 0 }}>
         {outlets.length > 0 && (
           <Box
-            className="glass-card"
             sx={{
+              bgcolor: "#FFFFFF",
+              border: "1px solid rgba(0,0,0,0.08)",
+              boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
               borderRadius: "9999px",
               p: "6px",
               display: "flex",
               alignItems: "center",
               gap: 1,
-              boxShadow: "0 12px 32px rgba(0,0,0,0.12)",
             }}
           >
             <IconButton
               onClick={() => setFiltersModalOpen(true)}
               aria-label="filters"
               sx={{
-                width: 56,
-                height: 56,
+                width: 52,
+                height: 52,
                 borderRadius: "9999px",
                 color: "#6B7280",
                 flexShrink: 0,
@@ -386,13 +381,13 @@ export default function Home() {
               endIcon={<CasinoIcon />}
               sx={{
                 flex: 1,
-                height: 56,
+                height: 52,
                 borderRadius: "9999px",
                 bgcolor: "#FF6B35",
                 fontWeight: 800,
-                fontSize: "1.05rem",
+                fontSize: "0.95rem",
                 letterSpacing: "0.08em",
-                boxShadow: "0 12px 32px rgba(255,107,53,0.4)",
+                boxShadow: "0 8px 24px rgba(255,107,53,0.35)",
                 "&:hover": { bgcolor: "#E55A20" },
                 "&:active": { transform: "scale(0.96)" },
                 transition: "all 0.15s ease",
@@ -405,8 +400,8 @@ export default function Home() {
               onClick={() => router.push("/favorites")}
               aria-label="favorites"
               sx={{
-                width: 56,
-                height: 56,
+                width: 52,
+                height: 52,
                 borderRadius: "9999px",
                 color: "#6B7280",
                 flexShrink: 0,
