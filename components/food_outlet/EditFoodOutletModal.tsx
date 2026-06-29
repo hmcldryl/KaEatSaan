@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
-import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -70,10 +69,8 @@ export default function EditFoodOutletModal({
   const [facebookUrl, setFacebookUrl] = useState(outlet.facebookUrl || "");
   const [messengerUsername, setMessengerUsername] = useState(outlet.messengerUsername || "");
 
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const captchaRef = useRef<HCaptcha>(null);
 
   const handleAddTag = () => {
     const t = tagInput.trim();
@@ -89,7 +86,6 @@ export default function EditFoodOutletModal({
 
   const handleSubmit = async () => {
     if (!user) { setError("Must be signed in to edit."); return; }
-    if (!captchaToken) { setError("Please complete the CAPTCHA."); return; }
     if (!name.trim()) { setError("Name is required."); return; }
 
     setIsSubmitting(true);
@@ -118,14 +114,10 @@ export default function EditFoodOutletModal({
 
     setIsSubmitting(false);
     if (ok) {
-      captchaRef.current?.resetCaptcha();
-      setCaptchaToken(null);
       onSaved?.();
       onClose();
     } else {
       setError("Failed to save. Please try again.");
-      captchaRef.current?.resetCaptcha();
-      setCaptchaToken(null);
     }
   };
 
@@ -159,7 +151,7 @@ export default function EditFoodOutletModal({
       <DialogContent sx={{ pt: 3 }}>
         {error && <Alert severity="error" sx={{ mb: 2, fontSize: "0.75rem" }}>{error}</Alert>}
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", mt: 2, flexDirection: "column", gap: 2 }}>
           <TextField
             label="Name"
             value={name}
@@ -264,14 +256,6 @@ export default function EditFoodOutletModal({
             placeholder="username (without m.me/)"
           />
 
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 1 }}>
-            <HCaptcha
-              sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY || "10000000-ffff-ffff-ffff-000000000001"}
-              onVerify={(token) => setCaptchaToken(token)}
-              onExpire={() => setCaptchaToken(null)}
-              ref={captchaRef}
-            />
-          </Box>
         </Box>
       </DialogContent>
 
@@ -288,7 +272,7 @@ export default function EditFoodOutletModal({
           onClick={handleSubmit}
           variant="contained"
           fullWidth
-          disabled={isSubmitting || !captchaToken}
+          disabled={isSubmitting}
           sx={{ borderRadius: "9999px", fontWeight: 700, fontSize: "0.75rem", bgcolor: "#FF6B35", "&:hover": { bgcolor: "#E55A20" } }}
         >
           {isSubmitting ? <CircularProgress size={18} color="inherit" /> : "Save Changes"}
