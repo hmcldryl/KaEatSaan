@@ -112,15 +112,15 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
       </Box>
 
       {/* Scrollable content */}
-      <Box sx={{ overflowY: 'auto', flex: 1, px: 3, py: 3 }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, pb: 2 }}>
+      <Box sx={{ overflowY: 'auto', flex: 1, px: 3, py: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pb: 2 }}>
 
           {/* Budget Filter */}
           <Box>
             <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
               Budget Range
             </Typography>
-            <Box sx={{ px: 1, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 1.5 }}>
               <Slider
                 value={filters.budget}
                 onChange={handleBudgetChange}
@@ -145,7 +145,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
             <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", mb: 0.5 }}>
               Show kainan within {filters.distance} km
             </Typography>
-            <Box sx={{ px: 1, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 1.5 }}>
               <Slider
                 value={filters.distance}
                 onChange={handleDistanceChange}
@@ -170,7 +170,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
             <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", mb: 0.5 }}>
               Show up to {filters.maxOutlets} kainan in the wheel
             </Typography>
-            <Box sx={{ px: 1, pt: 2 }}>
+            <Box sx={{ px: 1, pt: 1.5 }}>
               <Slider
                 value={filters.maxOutlets}
                 onChange={handleMaxOutletsChange}

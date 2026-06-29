@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -52,8 +53,15 @@ export default function HistoryPage() {
           {title}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          {entries.map((entry) => (
-            <Card key={entry.id} sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+          {entries.map((entry, i) => (
+            <motion.div
+              key={entry.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 22, delay: i * 0.05 }}
+              whileTap={{ scale: 0.98 }}
+            >
+            <Card sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
               <CardActionArea onClick={() => setSelectedOutlet(entry.outlet)}>
                 <CardContent sx={{ py: 1.25, px: 2, "&:last-child": { pb: 1.25 } }}>
                   <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -108,6 +116,7 @@ export default function HistoryPage() {
                 </CardContent>
               </CardActionArea>
             </Card>
+            </motion.div>
           ))}
         </Box>
       </Box>

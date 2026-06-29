@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -68,8 +69,15 @@ export default function FavoritesPage() {
         </Box>
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}>
-          {favoriteOutlets.map((outlet) => (
-            <Card key={outlet.id} sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
+          {favoriteOutlets.map((outlet, i) => (
+            <motion.div
+              key={outlet.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 22, delay: i * 0.05 }}
+              whileTap={{ scale: 0.98 }}
+            >
+            <Card sx={{ borderRadius: "14px", border: "1px solid #F3F4F6", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>
               <CardActionArea onClick={() => setSelectedOutlet(outlet)}>
                 <CardContent sx={{ py: 1.5, px: 2, "&:last-child": { pb: 1.5 } }}>
                   <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -137,6 +145,7 @@ export default function FavoritesPage() {
                 </CardContent>
               </CardActionArea>
             </Card>
+            </motion.div>
           ))}
         </Box>
       </Box>
