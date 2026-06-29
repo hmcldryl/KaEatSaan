@@ -130,7 +130,7 @@ export default function FoodOutletDetailModal({
         </IconButton>
 
         {/* Header */}
-        <Box sx={{ textAlign: "center", pt: 2.5, pb: 1.5, px: 5, borderBottom: "1px solid #F3F4F6" }}>
+        <Box sx={{ textAlign: "center", pt: 2.5, px: 5, borderBottom: "1px solid #F3F4F6" }}>
           <Typography sx={{ fontWeight: 800, fontSize: "1.1rem", color: "#FF6B35", letterSpacing: "-0.02em", lineHeight: 1.2, mb: 1 }}>
             {outlet.name}
           </Typography>
@@ -175,7 +175,6 @@ export default function FoodOutletDetailModal({
               "&:hover": { color: "#FF6B35" },
             }}
           >
-            <LocationOnIcon sx={{ fontSize: 13, flexShrink: 0 }} />
             <Typography sx={{ fontSize: "0.72rem", lineHeight: 1.3, textAlign: "center" }}>
               {outlet.location.address}
             </Typography>
