@@ -1,3 +1,11 @@
+# [1.2.0-beta.17](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.16...v1.2.0-beta.17) (2026-06-29)
+
+
+### Bug Fixes
+
+* **edit-modal:** guard against undefined/invalid Select values from DB ([fb522aa](https://github.com/hmcldryl/KaEatSaan/commit/fb522aa8cc6fa618a20ac26fd177b84ae982d60e))
+* **edit-modal:** remove hCaptcha, gate edits on auth only ([30949be](https://github.com/hmcldryl/KaEatSaan/commit/30949bed76233e19c1ceadc09889be3ce6e23d6a))
+
 # [1.2.0-beta.16](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.15...v1.2.0-beta.16) (2026-06-29)
 
 
