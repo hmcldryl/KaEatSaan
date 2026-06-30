@@ -215,7 +215,7 @@ export const useFoodOutletStore = create<FoodOutletStore>((set, get) => ({
       const multiPathUpdates: Record<string, unknown> = {};
 
       for (const [field, val] of Object.entries(updates)) {
-        multiPathUpdates[`food_outlets/${outlet.id}/${field}`] = val;
+        multiPathUpdates[`food_outlets/${outlet.id}/${field}`] = val ?? null;
       }
       multiPathUpdates[`food_outlets/${outlet.id}/updatedAt`] = new Date().toISOString();
       multiPathUpdates[`food_outlets/${outlet.id}/updatedBy`] = userId;

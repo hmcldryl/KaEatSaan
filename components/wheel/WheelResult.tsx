@@ -123,6 +123,13 @@ export default function WheelResult({
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}>
             <Box sx={{ display: "flex", gap: 0.75, flexWrap: "wrap", justifyContent: "center" }}>
+              {outlet.classification && (
+                <Chip
+                  label={outlet.classification}
+                  size="small"
+                  sx={{ bgcolor: "#F3F4F6", color: "#374151", fontWeight: 600, fontSize: "0.72rem", height: 24 }}
+                />
+              )}
               <Chip
                 label={outlet.cuisine}
                 size="small"

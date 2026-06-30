@@ -161,21 +161,21 @@ export default function EditFoodOutletModal({
             size="small"
           />
 
-          <FormControl fullWidth size="small">
+          <FormControl fullWidth size="small" required>
             <InputLabel>Classification</InputLabel>
             <Select value={classification} label="Classification" onChange={(e) => setClassification(e.target.value as ClassificationType)}>
               {CLASSIFICATIONS.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
             </Select>
           </FormControl>
 
-          <FormControl fullWidth size="small">
-            <InputLabel>Cuisine Type</InputLabel>
-            <Select value={cuisine} label="Cuisine Type" onChange={(e) => setCuisine(e.target.value as CuisineType)}>
+          <FormControl fullWidth size="small" required>
+            <InputLabel>Cuisine</InputLabel>
+            <Select value={cuisine} label="Cuisine" onChange={(e) => setCuisine(e.target.value as CuisineType)}>
               {CUISINES.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
             </Select>
           </FormControl>
 
-          <FormControl fullWidth size="small">
+          <FormControl fullWidth size="small" required>
             <InputLabel>Budget Level</InputLabel>
             <Select value={budget} label="Budget Level" onChange={(e) => setBudget(e.target.value as BudgetLevel)}>
               {([1, 2, 3, 4, 5] as BudgetLevel[]).map((b) => <MenuItem key={b} value={b}>{BUDGET_LABELS[b]}</MenuItem>)}

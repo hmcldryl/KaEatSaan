@@ -33,6 +33,7 @@ import ReviewForm from "@/components/reviews/ReviewForm";
 import MapContainer from "@/components/map/MapContainer";
 import EditFoodOutletModal from "@/components/food_outlet/EditFoodOutletModal";
 import { useLocationStore } from "@/lib/store/locationStore";
+import { useFoodOutletStore } from "@/lib/store/foodOutletStore";
 
 interface FoodOutletDetailModalProps {
   outlet: FoodOutlet | null;
@@ -87,6 +88,7 @@ export default function FoodOutletDetailModal({
 }: FoodOutletDetailModalProps) {
   const { user } = useAuthStore();
   const { location: userGeoLocation } = useLocationStore();
+  const { outlets } = useFoodOutletStore();
   const { reviews, isLoading: reviewsLoading, addReview, deleteReview, reviewCount, averageRating } = useReviews(
     open && outlet ? outlet.id : null,
   );
@@ -97,6 +99,8 @@ export default function FoodOutletDetailModal({
   const [showLogs, setShowLogs] = useState(false);
 
   if (!outlet) return null;
+
+  const liveOutlet = outlets.find(o => o.id === outlet.id) ?? outlet;
 
   const handleAddReview = async (rating: number, summary: string) => {
     if (!user) return;
@@ -132,7 +136,7 @@ export default function FoodOutletDetailModal({
         {/* Header */}
         <Box sx={{ textAlign: "center", pt: 2.5, pb: 1.25, px: 5 }}>
           <Typography sx={{ fontWeight: 800, fontSize: "1.1rem", color: "#FF6B35", letterSpacing: "-0.02em", lineHeight: 1.2, mb: 0.5 }}>
-            {outlet.name}
+            {liveOutlet.name}
           </Typography>
 
           {averageRating > 0 && (
@@ -142,12 +146,13 @@ export default function FoodOutletDetailModal({
           )}
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap", justifyContent: "center" }}>
-            <Chip label={outlet.cuisine} size="small" sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.72rem", height: 24 }} />
-            <Chip label={BUDGET_SYMBOLS[outlet.budget]} size="small" variant="outlined" sx={{ fontWeight: 600, fontSize: "0.72rem", height: 24, borderColor: "#E5E7EB" }} />
-            {outlet.distance !== undefined && (
+            {liveOutlet.classification && <Chip label={liveOutlet.classification} size="small" sx={{ bgcolor: "#F3F4F6", color: "#374151", fontWeight: 600, fontSize: "0.72rem", height: 24 }} />}
+            <Chip label={liveOutlet.cuisine} size="small" sx={{ bgcolor: "#FF6B35", color: "#fff", fontWeight: 600, fontSize: "0.72rem", height: 24 }} />
+            <Chip label={BUDGET_SYMBOLS[liveOutlet.budget]} size="small" variant="outlined" sx={{ fontWeight: 600, fontSize: "0.72rem", height: 24, borderColor: "#E5E7EB" }} />
+            {liveOutlet.distance !== undefined && (
               <Chip
                 icon={<LocationOnIcon sx={{ fontSize: "14px !important" }} />}
-                label={formatDistance(outlet.distance)}
+                label={formatDistance(liveOutlet.distance)}
                 size="small"
                 variant="outlined"
                 sx={{ fontWeight: 600, fontSize: "0.72rem", height: 24, borderColor: "#E5E7EB" }}
@@ -197,13 +202,13 @@ export default function FoodOutletDetailModal({
 
           <Box sx={{ p: 1.5 }}>
             {/* Contact & Social */}
-            {(outlet.contactNumber || outlet.facebookUrl || outlet.messengerUsername) && (
+            {(liveOutlet.contactNumber || liveOutlet.facebookUrl || liveOutlet.messengerUsername) && (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 1, justifyContent: "center" }}>
-                {outlet.contactNumber && (
-                  <Link href={`tel:${outlet.contactNumber}`} underline="none">
+                {liveOutlet.contactNumber && (
+                  <Link href={`tel:${liveOutlet.contactNumber}`} underline="none">
                     <Chip
                       icon={<PhoneIcon sx={{ fontSize: "13px !important" }} />}
-                      label={outlet.contactNumber}
+                      label={liveOutlet.contactNumber}
                       size="small"
                       variant="outlined"
                       clickable
@@ -211,8 +216,8 @@ export default function FoodOutletDetailModal({
                     />
                   </Link>
                 )}
-                {outlet.facebookUrl && (
-                  <Link href={outlet.facebookUrl} target="_blank" rel="noopener noreferrer" underline="none">
+                {liveOutlet.facebookUrl && (
+                  <Link href={liveOutlet.facebookUrl} target="_blank" rel="noopener noreferrer" underline="none">
                     <Chip
                       icon={<FacebookIcon sx={{ fontSize: "13px !important", color: "#1877F2 !important" }} />}
                       label="Facebook"
@@ -223,8 +228,8 @@ export default function FoodOutletDetailModal({
                     />
                   </Link>
                 )}
-                {outlet.messengerUsername && (
-                  <Link href={`https://m.me/${outlet.messengerUsername}`} target="_blank" rel="noopener noreferrer" underline="none">
+                {liveOutlet.messengerUsername && (
+                  <Link href={`https://m.me/${liveOutlet.messengerUsername}`} target="_blank" rel="noopener noreferrer" underline="none">
                     <Chip
                       icon={<ChatIcon sx={{ fontSize: "13px !important", color: "#0084FF !important" }} />}
                       label="Message"
@@ -239,18 +244,18 @@ export default function FoodOutletDetailModal({
             )}
 
             {/* Description */}
-            {outlet.description && (
+            {liveOutlet.description && (
               <Box sx={{ mb: 1, textAlign: "center" }}>
                 <Typography sx={{ fontSize: "0.72rem", lineHeight: 1.3 }} color="text.secondary">
-                  {outlet.description}
+                  {liveOutlet.description}
                 </Typography>
               </Box>
             )}
 
             {/* Tags */}
-            {outlet.tags && outlet.tags.length > 0 && (
+            {liveOutlet.tags && liveOutlet.tags.length > 0 && (
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5, mb: 1, justifyContent: "center" }}>
-                {outlet.tags.map((tag) => (
+                {liveOutlet.tags.map((tag) => (
                   <Chip key={tag} label={tag} size="small" variant="outlined" sx={{ fontSize: "0.68rem", height: 20 }} />
                 ))}
               </Box>
@@ -346,7 +351,7 @@ export default function FoodOutletDetailModal({
 
       {showEditModal && (
         <EditFoodOutletModal
-          outlet={outlet}
+          outlet={liveOutlet}
           open={showEditModal}
           onClose={() => setShowEditModal(false)}
         />
