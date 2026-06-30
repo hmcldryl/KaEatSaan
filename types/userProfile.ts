@@ -4,4 +4,6 @@ export interface UserProfile {
   level: number;
   streak: number;
   lastSpinDate: string; // YYYY-MM-DD
+  displayName?: string;
+  xp: number;
 }

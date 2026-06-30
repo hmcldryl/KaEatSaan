@@ -45,16 +45,21 @@ export default function RouletteWheel({
   onCurrentChange,
   triggerSpin = 0,
 }: RouletteWheelProps) {
-  const [rotation, setRotation] = useState(0);
+  const [rotation, setRotation] = useState(() => {
+    const n = Math.max(outlets.length, MIN_SEGMENTS);
+    return -(360 / n) / 2;
+  });
   const [isSpinning, setIsSpinning] = useState(false);
   const [result, setResult] = useState<FoodOutlet | null>(null);
   const [excludedIds, setExcludedIds] = useState<Set<string>>(new Set());
 
   const lastTriggerRef = useRef(0);
-  const rotationRef = useRef(0);
+  const initialRotation = -(360 / Math.max(outlets.length, MIN_SEGMENTS)) / 2;
+  const rotationRef = useRef(initialRotation);
   const isSpinningRef = useRef(false);
   const spinRef = useRef<(() => void) | null>(null);
   const lastOutletIdRef = useRef<string | null>("__init__");
+  const hasSpunRef = useRef(false);
 
   // Real outlets after exclusions
   const activeOutlets = useMemo(
@@ -76,6 +81,7 @@ export default function RouletteWheel({
   const activeOutletsRef = useRef<FoodOutlet[]>([]);
   useEffect(() => { activeOutletsRef.current = paddedOutlets; }, [paddedOutlets]);
 
+
   // Drag/swipe state
   const isDragging = useRef(false);
   const hasMoved = useRef(false);
@@ -85,6 +91,7 @@ export default function RouletteWheel({
   const angularVelocity = useRef(0);
 
   useEffect(() => {
+    if (!hasSpunRef.current) return;
     const current = getSegmentAtPointer(rotation, paddedOutlets);
     const newId = (!current || current.id.startsWith(SPIN_AGAIN_PREFIX)) ? null : current.id;
     // Only propagate when segment actually changes — avoids 60 re-renders/sec for same segment
@@ -101,6 +108,8 @@ export default function RouletteWheel({
     const active = activeOutletsRef.current;
     if (isSpinningRef.current || active.length === 0) return;
 
+    hasSpunRef.current = true;
+    lastOutletIdRef.current = null;
     isSpinningRef.current = true;
     setIsSpinning(true);
     onSpinStart?.();

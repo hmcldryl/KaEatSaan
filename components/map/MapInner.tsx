@@ -43,6 +43,7 @@ interface MapInnerProps {
   onMapClick?: (lat: number, lng: number) => void;
   height?: string | number;
   userLocation?: [number, number];
+  borderRadius?: string | number;
 }
 
 function MapClickHandler({
@@ -99,6 +100,7 @@ export default function MapInner({
   onMapClick,
   height = 300,
   userLocation,
+  borderRadius = "16px",
 }: MapInnerProps) {
   const isMounted = useSyncExternalStore(
     () => () => {},
@@ -107,6 +109,7 @@ export default function MapInner({
   );
 
   const heightVal = typeof height === "number" ? `${height}px` : height;
+  const borderRadiusVal = typeof borderRadius === "number" ? `${borderRadius}px` : borderRadius;
 
   if (!isMounted) {
     return (
@@ -117,7 +120,7 @@ export default function MapInner({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: "16px",
+          borderRadius: borderRadiusVal,
           color: "#FF6B35",
           fontSize: "14px",
           fontWeight: 500,
@@ -137,7 +140,7 @@ export default function MapInner({
       style={{
         height: heightVal,
         width: "100%",
-        borderRadius: "16px",
+        borderRadius: borderRadiusVal,
         outline: "none",
       }}
     >

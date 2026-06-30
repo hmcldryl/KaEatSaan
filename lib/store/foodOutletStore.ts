@@ -197,6 +197,7 @@ export const useFoodOutletStore = create<FoodOutletStore>((set, get) => ({
       const editableFields: (keyof FoodOutlet)[] = [
         "name", "classification", "cuisine", "budget", "isOpen",
         "description", "tags", "contactNumber", "facebookUrl", "messengerUsername",
+        "location",
       ];
 
       const changes: Record<string, UpdateLogChange> = {};

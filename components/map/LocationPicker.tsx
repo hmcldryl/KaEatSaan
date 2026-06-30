@@ -30,12 +30,14 @@ interface LocationPickerProps {
   value?: Location | null;
   onChange: (location: Location) => void;
   height?: number;
+  contentPx?: number;
 }
 
 export default function LocationPicker({
   value,
   onChange,
   height = 300,
+  contentPx,
 }: LocationPickerProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<GeocodingResult[]>([]);
@@ -127,7 +129,7 @@ export default function LocationPicker({
 
   return (
     <Box sx={{ position: "relative" }}>
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ mb: 2, ...(contentPx !== undefined && { px: contentPx }) }}>
         <TextField
           fullWidth
           placeholder="Search for a location..."
@@ -242,7 +244,6 @@ export default function LocationPicker({
               alignItems: "center",
               justifyContent: "center",
               backgroundColor: "rgba(255, 255, 255, 0.7)",
-              borderRadius: "8px",
               zIndex: 500,
             }}
           >
@@ -252,7 +253,7 @@ export default function LocationPicker({
       </Box>
 
       {value && (
-        <Box sx={{ mt: 1 }}>
+        <Box sx={{ mt: 1, ...(contentPx !== undefined && { px: contentPx }) }}>
           <Typography variant="body2" color="text.secondary">
             Selected: {value.address}
           </Typography>

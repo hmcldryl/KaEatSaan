@@ -28,10 +28,13 @@ import {
   BudgetLevel,
   ClassificationType,
   FoodOutlet,
+  Location,
 } from "@/types/foodOutlet";
 import { CUISINES, CLASSIFICATIONS } from "@/lib/constants/foodOutlets";
+import LocationPicker from "@/components/map/LocationPicker";
 import { useFoodOutletStore } from "@/lib/store/foodOutletStore";
 import { useAuthStore } from "@/lib/store/authStore";
+import { useUserProfileStore } from "@/lib/store/userProfileStore";
 
 interface EditFoodOutletModalProps {
   outlet: FoodOutlet;
@@ -56,6 +59,7 @@ export default function EditFoodOutletModal({
 }: EditFoodOutletModalProps) {
   const { communityUpdateOutlet } = useFoodOutletStore();
   const { user } = useAuthStore();
+  const { profile, addXP } = useUserProfileStore();
 
   const [name, setName] = useState(outlet.name);
   const [classification, setClassification] = useState<ClassificationType>(outlet.classification || CLASSIFICATIONS[0]);
@@ -65,6 +69,7 @@ export default function EditFoodOutletModal({
   const [description, setDescription] = useState(outlet.description || "");
   const [tags, setTags] = useState<string[]>(outlet.tags || []);
   const [tagInput, setTagInput] = useState("");
+  const [location, setLocation] = useState<Location>(outlet.location);
   const [contactNumber, setContactNumber] = useState(outlet.contactNumber || "");
   const [facebookUrl, setFacebookUrl] = useState(outlet.facebookUrl || "");
   const [messengerUsername, setMessengerUsername] = useState(outlet.messengerUsername || "");
@@ -97,6 +102,7 @@ export default function EditFoodOutletModal({
       cuisine,
       budget,
       isOpen,
+      location,
       description: description.trim() || undefined,
       tags: tags.length > 0 ? tags : undefined,
       contactNumber: contactNumber.trim() || undefined,
@@ -108,12 +114,13 @@ export default function EditFoodOutletModal({
       outlet,
       updates,
       user.uid,
-      user.displayName || "Anonymous",
+      profile?.displayName || "Anonymous",
       user.photoURL || undefined
     );
 
     setIsSubmitting(false);
     if (ok) {
+      addXP(user.uid, 10);
       onSaved?.();
       onClose();
     } else {
@@ -181,6 +188,13 @@ export default function EditFoodOutletModal({
               {([1, 2, 3, 4, 5] as BudgetLevel[]).map((b) => <MenuItem key={b} value={b}>{BUDGET_LABELS[b]}</MenuItem>)}
             </Select>
           </FormControl>
+
+          <Box sx={{ mx: -3 }}>
+            <Typography variant="subtitle2" gutterBottom sx={{ color: "text.secondary", px: 3 }}>
+              Location
+            </Typography>
+            <LocationPicker value={location} onChange={setLocation} height={200} contentPx={3} />
+          </Box>
 
           <FormControlLabel
             control={<Switch checked={isOpen} onChange={(e) => setIsOpen(e.target.checked)} sx={{ "& .Mui-checked + .MuiSwitch-track": { bgcolor: "#FF6B35" } }} />}

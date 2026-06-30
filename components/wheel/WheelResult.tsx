@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -16,6 +17,8 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import CloseIcon from "@mui/icons-material/Close";
 import { FoodOutlet } from "@/types/foodOutlet";
 import { useFavoritesStore } from "@/lib/store/favoritesStore";
+import { useAuthStore } from "@/lib/store/authStore";
+import { useUserProfileStore } from "@/lib/store/userProfileStore";
 import FoodOutletDetailModal from "@/components/food_outlet/FoodOutletDetailModal";
 import StarRating from "@/components/reviews/StarRating";
 
@@ -32,7 +35,10 @@ export default function WheelResult({
   onClose,
   onSpinAgain,
 }: WheelResultProps) {
+  const router = useRouter();
   const { isFavorite, addFavorite, removeFavorite } = useFavoritesStore();
+  const { user } = useAuthStore();
+  const { addXP } = useUserProfileStore();
   const [detailOpen, setDetailOpen] = useState(false);
   const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
 
@@ -41,8 +47,12 @@ export default function WheelResult({
   const favorite = isFavorite(outlet.id);
 
   const handleToggleFavorite = () => {
-    if (favorite) removeFavorite(outlet.id);
-    else addFavorite(outlet.id);
+    if (favorite) {
+      removeFavorite(outlet.id);
+    } else {
+      addFavorite(outlet.id);
+      if (user) addXP(user.uid, 2);
+    }
   };
 
   const handleSpinAgainClick = () => {
@@ -87,7 +97,10 @@ export default function WheelResult({
         <Typography sx={{ color: "#9CA3AF", fontWeight: 600, fontSize: "0.7rem", letterSpacing: "0.06em", textTransform: "uppercase", mb: 0.5 }}>
           You&apos;re eating at...
         </Typography>
-        <Typography sx={{ fontWeight: 800, fontSize: "1.25rem", color: "#FF6B35", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+        <Typography
+          onClick={() => { onClose(); router.push(`/outlet?id=${outlet.id}`); }}
+          sx={{ fontWeight: 800, fontSize: "1.25rem", color: "#FF6B35", letterSpacing: "-0.02em", lineHeight: 1.2, cursor: "pointer", "&:hover": { textDecoration: "underline" } }}
+        >
           {outlet.name}
         </Typography>
       </DialogTitle>
@@ -209,7 +222,7 @@ export default function WheelResult({
           </Box>
           {/* Let's Go – full width */}
           <Button
-            onClick={onClose}
+            onClick={() => { if (user) addXP(user.uid, 5); onClose(); router.push(`/outlet?id=${outlet.id}`); }}
             variant="contained"
             fullWidth
             sx={{ borderRadius: "9999px", fontWeight: 700, fontSize: "0.78rem", bgcolor: "#FF6B35", "&:hover": { bgcolor: "#E55A20" } }}

@@ -43,7 +43,7 @@ export default function MapContainer({ borderRadius = 0, ...props }: MapContaine
       transition={{ duration: 0.35, ease: "easeOut" }}
       style={{ borderRadius, overflow: "hidden" }}
     >
-      <MapInner {...props} />
+      <MapInner {...props} borderRadius={borderRadius} />
     </motion.div>
   );
 }
