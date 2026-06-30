@@ -1,3 +1,10 @@
+# [1.2.0-beta.20](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.19...v1.2.0-beta.20) (2026-06-30)
+
+
+### Features
+
+* **ui:** outlet detail page, XP system, merged badge, display name, floating emojis ([120fdd8](https://github.com/hmcldryl/KaEatSaan/commit/120fdd83453decc7df63a7e6b33c58d5a83a58cd))
+
 # [1.2.0-beta.19](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.18...v1.2.0-beta.19) (2026-06-30)
 
 
