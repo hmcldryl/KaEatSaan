@@ -1,3 +1,10 @@
+# [1.2.0-beta.19](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.18...v1.2.0-beta.19) (2026-06-30)
+
+
+### Bug Fixes
+
+* **outlets:** classification chip, live detail data, undefined save fix ([cf47d85](https://github.com/hmcldryl/KaEatSaan/commit/cf47d85b55994a55102af5d6fa08a4b82938cab2))
+
 # [1.2.0-beta.18](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.17...v1.2.0-beta.18) (2026-06-29)
 
 
