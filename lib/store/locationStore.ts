@@ -157,7 +157,7 @@ export const useLocationStore = create<LocationStore>()(
       },
     }),
     {
-      name: 'kaetsaan-location',
+      name: 'kaeatsaan-location',
       partialize: (state) => ({
         location: state.location,
         status: state.status === 'success' ? 'success' : 'idle',
