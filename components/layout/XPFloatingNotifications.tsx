@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import Box from "@mui/material/Box";
@@ -59,9 +58,6 @@ function XPNotifItem({ notif, onDone }: { notif: XPNotif; onDone: () => void }) 
 
 export default function XPFloatingNotifications() {
   const { notifs, remove } = useXPNotifStore();
-  const [mounted] = useState(() => typeof window !== "undefined");
-
-  if (!mounted) return null;
 
   return createPortal(
     <>

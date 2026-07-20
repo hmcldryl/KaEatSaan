@@ -20,6 +20,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import TextField from "@mui/material/TextField";
 import TuneIcon from "@mui/icons-material/Tune";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PersonIcon from "@mui/icons-material/Person";
 import AddIcon from "@mui/icons-material/Add";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -31,16 +32,18 @@ import { useHistoryStore } from "@/lib/store/historyStore";
 import { useFiltersStore } from "@/lib/store/filtersStore";
 import { useAuthStore } from "@/lib/store/authStore";
 import { useUserProfileStore } from "@/lib/store/userProfileStore";
+import { useWheelListStore } from "@/lib/store/wheelListStore";
 import { FoodOutlet } from "@/types/foodOutlet";
 import AddFoodOutletModal from "@/components/food_outlet/AddFoodOutletModal";
 import AuthDialog from "@/components/auth/AuthDialog";
 import AboutModal from "@/components/layout/AboutModal";
+import WheelListModal from "@/components/wheel/WheelListModal";
 
 
 // Canvas top locked at 31vh. WHEEL_BOTTOM derived so increasing WHEEL_SIZE
 // expands the wheel downward + sideways only, never upward.
 const WHEEL_SIZE = "min(75vh, 900px)";
-const WHEEL_BOTTOM = `calc(56vh - ${WHEEL_SIZE})`; // = -6vh at 75vh; grows more negative as size increases
+const WHEEL_BOTTOM = `calc(60vh - ${WHEEL_SIZE})`; // = -6vh at 75vh; grows more negative as size increases
 const WHEEL_RADIUS_SPACE = "54vh";
 
 export default function Home() {
@@ -53,12 +56,15 @@ export default function Home() {
   const { user, signOut } = useAuthStore();
   const { profile, syncSpin, setDisplayName } = useUserProfileStore();
 
+  const excluded = useWheelListStore((s) => s.excluded);
+
   const [currentOutlet, setCurrentOutlet] = useState<FoodOutlet | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const [displayNameOpen, setDisplayNameOpen] = useState(false);
   const [displayNameInput, setDisplayNameInput] = useState("");
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [wheelListOpen, setWheelListOpen] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
 
   const level = profile?.level ?? 1;
@@ -252,6 +258,29 @@ export default function Home() {
             <TuneIcon sx={{ fontSize: 18, color: "#6B7280" }} />
           </Badge>
         </IconButton>
+
+        {/* Wheel List FAB */}
+        <IconButton
+          onClick={() => setWheelListOpen(true)}
+          aria-label="wheel list"
+          sx={{
+            width: 36,
+            height: 36,
+            bgcolor: "#FFFFFF",
+            border: "1.5px solid rgba(0,0,0,0.08)",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.10)",
+            "&:hover": { bgcolor: "#FFF4F0" },
+            "&:active": { transform: "scale(0.9)" },
+            transition: "all 0.15s ease",
+          }}
+        >
+          <Badge
+            badgeContent={excluded.length || null}
+            sx={{ "& .MuiBadge-badge": { bgcolor: "#6B7280", color: "#fff", fontWeight: 700, fontSize: "0.6rem", minWidth: 14, height: 14, p: 0 } }}
+          >
+            <FormatListBulletedIcon sx={{ fontSize: 18, color: "#6B7280" }} />
+          </Badge>
+        </IconButton>
       </Box>
 
       {/* Top content: logo + result + loading/empty — fills space above wheel */}
@@ -282,34 +311,13 @@ export default function Home() {
           priority
         />
 
-        {isLoading && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <CircularProgress size={18} sx={{ color: "#FF6B35" }} />
-            <Typography sx={{ color: "#6B7280", fontSize: "0.8rem", fontWeight: 600 }}>Loading...</Typography>
-          </Box>
-        )}
-
-        {!isLoading && outlets.length === 0 && (
-          <Box sx={{ bgcolor: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 4px 16px rgba(0,0,0,0.06)", borderRadius: "20px", p: 3, textAlign: "center", width: "100%" }}>
-            <Typography sx={{ fontWeight: 800, color: "#1F2937", mb: 1, fontSize: "1rem" }}>No Kainan Yet</Typography>
-            <Typography sx={{ color: "#6B7280", mb: 2, fontSize: "0.85rem" }}>Add your favorite kainan to get started!</Typography>
-            {user ? (
-              <Button variant="contained" startIcon={<AddIcon />} onClick={() => setAddModalOpen(true)}
-                sx={{ bgcolor: "#FF6B35", borderRadius: "9999px", fontWeight: 700, "&:hover": { bgcolor: "#E55A20" } }}>
-                Add Kainan
-              </Button>
-            ) : (
-              <Button variant="outlined" onClick={() => setAuthDialogOpen(true)}
-                sx={{ borderColor: "#FF6B35", color: "#FF6B35", borderRadius: "9999px", fontWeight: 700 }}>
-                Sign in to add
-              </Button>
-            )}
-          </Box>
+        {isLoading && outlets.length === 0 && (
+          <CircularProgress size={18} thickness={5} sx={{ color: "#FF6B35", opacity: 0.6 }} />
         )}
       </Box>
 
       {/* Selector text: pinned just above the visible wheel arc, max 3 lines */}
-      {currentOutlet && outlets.length > 0 && (
+      {currentOutlet && (
         <Box
           sx={{
             position: "absolute",
@@ -351,26 +359,25 @@ export default function Home() {
       )}
 
       {/* Wheel: large, positioned so center is at container bottom → only top half visible */}
-      {outlets.length > 0 && (
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: WHEEL_BOTTOM,
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: WHEEL_SIZE,
-            height: WHEEL_SIZE,
-            zIndex: 20,
-          }}
-        >
-          <RouletteWheel
-            outlets={outlets}
-            onSpinStart={() => setIsSpinning(true)}
-            onSpinEnd={handleSpinEnd}
-            onCurrentChange={setCurrentOutlet}
-          />
-        </Box>
-      )}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: WHEEL_BOTTOM,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: WHEEL_SIZE,
+          height: WHEEL_SIZE,
+          zIndex: 20,
+        }}
+      >
+        <RouletteWheel
+          outlets={outlets}
+          onSpinStart={() => setIsSpinning(true)}
+          onSpinEnd={handleSpinEnd}
+          onCurrentChange={setCurrentOutlet}
+          isLoading={isLoading && outlets.length === 0}
+        />
+      </Box>
 
       {/* Fade gradient: fades bottom of visible wheel arc into nav bar */}
       <Box
@@ -389,6 +396,7 @@ export default function Home() {
       <AddFoodOutletModal open={addModalOpen} onClose={() => setAddModalOpen(false)} />
       <AuthDialog open={authDialogOpen} onClose={() => setAuthDialogOpen(false)} />
       <AboutModal open={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <WheelListModal open={wheelListOpen} onClose={() => setWheelListOpen(false)} />
 
       <Dialog open={displayNameOpen} onClose={() => setDisplayNameOpen(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: "16px", mx: 2 } }}>
         <DialogTitle sx={{ fontSize: "0.92rem", fontWeight: 700, pb: 1 }}>Display name</DialogTitle>

@@ -28,6 +28,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
     { value: 2, label: '₱₱' },
     { value: 3, label: '₱₱₱' },
     { value: 4, label: '₱₱₱₱' },
+    { value: 5, label: '₱₱₱₱₱' },
   ];
 
   const distanceMarks = [
@@ -128,7 +129,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 valueLabelDisplay="auto"
                 valueLabelFormat={(value) => '₱'.repeat(value)}
                 min={1}
-                max={4}
+                max={5}
                 step={1}
                 marks={budgetMarks}
                 sx={{ color: '#FF6B35' }}

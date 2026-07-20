@@ -28,6 +28,7 @@ interface RouletteWheelProps {
   onSpinEnd?: (outlet: FoodOutlet) => void;
   onCurrentChange?: (outlet: FoodOutlet | null) => void;
   triggerSpin?: number;
+  isLoading?: boolean;
 }
 
 function getSegmentAtPointer(rotation: number, outlets: FoodOutlet[]): FoodOutlet | null {
@@ -44,6 +45,7 @@ export default function RouletteWheel({
   onSpinEnd,
   onCurrentChange,
   triggerSpin = 0,
+  isLoading = false,
 }: RouletteWheelProps) {
   const [rotation, setRotation] = useState(() => {
     const n = Math.max(outlets.length, MIN_SEGMENTS);
@@ -237,7 +239,7 @@ export default function RouletteWheel({
       onPointerUp={disabled ? undefined : handlePointerUp}
       onPointerCancel={disabled ? undefined : handlePointerUp}
     >
-      <WheelCanvas outlets={paddedOutlets} rotation={rotation} size={800} />
+      <WheelCanvas outlets={paddedOutlets} rotation={rotation} size={800} isLoading={isLoading} />
       <WheelResult
         outlet={result}
         open={!!result}
