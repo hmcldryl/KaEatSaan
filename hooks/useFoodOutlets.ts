@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFoodOutletStore } from "@/lib/store/foodOutletStore";
 import { useFiltersStore } from "@/lib/store/filtersStore";
 import { useLocationStore } from "@/lib/store/locationStore";
+import { useWheelListStore } from "@/lib/store/wheelListStore";
 
 export function useFoodOutlets() {
   const {
@@ -16,6 +17,8 @@ export function useFoodOutlets() {
 
   const filters = useFiltersStore();
   const { location } = useLocationStore();
+  const customOrder = useWheelListStore((s) => s.customOrder);
+  const excluded = useWheelListStore((s) => s.excluded);
 
   // Track if distances have been calculated for current location
   const lastLocationRef = useRef<{ lat: number; lon: number } | null>(null);
@@ -71,9 +74,23 @@ export function useFoodOutlets() {
     filterOutlets,
   ]);
 
+  const wheelOutlets = useMemo(() => {
+    let list = filteredOutlets.filter((o) => !excluded.includes(o.id));
+    if (customOrder && customOrder.length > 0) {
+      const orderMap = new Map(customOrder.map((id, i) => [id, i]));
+      list = [...list].sort((a, b) => {
+        const ai = orderMap.has(a.id) ? orderMap.get(a.id)! : Infinity;
+        const bi = orderMap.has(b.id) ? orderMap.get(b.id)! : Infinity;
+        return ai - bi;
+      });
+    }
+    return list;
+  }, [filteredOutlets, customOrder, excluded]);
+
   return {
-    outlets: filteredOutlets,
-    allOutles: outlets,
+    outlets: wheelOutlets,
+    rawFilteredOutlets: filteredOutlets,
+    allOutlets: outlets,
     isLoading,
     error,
     hasLocation: location !== null,

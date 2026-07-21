@@ -12,8 +12,10 @@ import { useUIStore } from '@/lib/store/uiStore';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useUserProfileStore } from '@/lib/store/userProfileStore';
 import { useGeolocation } from '@/hooks/useGeolocation';
+import dynamic from 'next/dynamic';
 import { initCursorTracker } from '@/lib/cursorTracker';
-import XPFloatingNotifications from '@/components/layout/XPFloatingNotifications';
+
+const XPFloatingNotifications = dynamic(() => import('@/components/layout/XPFloatingNotifications'), { ssr: false });
 
 const FOOD_EMOJIS = ['🍜', '🍔', '🍕', '🌮', '🍣', '🍗', '🥘', '🍲', '🍱', '🍤'];
 

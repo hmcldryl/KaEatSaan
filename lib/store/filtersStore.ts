@@ -17,7 +17,7 @@ interface FiltersStore extends FilterState {
 }
 
 const defaultFilters: FilterState = {
-  budget: [1, 4],
+  budget: [1, 5],
   distance: 5,
   classifications: [],
   cuisines: [],
@@ -78,7 +78,7 @@ export const useFiltersStore = create<FiltersStore>()(
         let count = 0;
 
         // Budget is active if not full range
-        if (state.budget[0] !== 1 || state.budget[1] !== 4) count++;
+        if (state.budget[0] !== 1 || state.budget[1] !== 5) count++;
 
         // Distance is active if not default
         if (state.distance !== 5) count++;
@@ -100,7 +100,7 @@ export const useFiltersStore = create<FiltersStore>()(
       },
     }),
     {
-      name: 'kaetsaan-filters',
+      name: 'kaeatsaan-filters',
     }
   )
 );

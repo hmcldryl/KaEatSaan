@@ -101,7 +101,7 @@ export const useFoodOutletStore = create<FoodOutletStore>((set, get) => ({
 
       // Distance filter
       const distanceMatch =
-        !outlet.distance || outlet.distance <= filters.distance;
+        outlet.distance === undefined || outlet.distance <= filters.distance;
 
       // Classification filter
       const classificationMatch =
@@ -138,7 +138,11 @@ export const useFoodOutletStore = create<FoodOutletStore>((set, get) => ({
     // Limit to maxOutlets by randomly selecting
     if (filtered.length > filters.maxOutlets) {
       // Shuffle and take first maxOutlets
-      const shuffled = [...filtered].sort(() => Math.random() - 0.5);
+      const shuffled = [...filtered];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
       filtered = shuffled.slice(0, filters.maxOutlets);
     }
 

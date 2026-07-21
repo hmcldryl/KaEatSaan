@@ -38,7 +38,7 @@ export async function searchLocation(query: string): Promise<GeocodingResult[]> 
 
     const response = await fetch(`${NOMINATIM_BASE_URL}/search?${params}`, {
       headers: {
-        'User-Agent': 'KaEatSaan/1.0 (https://kaetsaan.app)',
+        'User-Agent': 'KaEatSaan/1.0 (https://kaeatsaan.app)',
       },
     });
 
@@ -78,7 +78,7 @@ export async function reverseGeocode(
 
     const response = await fetch(`${NOMINATIM_BASE_URL}/reverse?${params}`, {
       headers: {
-        'User-Agent': 'KaEatSaan/1.0 (https://kaetsaan.app)',
+        'User-Agent': 'KaEatSaan/1.0 (https://kaeatsaan.app)',
       },
     });
 

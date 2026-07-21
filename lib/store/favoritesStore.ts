@@ -40,7 +40,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
       },
     }),
     {
-      name: "kaetsaan-favorites",
+      name: "kaeatsaan-favorites",
     },
   ),
 );
