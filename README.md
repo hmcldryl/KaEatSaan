@@ -1,10 +1,23 @@
-# KaEatSaan - Where to Eat? 🍜
+<p align="center">
+  <img src="public/logo.png" alt="KaEatSaan logo" width="240" />
+</p>
+
+<h1 align="center">KaEatSaan - Where to Eat? 🍜</h1>
 
 _Saan tayo kakain?_ No more "Bahala na si Batman"! Let KaEatSaan decide for you!
 
 ## About 🤔
 
-KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for those moments when you and your friends can't decide where to eat. Say goodbye to the endless "Kayo bahala" loop!
+KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for those moments when you and your friends can't decide where to eat. Say goodbye to the endless "Kayo bahala" loop! Spin the wheel, land on a kainan, done.
+
+## Features ✨
+
+- **Roulette wheel:** drag or tap to spin through your filtered food spots, weighted fairly, no sign-in required
+- **Filters:** budget (₱ to ₱₱₱₱₱), distance, cuisine, classification, open/closed, new places
+- **Kainan List:** drag-reorder or hide specific outlets from the wheel without changing your filters
+- **Favorites & History:** save go-to spots and look back at past spins
+- **XP & levels:** earn XP and build a streak for spinning and checking out outlets
+- **Community outlet data:** signed-in users can add kainans and reviews, backed by Firebase Realtime Database
 
 ## Tech Stack 💻
 
