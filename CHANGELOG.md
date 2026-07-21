@@ -1,3 +1,23 @@
+# [2.0.0-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.20...v2.0.0-beta.1) (2026-07-21)
+
+
+### Bug Fixes
+
+* **storage:** correct kaeatsaan typo in persist keys and user-agent ([4ea29cf](https://github.com/hmcldryl/KaEatSaan/commit/4ea29cf91cf670c2adea001ce481eb93ea32b58e))
+
+
+### Features
+
+* **wheel:** add kainan list, reposition wheel, add loading skeleton ([3a8d642](https://github.com/hmcldryl/KaEatSaan/commit/3a8d64278932cba139f08121e49985154d28af8c))
+
+
+### BREAKING CHANGES
+
+* **storage:** renamed persist keys (kaetsaan-favorites,
+kaetsaan-history, kaetsaan-location -> kaeatsaan-*) drop existing
+users' saved favorites, history, and location on next load — old
+keys are orphaned, not migrated.
+
 # [1.2.0-beta.20](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.19...v1.2.0-beta.20) (2026-06-30)
 
 
