@@ -26,7 +26,7 @@ No test framework configured. Project uses semantic-release for automated versio
 
 ### State Management (Zustand)
 
-Each domain has own Zustand store in `/lib/store/`. Several stores use `persist()` middleware with localStorage keys prefixed `kaetsaan-` (e.g., `kaetsaan-filters`). Stores contain both state and actions in single `create()` call.
+Each domain has own Zustand store in `/lib/store/`. Several stores use `persist()` middleware with localStorage keys prefixed `kaeatsaan-` (e.g., `kaeatsaan-filters`). Stores contain both state and actions in single `create()` call.
 
 - `authStore` - Firebase Google Sign-In
 - `foodOutletStore` - CRUD against Firebase Realtime Database

@@ -115,7 +115,9 @@
         "spinCount": { ".validate": "newData.isNumber() && newData.val() >= 0" },
         "level": { ".validate": "newData.isNumber() && newData.val() >= 1" },
         "streak": { ".validate": "newData.isNumber() && newData.val() >= 0" },
-        "lastSpinDate": { ".validate": "newData.isString()" }
+        "lastSpinDate": { ".validate": "newData.isString()" },
+        "displayName": { ".validate": "!newData.exists() || (newData.isString() && newData.val().length <= 50)" },
+        "xp": { ".validate": "!newData.exists() || (newData.isNumber() && newData.val() >= 0)" }
       }
     }
   }

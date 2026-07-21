@@ -1,10 +1,33 @@
-# KaEatSaan - Where to Eat? 🍜
 
-_Saan tayo kakain?_ No more "Bahala na si Batman"! Let KaEatSaan decide for you!
+<p align="center">
+  <img src="public/logo.png" alt="KaEatSaan logo" width="240" />
+</p>
+
+<h3 align="center">KaEatSaan - Where to Eat? 🍜</h3>
+<p align="center">Saan tayo kakain? No more "Bahala na si Batman"! Let KaEatSaan decide for you!</p>
+
+<div align="center">
+  
+![Next JS](https://img.shields.io/badge/Next-black.svg?style=for-the-badge&logo=next.js&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![MaterialUI](https://img.shields.io/badge/Material%20UI-%23FFFFFF.svg?style=for-the-badge&logo=MUI&logoColor=#007FFF)
+![Claude](https://img.shields.io/badge/Claude-D97757?style=for-the-badge&logo=claude&logoColor=white)
+
+</div>
 
 ## About 🤔
 
-KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for those moments when you and your friends can't decide where to eat. Say goodbye to the endless "Kayo bahala" loop!
+KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for those moments when you and your friends can't decide where to eat. Say goodbye to the endless "Kayo bahala" loop! Spin the wheel, land on a kainan, done.
+
+## Features ✨
+
+- **Roulette wheel:** drag or tap to spin through your filtered food spots, weighted fairly, no sign-in required
+- **Filters:** budget (₱ to ₱₱₱₱₱), distance, cuisine, classification, open/closed, new places
+- **Kainan List:** drag-reorder or hide specific outlets from the wheel without changing your filters
+- **Favorites & History:** save go-to spots and look back at past spins
+- **XP & levels:** earn XP and build a streak for spinning and checking out outlets
+- **Community outlet data:** signed-in users can add kainans and reviews, backed by Firebase Realtime Database
 
 ## Tech Stack 💻
 
@@ -49,7 +72,8 @@ I'm not strict about contributions, but if you want to help, check out the `CONT
 ## Community 👨‍👩‍👧‍👦
 
 Join our Discord server to hang out, ask questions, or just share your favorite food spots:
-[https://discord.gg/e3b9rtYUx5](https://discord.gg/e3b9rtYUx5)
+
+[![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/e3b9rtYUx5)
 
 ---
 

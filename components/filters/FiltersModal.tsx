@@ -12,7 +12,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import { useFiltersStore } from '@/lib/store/filtersStore';
 import { BudgetLevel } from '@/types/foodOutlet';
-import { CUISINES } from '@/lib/constants/foodOutlets';
+import { CUISINES, CLASSIFICATIONS } from '@/lib/constants/foodOutlets';
+import { ClassificationType } from '@/types/foodOutlet';
 
 interface FiltersModalProps {
   open: boolean;
@@ -27,6 +28,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
     { value: 2, label: '₱₱' },
     { value: 3, label: '₱₱₱' },
     { value: 4, label: '₱₱₱₱' },
+    { value: 5, label: '₱₱₱₱₱' },
   ];
 
   const distanceMarks = [
@@ -127,7 +129,7 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 valueLabelDisplay="auto"
                 valueLabelFormat={(value) => '₱'.repeat(value)}
                 min={1}
-                max={4}
+                max={5}
                 step={1}
                 marks={budgetMarks}
                 sx={{ color: '#FF6B35' }}
@@ -181,6 +183,32 @@ export default function FiltersModal({ open, onClose }: FiltersModalProps) {
                 marks={maxOutletsMarks}
                 sx={{ color: '#FF6B35' }}
               />
+            </Box>
+          </Box>
+
+          <Divider />
+
+          {/* Classification Filter */}
+          <Box>
+            <Typography sx={{ fontSize: "0.78rem", fontWeight: 700, color: "#374151", mb: 0.5 }}>
+              Classification
+            </Typography>
+            <Typography sx={{ fontSize: "0.72rem", color: "#6B7280", mb: 0.5 }}>
+              {filters.classifications.length === 0
+                ? 'All classifications selected'
+                : `${filters.classifications.length} classification${filters.classifications.length !== 1 ? 's' : ''} selected`}
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1.5 }}>
+              {CLASSIFICATIONS.map((c: ClassificationType) => (
+                <Chip
+                  key={c}
+                  label={c}
+                  onClick={() => filters.toggleClassification(c)}
+                  color={filters.classifications.includes(c) ? 'primary' : 'default'}
+                  variant={filters.classifications.includes(c) ? 'filled' : 'outlined'}
+                  size="small"
+                />
+              ))}
             </Box>
           </Box>
 

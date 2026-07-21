@@ -17,6 +17,7 @@ interface ReviewListProps {
   reviews: Review[];
   isLoading: boolean;
   onDelete?: (reviewId: string) => void;
+  currentUserName?: string;
 }
 
 function formatDate(dateString: string): string {
@@ -40,7 +41,7 @@ function formatDate(dateString: string): string {
   }
 }
 
-export default function ReviewList({ reviews, isLoading, onDelete }: ReviewListProps) {
+export default function ReviewList({ reviews, isLoading, onDelete, currentUserName }: ReviewListProps) {
   const { user } = useAuthStore();
 
   if (isLoading) {
@@ -72,13 +73,13 @@ export default function ReviewList({ reviews, isLoading, onDelete }: ReviewListP
                 alt={review.userName}
                 sx={{ width: 28, height: 28, bgcolor: '#FF6B35', fontSize: '0.7rem' }}
               >
-                {review.userName[0]?.toUpperCase()}
+                {(user?.uid === review.userId && currentUserName ? currentUserName : review.userName)[0]?.toUpperCase()}
               </Avatar>
               <Box sx={{ flex: 1 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Box>
                     <Typography sx={{ fontSize: '0.75rem', fontWeight: 700, color: '#374151', lineHeight: 1.2 }}>
-                      {review.userName}
+                      {user?.uid === review.userId && currentUserName ? currentUserName : review.userName}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mt: 0.25 }}>
                       <StarRating value={review.rating} readonly size="small" />

@@ -85,6 +85,13 @@ export default function FavoritesPage() {
                   </Typography>
 
                   <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap", mb: 0.75 }}>
+                    {outlet.classification && (
+                      <Chip
+                        label={outlet.classification}
+                        size="small"
+                        sx={{ bgcolor: "#F3F4F6", color: "#374151", fontWeight: 600, fontSize: "0.68rem", height: 20 }}
+                      />
+                    )}
                     <Chip
                       label={outlet.cuisine}
                       size="small"

@@ -92,7 +92,7 @@ export const useHistoryStore = create<HistoryStore>()(
       },
     }),
     {
-      name: 'kaetsaan-history',
+      name: 'kaeatsaan-history',
     }
   )
 );

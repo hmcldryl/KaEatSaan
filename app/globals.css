@@ -93,6 +93,16 @@ html {
   100% { transform: scale(3.5); opacity: 0; }
 }
 
+/* Wheel skeleton pulse while outlets are loading */
+@keyframes wheel-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+.wheel-skeleton {
+  animation: wheel-skeleton-pulse 1.4s ease-in-out infinite;
+}
+
 .kaeatsaan-marker-pulse {
   position: absolute;
   width: 28px;

@@ -16,12 +16,14 @@ interface WheelCanvasProps {
   outlets: FoodOutlet[];
   rotation: number;
   size?: number;
+  isLoading?: boolean;
 }
 
 export default function WheelCanvas({
   outlets,
   rotation,
   size = 300,
+  isLoading = false,
 }: WheelCanvasProps) {
   const rotatingRef = useRef<HTMLCanvasElement>(null);
   const staticRef = useRef<HTMLCanvasElement>(null);
@@ -80,11 +82,10 @@ export default function WheelCanvas({
       const startAngle = i * segmentAngle - Math.PI / 2;
       const endAngle = startAngle + segmentAngle;
       const isSpinAgainSeg = !isEmpty && outlets[i]?.id.startsWith(SPIN_AGAIN_PREFIX);
-      const segmentColor = isEmpty
+      const segmentColor = isLoading
         ? i % 2 === 0 ? "#F3F4F6" : "#E5E7EB"
-        : isSpinAgainSeg ? "#D1D5DB"
         : colors[i];
-      const segmentLabel = isEmpty ? "" : outlets[i].name;
+      const segmentLabel = (!isEmpty && !isSpinAgainSeg) ? outlets[i].name : "";
       drawSegment(ctx, centerX, centerY, radius, startAngle, endAngle, segmentColor, segmentLabel);
     }
 
@@ -99,7 +100,7 @@ export default function WheelCanvas({
     // ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
     // ctx.fillStyle = depthGrad;
     // ctx.fill();
-  }, [outlets, rotation, size]);
+  }, [outlets, rotation, size, isLoading]);
 
   const canvasStyle: React.CSSProperties = {
     position: "absolute",
@@ -113,7 +114,10 @@ export default function WheelCanvas({
   };
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div
+      className={isLoading ? "wheel-skeleton" : undefined}
+      style={{ position: "relative", width: "100%", height: "100%" }}
+    >
       <canvas ref={rotatingRef} width={size} height={size} style={canvasStyle} />
       <canvas ref={staticRef} width={size} height={size} style={{ ...canvasStyle, pointerEvents: "none" }} />
     </div>
