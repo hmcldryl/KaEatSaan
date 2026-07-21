@@ -1,3 +1,10 @@
+# [2.0.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2026-07-21)
+
+
+### Features
+
+* **bug-report:** add bug report FAB with GitHub issue prefill ([1115f46](https://github.com/hmcldryl/KaEatSaan/commit/1115f46eee6f09fd3b3d3a11e70931fabc0041d5))
+
 # [2.0.0-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.20...v2.0.0-beta.1) (2026-07-21)
 
 
