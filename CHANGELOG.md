@@ -1,3 +1,26 @@
+# [2.0.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.3.0...v2.0.0) (2026-07-21)
+
+
+### Bug Fixes
+
+* **outlets:** classification chip, live detail data, undefined save fix ([cf47d85](https://github.com/hmcldryl/KaEatSaan/commit/cf47d85b55994a55102af5d6fa08a4b82938cab2))
+* **storage:** correct kaeatsaan typo in persist keys and user-agent ([4ea29cf](https://github.com/hmcldryl/KaEatSaan/commit/4ea29cf91cf670c2adea001ce481eb93ea32b58e))
+
+
+### Features
+
+* **bug-report:** add bug report FAB with GitHub issue prefill ([1115f46](https://github.com/hmcldryl/KaEatSaan/commit/1115f46eee6f09fd3b3d3a11e70931fabc0041d5))
+* **ui:** outlet detail page, XP system, merged badge, display name, floating emojis ([120fdd8](https://github.com/hmcldryl/KaEatSaan/commit/120fdd83453decc7df63a7e6b33c58d5a83a58cd))
+* **wheel:** add kainan list, reposition wheel, add loading skeleton ([3a8d642](https://github.com/hmcldryl/KaEatSaan/commit/3a8d64278932cba139f08121e49985154d28af8c))
+
+
+### BREAKING CHANGES
+
+* **storage:** renamed persist keys (kaetsaan-favorites,
+kaetsaan-history, kaetsaan-location -> kaeatsaan-*) drop existing
+users' saved favorites, history, and location on next load — old
+keys are orphaned, not migrated.
+
 # [2.0.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2026-07-21)
 
 
