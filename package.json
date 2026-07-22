@@ -2,6 +2,7 @@
   "name": "ka-eat-saan",
   "version": "2.0.0-beta.2",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
