@@ -7,6 +7,12 @@
 <p align="center">Saan tayo kakain? No more "Bahala na si Batman"! Let KaEatSaan decide for you!</p>
 
 <div align="center">
+
+[![Created Badge](https://badges.pufler.dev/created/hmcldryl/kaeatsaan)](https://github.com/hmcldryl/KaEatSaan/)
+[![Updated Badge](https://badges.pufler.dev/updated/hmcldryl/kaeatsaan)](https://github.com/hmcldryl/KaEatSaan/)
+[![Visits Badge](https://badges.pufler.dev/visits/hmcldryl/kaeatsaan)](https://github.com/hmcldryl/KaEatSaan/)
+[![License: MIT License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://kaeatsaan.web.app/)
   
 ![Next JS](https://img.shields.io/badge/Next-black.svg?style=for-the-badge&logo=next.js&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
@@ -75,6 +81,5 @@ Join our Discord server to hang out, ask questions, or just share your favorite 
 
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/e3b9rtYUx5)
 
----
-
-Made with ❤️
+## Contributors 🍜
+[![Contributors Display](https://badges.pufler.dev/contributors/hmcldryl/kaeatsaan?size=50&padding=5&perRow=10&bots=true)](https://github.com/hmcldryl/KaEatSaan)
