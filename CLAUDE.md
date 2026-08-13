@@ -14,7 +14,7 @@ npm run build      # Production build (static export)
 npm run lint       # ESLint v9 (flat config in eslint.config.mjs)
 ```
 
-No test framework configured. Project uses semantic-release for automated versioning on `main` (production) and `develop` (beta pre-releases).
+No test framework configured. Project uses semantic-release for automated versioning on `main`.
 
 ## Architecture
 
@@ -61,15 +61,15 @@ TypeScript interfaces in `/types/` — `FoodOutlet`, `FilterState`, `HistoryEntr
 ## Conventions
 
 - **Commits**: Conventional Commits format (`feat:`, `fix:`, `chore:`, `docs:`)
-- **Branches**: `main` (production), `develop` (development), feature/fix branches named `feature/name` or `fix/name`
+- **Branches**: `main` (production, protected). Branch out per change as `feat/feature-name` or `fix/fix-name`, PR back into `main`.
 - **Styling**: MUI theme with custom orange primary `#FF6B35`, warm beige backgrounds `#FAF9F7`, Montserrat font. Mobile-first. Tailwind v4 — no `tailwind.config.js`; config in CSS via `@theme`.
 - **Firebase**: Lazy init with `getApps()` check. Real-time listeners with unsubscribe cleanup.
 - **Persistence**: History auto-cleans entries older than 30 days, max 100 entries.
 
 ## Environment Variables
 
-Public Firebase config vars prefixed `NEXT_PUBLIC_FIREBASE_*`, stored in `.env.development`, `.env.production`, `.env.local`. `NEXT_PUBLIC_APP_VERSION` injected at build time from `package.json`.
+Public Firebase config vars prefixed `NEXT_PUBLIC_FIREBASE_*`, stored in `.env.production` (CI build) and `.env.local` (local dev, gitignored). Both point at the `kaeatsaan-75e29` Firebase project. `NEXT_PUBLIC_APP_VERSION` injected at build time from `package.json`.
 
 ## Deployment
 
-GitHub Actions deploys `main` to production (`kaeatsaan.web.app`) and `develop` to dev (`dev-kaeatsaan.web.app`). Both workflows run semantic-release, build, deploy to Firebase Hosting, send Discord notifications.
+GitHub Actions (`.github/workflows/deploy.yml`) deploys `main` to production (`kaeatsaan.web.app`, custom domain `kaeatsaan.com`). Runs semantic-release, build, deploy to Firebase Hosting, sends Discord notification. Canonical `<link>` tag + a `beforeInteractive` redirect script in `app/layout.tsx` bounce visitors from `*.web.app`/`*.firebaseapp.com` to `kaeatsaan.com`.
