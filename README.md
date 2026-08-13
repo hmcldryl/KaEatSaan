@@ -12,7 +12,7 @@
 [![Updated Badge](https://badges.pufler.dev/updated/hmcldryl/kaeatsaan)](https://github.com/hmcldryl/KaEatSaan/)
 [![Visits Badge](https://badges.pufler.dev/visits/hmcldryl/kaeatsaan)](https://github.com/hmcldryl/KaEatSaan/)
 [![License: MIT License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
-[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://kaeatsaan.web.app/)
+[![Website](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://kaeatsaan.com/)
   
 ![Next JS](https://img.shields.io/badge/Next-black.svg?style=for-the-badge&logo=next.js&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
@@ -57,12 +57,6 @@ Other commands:
 npm run build   # Production build (static export to /out)
 npm run lint    # ESLint v9
 ```
-
-## Deployment 🌐
-
-Single production environment, deployed from `main`:
-
-- **Production:** [kaeatsaan.web.app](https://kaeatsaan.web.app) (custom domain: [kaeatsaan.com](https://kaeatsaan.com))
 
 ## Testing 🧪
 

@@ -72,4 +72,4 @@ Public Firebase config vars prefixed `NEXT_PUBLIC_FIREBASE_*`, stored in `.env.p
 
 ## Deployment
 
-GitHub Actions (`.github/workflows/deploy.yml`) deploys `main` to production (`kaeatsaan.web.app`, custom domain `kaeatsaan.com`). Runs semantic-release, build, deploy to Firebase Hosting, sends Discord notification. Canonical `<link>` tag + a `beforeInteractive` redirect script in `app/layout.tsx` bounce visitors from `*.web.app`/`*.firebaseapp.com` to `kaeatsaan.com`.
+GitHub Actions (`.github/workflows/deploy.yml`) deploys `main` to production (`kaeatsaan.com`). Runs semantic-release, build, deploy to Firebase Hosting, sends Discord notification. Canonical `<link>` tag + a `beforeInteractive` redirect script in `app/layout.tsx` bounce visitors from Firebase's default hosting domains to `kaeatsaan.com`.
