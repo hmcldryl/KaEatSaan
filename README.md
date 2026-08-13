@@ -48,7 +48,7 @@ KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for tho
 
 1. Clone the repo
 2. Install dependencies: `npm install`
-3. Copy `.env.development` and fill in your Firebase config (`NEXT_PUBLIC_FIREBASE_*` vars)
+3. Copy `.env.local` and fill in your Firebase config (`NEXT_PUBLIC_FIREBASE_*` vars)
 4. Run the dev server: `npm run dev`
 
 Other commands:
@@ -58,14 +58,11 @@ npm run build   # Production build (static export to /out)
 npm run lint    # ESLint v9
 ```
 
-## Environments 🌐
+## Deployment 🌐
 
-We have two environments fully set up:
+Single production environment, deployed from `main`:
 
-- **Production:** [kaeatsaan.web.app](https://kaeatsaan.web.app)
-- **Development:** [dev-kaeatsaan.web.app](https://dev-kaeatsaan.web.app)
-
-Each environment has its own hosting and database configuration.
+- **Production:** [kaeatsaan.web.app](https://kaeatsaan.web.app) (custom domain: [kaeatsaan.com](https://kaeatsaan.com))
 
 ## Testing 🧪
 
