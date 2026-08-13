@@ -1,4 +1,10 @@
-# [2.0.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.3.0...v2.0.0) (2026-07-21)
+# [1.4.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.3.0...v1.4.0) (2026-08-13)
+
+Supersedes the v2.0.0 / v2.0.0-beta.1 / v2.0.0-beta.2 tags and GitHub
+Releases, which were retracted — a `BREAKING CHANGE:` footer on a
+storage-key-rename fix commit forced an unintended major bump under
+Conventional Commits rules. No product-level breaking change was
+intended; versioning is corrected back onto the 1.x line here.
 
 
 ### Bug Fixes
@@ -14,34 +20,17 @@
 * **wheel:** add kainan list, reposition wheel, add loading skeleton ([3a8d642](https://github.com/hmcldryl/KaEatSaan/commit/3a8d64278932cba139f08121e49985154d28af8c))
 
 
-### BREAKING CHANGES
+### Chores
 
-* **storage:** renamed persist keys (kaetsaan-favorites,
-kaetsaan-history, kaetsaan-location -> kaeatsaan-*) drop existing
-users' saved favorites, history, and location on next load — old
-keys are orphaned, not migrated.
-
-# [2.0.0-beta.2](https://github.com/hmcldryl/KaEatSaan/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2026-07-21)
+* collapse to single main-branch workflow, drop dev Firebase project/environment, add canonical domain handling for kaeatsaan.com ([9ce3f3a5](https://github.com/hmcldryl/KaEatSaan/commit/9ce3f3a58))
 
 
-### Features
+### Notes
 
-* **bug-report:** add bug report FAB with GitHub issue prefill ([1115f46](https://github.com/hmcldryl/KaEatSaan/commit/1115f46eee6f09fd3b3d3a11e70931fabc0041d5))
-
-# [2.0.0-beta.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.2.0-beta.20...v2.0.0-beta.1) (2026-07-21)
-
-
-### Bug Fixes
-
-* **storage:** correct kaeatsaan typo in persist keys and user-agent ([4ea29cf](https://github.com/hmcldryl/KaEatSaan/commit/4ea29cf91cf670c2adea001ce481eb93ea32b58e))
-
-
-### Features
-
-* **wheel:** add kainan list, reposition wheel, add loading skeleton ([3a8d642](https://github.com/hmcldryl/KaEatSaan/commit/3a8d64278932cba139f08121e49985154d28af8c))
-
-
-### BREAKING CHANGES
+* **storage:** persist keys renamed (`kaetsaan-favorites`,
+`kaetsaan-history`, `kaetsaan-location` → `kaeatsaan-*`) — existing
+users' saved favorites, history, and location are dropped on next
+load; old keys are orphaned, not migrated.
 
 * **storage:** renamed persist keys (kaetsaan-favorites,
 kaetsaan-history, kaetsaan-location -> kaeatsaan-*) drop existing
