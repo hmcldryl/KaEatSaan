@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.4.0...v1.5.0) (2026-11-17)
+
+
+### Features
+
+* **map:** switch to MapLibre GL + OpenFreeMap tiles ([489d05b](https://github.com/hmcldryl/KaEatSaan/commit/489d05bd320b6f3d7780953f8406f1f3fa746949))
+
 # [1.4.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.3.0...v1.4.0) (2026-08-13)
 
 Supersedes the v2.0.0 / v2.0.0-beta.1 / v2.0.0-beta.2 tags and GitHub
