@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/hmcldryl/KaEatSaan/compare/v1.5.0...v1.5.1) (2026-11-17)
+
+
+### Bug Fixes
+
+* **map:** pin maplibre-gl to v5 so vector tiles render at street zoom ([1c2d04f](https://github.com/hmcldryl/KaEatSaan/commit/1c2d04f6261d64e13a1a0dfee8e22147541d3fef))
+
 # [1.5.0](https://github.com/hmcldryl/KaEatSaan/compare/v1.4.0...v1.5.0) (2026-11-17)
 
 
