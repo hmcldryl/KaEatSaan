@@ -42,7 +42,7 @@ KaEatSaan (a play on "Kahit Saan" or "Anywhere") is your trusty sidekick for tho
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) & [Material UI v7](https://mui.com/)
 - **State Management:** [Zustand](https://zustand-demo.pmnd.rs/)
 - **Animations:** [Framer Motion](https://www.framer.com/motion/) + HTML Canvas (wheel)
-- **Maps:** [Leaflet](https://leafletjs.com/) + react-leaflet
+- **Maps:** [MapLibre GL](https://maplibre.org/) + react-map-gl, tiles by [OpenFreeMap](https://openfreemap.org/)
 
 ## Getting Started 🚀
 

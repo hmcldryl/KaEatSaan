@@ -1,7 +1,6 @@
-﻿"use client";
+"use client";
 
 import dynamic from "next/dynamic";
-import { LatLngExpression } from "leaflet";
 import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 
@@ -26,9 +25,9 @@ const MapInner = dynamic(() => import("./MapInner"), {
 });
 
 interface MapContainerProps {
-  center?: LatLngExpression;
+  center?: [number, number];
   zoom?: number;
-  markerPosition?: LatLngExpression | null;
+  markerPosition?: [number, number] | null;
   onMapClick?: (lat: number, lng: number) => void;
   height?: string | number;
   userLocation?: [number, number];

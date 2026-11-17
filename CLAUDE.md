@@ -48,7 +48,7 @@ Filtering and distance computation (`/lib/utils/distance.ts`, `/lib/utils/geocod
 
 Components in `/components/` grouped by feature: `wheel/`, `layout/`, `auth/`, `food_outlet/`, `filters/`, `map/`, `reviews/`. All interactive components use `"use client"` directive. UI built exclusively with MUI components + Tailwind CSS utilities. `AuthProvider` wraps app for Firebase auth context.
 
-Map uses Leaflet + react-leaflet. Framer Motion handles UI animations (separate from canvas wheel animation).
+Map uses MapLibre GL + react-map-gl (`react-map-gl/maplibre`) with OpenFreeMap vector tiles (no API key). Framer Motion handles UI animations (separate from canvas wheel animation).
 
 ### Wheel Implementation
 

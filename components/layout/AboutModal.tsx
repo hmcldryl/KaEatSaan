@@ -28,7 +28,9 @@ const LICENSES = [
   { name: "Firebase", license: "Apache 2.0", url: "https://firebase.google.com" },
   { name: "MUI", license: "MIT", url: "https://mui.com" },
   { name: "Zustand", license: "MIT", url: "https://zustand-demo.pmnd.rs" },
-  { name: "Leaflet / React-Leaflet", license: "BSD 2-Clause", url: "https://leafletjs.com" },
+  { name: "MapLibre GL JS", license: "BSD 3-Clause", url: "https://maplibre.org" },
+  { name: "react-map-gl", license: "MIT", url: "https://visgl.github.io/react-map-gl" },
+  { name: "OpenFreeMap", license: "MIT", url: "https://openfreemap.org" },
   { name: "Framer Motion", license: "MIT", url: "https://www.framer.com/motion" },
   { name: "Tailwind CSS", license: "MIT", url: "https://tailwindcss.com" },
 ];
