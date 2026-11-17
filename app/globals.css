@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -115,19 +115,12 @@ html {
   pointer-events: none;
 }
 
-.leaflet-div-icon {
-  background: transparent !important;
-  border: none !important;
-}
-
-.leaflet-control-attribution {
+.maplibregl-ctrl-attrib {
   font-size: 9px !important;
   background: rgba(255, 255, 255, 0.75) !important;
   backdrop-filter: blur(4px);
-  border-radius: 8px 0 0 0 !important;
-  padding: 2px 6px !important;
 }
 
-.leaflet-control-zoom a {
+.maplibregl-ctrl-group {
   border-radius: 8px !important;
 }

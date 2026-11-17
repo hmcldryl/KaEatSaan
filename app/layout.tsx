@@ -7,7 +7,7 @@ import AppLayout from '@/components/layout/AppLayout';
 import { Montserrat } from 'next/font/google';
 import Script from 'next/script';
 import "./globals.css";
-import 'leaflet/dist/leaflet.css';
+import 'maplibre-gl/dist/maplibre-gl.css';
 
 // Canonical custom domain — Firebase Hosting also serves the app on
 // *.web.app / *.firebaseapp.com; we want search engines and visitors
